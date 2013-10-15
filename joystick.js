@@ -367,8 +367,8 @@ function resetCanvas(e) {
     
     // resize the canvas - but remember - this clears the canvas too.
     
-    control_canvas.width = max_val*2;
-    control_canvas.height = max_val*2;
+    control_canvas.width = document.getElementById("controlArea").offsetWidth;
+    control_canvas.height = control_canvas.width;
 
     halfWidth = control_canvas.width/2;
     halfHeight = control_canvas.height/2;
