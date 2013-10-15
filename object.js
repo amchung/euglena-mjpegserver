@@ -40,6 +40,7 @@ function setupVidCanvas() {
 function getMjpeg(){
     var img = new Image();
 	img.onload = function() {
+		vid_c.clearRect(0, 0, vid_width, vid_height);
     	vid_c.drawImage(img, 0, 0, vid_width, vid_height);
     	// motion detection
     	compareFrame(img);
@@ -82,7 +83,6 @@ function setupObjCanvas() {
 }
 
 function drawBox(box_X,box_Y,box_L,totalRes){
-	vid_c.clearRect(0, 0, vid_width, vid_height);
 	vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
     vid_c.lineWidth = 2;
 	
