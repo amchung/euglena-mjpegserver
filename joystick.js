@@ -197,7 +197,6 @@ function draw() {
     c.moveTo(halfWidth, halfHeight-4);
     c.strokeStyle = "rgba(250, 102, 0, 1)";
     c.lineWidth = 2;
-    //c.arc(halfWidth, halfHeight, 40, 0, Math.PI * 2, true);
     c.lineTo(halfWidth, halfHeight+4);
     c.stroke();
             
@@ -205,7 +204,6 @@ function draw() {
     c.moveTo(halfWidth+4, halfHeight);
     c.strokeStyle = "rgba(250, 102, 0, 1)";
     c.lineWidth = 2;
-    //c.arc(halfWidth, halfHeight, 40, 0, Math.PI * 2, true);
     c.lineTo(halfWidth-4, halfHeight);
     c.stroke();
     
@@ -363,15 +361,15 @@ function changeLED(LEDon) {
 
 
 function resetCanvas(e) {
-    max_val = (document.getElementById("controlArea").offsetWidth-120)/2;
+    max_val = (document.getElementById("controlArea").offsetWidth-100)/2;
     
     // resize the canvas - but remember - this clears the canvas too.
     
-    control_canvas.width = document.getElementById("controlArea").offsetWidth;
-    control_canvas.height = control_canvas.width;
+    control_canvas.width = document.getElementById("controlArea").offsetWidth-20;
+    control_canvas.height = control_canvas.width-20;
 
-    halfWidth = control_canvas.width/2;
-    halfHeight = control_canvas.height/2;
+    halfWidth = (control_canvas.width)/2;
+    halfHeight = (control_canvas.height)/2;
 
     // make sure we scroll to the top left. 
     window.scrollTo(0, 0);
