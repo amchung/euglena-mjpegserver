@@ -363,7 +363,7 @@ function changeLED(LEDon) {
 
 
 function resetCanvas(e) {
-    max_val = (document.getElementById("controlArea").offsetWidth-60)/2;
+    max_val = (document.getElementById("controlArea").offsetWidth-120)/2;
     
     // resize the canvas - but remember - this clears the canvas too.
     
