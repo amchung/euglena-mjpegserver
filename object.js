@@ -34,6 +34,9 @@ function setupVidCanvas() {
 	video_canvas.width = vid_width;
 	video_canvas.height = vid_height;
 	
+	ObjX = vid_width/2;
+	ObjY = vid_height/2;
+	
 	getMjpeg();
 }
 
@@ -69,18 +72,6 @@ function getMjpeg(){
     frameLastUpdateTime = Date.now();
     img1.onload=requestAnimFrame(getMjpeg);
 }*/
-
-function setupObjCanvas() {
-    //obj_canvas = document.getElementById('objCanvas');  
-    //obj_c = obj_canvas.getContext('2d');
-    //obj_canvas.width = vid_width;
-	//obj_canvas.height = vid_height;
-		
-	ObjX = vid_width/2;
-	ObjY = vid_height/2;
-    
-    drawBox(ObjX,ObjY,ObjL);
-}
 
 function drawBox(box_X,box_Y,box_L,totalRes){
 	vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
@@ -195,9 +186,6 @@ function compare(image1, image2, ptX, ptY, threshold, ObjR) {
       var ch0 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
       var ch1 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
       var ch2 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      //var ch0 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      //var ch1 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      //var ch2 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
 
       // count differing pixels
       var n = (x<Math.round(ptX/2))?0:1;
