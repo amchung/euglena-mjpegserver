@@ -148,8 +148,13 @@ function onReady(event) {
 
 	socket.on('connect', function() {
 		console.log("Connected");
-		chat.html("<b>Connected!</b>");
+		//chat.html("<b>Connected!</b>");
+		socket.emit('message', {channel:'realtime'});
 	});
+	
+	socket.on('reconnecting', function(){
+		console.log("Reconnecting...");
+	}
 
 	socket.on('message', function(message){
 		chat.append(message + '<br />');
