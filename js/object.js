@@ -6,7 +6,7 @@ ObjL=80,
 cp_canvas = null;
 
 var video_canvas,
-video_c;
+vid_c;
 
 var brown_const=0;
 var int_timer=0;
@@ -23,7 +23,7 @@ var vid_height = 480;
 function setupVidCanvas() {
 	// Show loading notice
 	video_canvas = document.getElementById('videoCanvas');
-	video_c = video_canvas.getContext('2d');
+	vid_c = video_canvas.getContext('2d');
 	//video_c.fillStyle = '#444';
 	//video_c.fillText('Loading...', video_canvas.width/2-30, video_canvas.height/3);
 
@@ -34,13 +34,17 @@ function setupVidCanvas() {
 	video_canvas.width = vid_width;
 	video_canvas.height = vid_height;
 	
+	ObjX = vid_width/2;
+	ObjY = vid_height/2;
+	
 	getMjpeg();
 }
 
 function getMjpeg(){
     var img = new Image();
 	img.onload = function() {
-    	video_c.drawImage(img, 0, 0, vid_width, vid_height);
+		vid_c.clearRect(0, 0, vid_width, vid_height);
+    	vid_c.drawImage(img, 0, 0, vid_width, vid_height);
     	// motion detection
     	compareFrame(img);
     	// load frame
@@ -69,52 +73,39 @@ function getMjpeg(){
     img1.onload=requestAnimFrame(getMjpeg);
 }*/
 
-function setupObjCanvas() {
-    obj_canvas = document.getElementById('objCanvas');  
-    obj_c = obj_canvas.getContext('2d');
-    obj_canvas.width = vid_width;
-	obj_canvas.height = vid_height;
-		
-	ObjX = vid_width/2;
-	ObjY = vid_height/2;
-    
-    drawBox(ObjX,ObjY,ObjL);
-}
-
 function drawBox(box_X,box_Y,box_L,totalRes){
-	obj_c.clearRect(0, 0, obj_canvas.width, obj_canvas.height);
-	obj_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
-    obj_c.lineWidth = 2;
+	vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
+    vid_c.lineWidth = 2;
 	
-	obj_c.beginPath();
-	obj_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
-    obj_c.stroke();	
+	vid_c.beginPath();
+	vid_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
+    vid_c.stroke();	
     
-    obj_c.fillStyle = "#f00";
-	obj_c.beginPath();
-	obj_c.moveTo(box_X,box_Y);
+    vid_c.fillStyle = "#f00";
+	vid_c.beginPath();
+	vid_c.moveTo(box_X,box_Y);
 	var enda = (2*Math.PI)*(int_timer/max_timer);
-	obj_c.arc(box_X,box_Y,box_L/4, 0, enda);
-	obj_c.fill();
+	vid_c.arc(box_X,box_Y,box_L/4, 0, enda);
+	vid_c.fill();
 	
 	if (score_val>0){
-		obj_c.beginPath();
-    	obj_c.fillStyle = "#fff"; 
-    	obj_c.fillText('score: +'+score_val,box_X - box_L/2, box_Y - box_L/2-10);
+		vid_c.beginPath();
+    	vid_c.fillStyle = "#fff"; 
+    	vid_c.fillText('score: +'+score_val,box_X - box_L/2, box_Y - box_L/2-10);
     	
-    	obj_c.moveTo(scoreX, scoreY);
-    	obj_c.strokeStyle = "#fff";
-    	obj_c.lineWidth = 1;
-		obj_c.lineTo(ObjX, ObjY);
-    	obj_c.stroke();	
+    	vid_c.moveTo(scoreX, scoreY);
+    	vid_c.strokeStyle = "#fff";
+    	vid_c.lineWidth = 1;
+		vid_c.lineTo(ObjX, ObjY);
+    	vid_c.stroke();	
     }
 }
 
 function resetGame(){
 	window.clearTimeout(gametimer);
 	
-	ObjX = obj_canvas.width/2;
-	ObjY = obj_canvas.height/2;
+	ObjX = vid_width/2;
+	ObjY = vid_height/2;
 	
 	score_val = 0;
 	scoreX = ObjX;
@@ -138,8 +129,8 @@ function countDown(){
 		
 		int_timer=0;
 		score_val = 0;
-		ObjX = obj_canvas.width/2;
-		ObjY = obj_canvas.height/2;
+		ObjX = vid_width/2;
+		ObjY = vid_height/2;
 	}
 }
 
@@ -195,9 +186,6 @@ function compare(image1, image2, ptX, ptY, threshold, ObjR) {
       var ch0 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
       var ch1 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
       var ch2 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      //var ch0 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      //var ch1 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      //var ch2 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
 
       // count differing pixels
       var n = (x<Math.round(ptX/2))?0:1;

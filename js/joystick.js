@@ -89,7 +89,6 @@ window.onresize = resetCanvas;
 function init() {
     setupCanvas();
     setupVidCanvas();
-    setupObjCanvas();
     setupMotionDetection();
     
     touches = new Collection();
@@ -143,14 +142,19 @@ function onReady(event) {
 			});
 	});
 	
-	socket = new io.connect('http://171.65.102.132');
+	socket = new io.connect('http://171.65.102.132:8088');
 	var chat = $('#chat');
 	var board = $('#board');
 
 	socket.on('connect', function() {
 		console.log("Connected");
-		chat.html("<b>Connected!</b>");
+		//chat.html("<b>Connected!</b>");
+		socket.emit('message', {channel:'realtime'});
 	});
+	
+	socket.on('reconnecting', function(){
+		console.log("Reconnecting...");
+	}
 
 	socket.on('message', function(message){
 		chat.append(message + '<br />');
@@ -197,7 +201,6 @@ function draw() {
     c.moveTo(halfWidth, halfHeight-4);
     c.strokeStyle = "rgba(250, 102, 0, 1)";
     c.lineWidth = 2;
-    //c.arc(halfWidth, halfHeight, 40, 0, Math.PI * 2, true);
     c.lineTo(halfWidth, halfHeight+4);
     c.stroke();
             
@@ -205,7 +208,6 @@ function draw() {
     c.moveTo(halfWidth+4, halfHeight);
     c.strokeStyle = "rgba(250, 102, 0, 1)";
     c.lineWidth = 2;
-    //c.arc(halfWidth, halfHeight, 40, 0, Math.PI * 2, true);
     c.lineTo(halfWidth-4, halfHeight);
     c.stroke();
     
@@ -363,15 +365,15 @@ function changeLED(LEDon) {
 
 
 function resetCanvas(e) {
-    max_val = (document.getElementById("controlArea").offsetWidth-60)/2;
+    max_val = (document.getElementById("controlArea").offsetWidth-100)/2;
     
     // resize the canvas - but remember - this clears the canvas too.
     
-    control_canvas.width = max_val*2;
-    control_canvas.height = max_val*2;
+    control_canvas.width = document.getElementById("controlArea").offsetWidth-20;
+    control_canvas.height = control_canvas.width-20;
 
-    halfWidth = control_canvas.width/2;
-    halfHeight = control_canvas.height/2;
+    halfWidth = (control_canvas.width)/2;
+    halfHeight = (control_canvas.height)/2;
 
     // make sure we scroll to the top left. 
     window.scrollTo(0, 0);
