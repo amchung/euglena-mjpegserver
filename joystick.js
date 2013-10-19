@@ -36,7 +36,7 @@ window.requestAnimFrame = (function () {
 })();
 
 var control_canvas,
-c,	// c is the fg_canvas' context 2D
+c,        // c is the fg_canvas' context 2D
 halfWidth,
 halfHeight,
 leftPointerID = -1,
@@ -82,14 +82,14 @@ var username = "noname";
 var socket;
 
 document.addEventListener("DOMContentLoaded", init);
-	
+        
 window.onorientationchange = resetCanvas;
 window.onresize = resetCanvas;
 
 function init() {
     setupCanvas();
     setupVidCanvas();
-    //setupMotionDetection();
+    setupMotionDetection();
     
     touches = new Collection();
     
@@ -97,23 +97,23 @@ function init() {
 }
 
 function onReady(event) {
-	// Remove the event listener because it is no longer needed
-	arduino.removeEventListener(IOBoardEvent.READY, onReady);
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-	// Set Pin 5,6,9,10 to PWM
-	arduino.setDigitalPinMode(5, Pin.PWM);
-	arduino.setDigitalPinMode(6, Pin.PWM);
-	arduino.setDigitalPinMode(9, Pin.PWM);
-	arduino.setDigitalPinMode(10, Pin.PWM);
+        // Set Pin 5,6,9,10 to PWM
+        arduino.setDigitalPinMode(5, Pin.PWM);
+        arduino.setDigitalPinMode(6, Pin.PWM);
+        arduino.setDigitalPinMode(9, Pin.PWM);
+        arduino.setDigitalPinMode(10, Pin.PWM);
 
-	// Create an LED object to interface with the LED wired
-	// to the I/O board
-	led1 = arduino.getDigitalPin(5);
-	led2 = arduino.getDigitalPin(6);
-	led3 = arduino.getDigitalPin(9);
-	led4 = arduino.getDigitalPin(10);
-	    
-	// jQuery part for the button
+        // Create an LED object to interface with the LED wired
+        // to the I/O board
+        led1 = arduino.getDigitalPin(5);
+        led2 = arduino.getDigitalPin(6);
+        led3 = arduino.getDigitalPin(9);
+        led4 = arduino.getDigitalPin(10);
+            
+        // jQuery part for the button
     $("#slider").slider({
         step: 0.05,
         min : 0.0,
@@ -130,66 +130,63 @@ function onReady(event) {
     });
     
 
-	$('input[name=setUsername]').click(function(){
-			if($('input[name=usernameTxt]').val() != ""){
-				username = $('input[name=usernameTxt]').val();
-				var msg = {type:'setUsername', user:username};
-				socket.json.send(msg);
-			}
-			$('#username').slideUp("slow",function(){
-				$('#sendChat').slideDown("slow");
-				resetGame();
-			});
-	});
-	
-	socket = new io.connect('http://171.65.102.132:8088');
-	var chat = $('#chat');
-	var board = $('#board');
+        $('input[name=setUsername]').click(function(){
+                        if($('input[name=usernameTxt]').val() != ""){
+                                username = $('input[name=usernameTxt]').val();
+                                var msg = {type:'setUsername', user:username};
+                                socket.json.send(msg);
+                        }
+                        $('#username').slideUp("slow",function(){
+                                $('#sendChat').slideDown("slow");
+                                resetGame();
+                        });
+        });
+        
+        socket = new io.connect('http://171.65.102.132:8088');
+        var chat = $('#chat');
+        var board = $('#board');
 
-	socket.on('connect', function() {
-		console.log("Connected");
-		socket.emit('message', {channel:'chatting'});
-	});
-	
-	socket.on('reconnecting', function(){
-		console.log("Reconnecting...");
-	}
+        socket.on('connect', function() {
+                console.log("Connected");
+                //chat.html("<b>Connected!</b>");
+                socket.emit('message', {channel:'realtime'});
+        });
+        
+        socket.on('reconnecting', function(){
+                console.log("Reconnecting...");
+        }
 
-	socket.on('message', function(message){
-		chat.append(message + '<br />');
-	});
-		
-	socket.on('postscore', function(score){
-		board.empty();
-		for (var i=0;i<score.length;i++){
-			if(i==0){
-				board.append('<span style="color: #FA6600">'+ score[i][0]+'  :  '+score[i][1]+'</span> <br />');
-			}else{
-				board.append(score[i][0]+'  :  '+score[i][1]+ '<br />');
-			}
-		}
-		board.fadeOut('fast');
-		board.fadeIn('fast');
-		board.fadeOut('fast');
-		board.fadeIn('fast');
-	});
-	
-	socket.on('gamearray', function(arrGame){
-		drawBox(arrGame[0],arrGame[1],ObjL);
-	}
+        socket.on('message', function(message){
+                chat.append(message + '<br />');
+        });
+                
+        socket.on('postscore', function(score){
+                board.empty();
+                for (var i=0;i<score.length;i++){
+                        if(i==0){
+                                board.append('<span style="color: #FA6600">'+ score[i][0]+'  :  '+score[i][1]+'</span> <br />');
+                        }else{
+                                board.append(score[i][0]+'  :  '+score[i][1]+ '<br />');
+                        }
+                }
+                board.fadeOut('fast');
+                board.fadeIn('fast');
+                board.fadeOut('fast');
+                board.fadeIn('fast');
+        });
 
-	socket.on('disconnect', function() {
-		console.log('disconnected');
-		chat.html("<b>Disconnect!</b>");
-	});
+        socket.on('disconnect', function() {
+                console.log('disconnected');
+                chat.html("<b>Disconnect!</b>");
+        });
 
-	$("input[name=sendBtn]").click(function(){
-		var msg = {type:'chat',message:username + " : " + $("input[name=chatTxt]").val()}
-		socket.json.send(msg);
-		$("input[name=chatTxt]").val("");
-	});
-	
-	control_canvas.addEventListener('pointerdown', onPointerDown, false);
+        $("input[name=sendBtn]").click(function(){
+                var msg = {type:'chat',message:username + " : " + $("input[name=chatTxt]").val()}
+                socket.json.send(msg);
+                $("input[name=chatTxt]").val("");
+        });
+        
+        control_canvas.addEventListener('pointerdown', onPointerDown, false);
     control_canvas.addEventListener('pointermove', onPointerMove, false);
     control_canvas.addEventListener('pointerup', onPointerUp, false);
     control_canvas.addEventListener('pointerout', onPointerUp, false);
@@ -198,8 +195,8 @@ function onReady(event) {
 }
 
 function draw() {
-	c.clearRect(0, 0, control_canvas.width, control_canvas.height);
-	
+        c.clearRect(0, 0, control_canvas.width, control_canvas.height);
+        
     c.beginPath();
     c.moveTo(halfWidth, halfHeight-4);
     c.strokeStyle = "rgba(250, 102, 0, 1)";
@@ -216,7 +213,7 @@ function draw() {
     
     drawCircles(halfWidth, halfHeight);
     
-	//// mouse event loop
+        //// mouse event loop
     touches.forEach(function (touch) {
         if (touch.identifier == leftPointerID) {
             var alpha = arrow.trimArrow(leftVector, max_val);
@@ -229,23 +226,23 @@ function draw() {
             c.beginPath();
             c.moveTo(leftPointerStartPos.x,leftPointerStartPos.y);
             c.strokeStyle = "rgba(250, 102, 0, 1)";
-			c.lineTo(leftPointerStartPos.x+max_val*(arrow.int2-arrow.int4),leftPointerStartPos.y+max_val*(arrow.int1-arrow.int3));
-			c.lineWidth = 3;
-			c.stroke();
-			
-			c.beginPath();
-			c.fillStyle = "rgba(255, 255, 255, "+alpha*(LEDcont)+")";
-    		c.arc(halfWidth, halfHeight, 16, 0, Math.PI * 2, true);
-    		c.fill();
-			
-			c.beginPath();
-        	c.fillStyle = "#fff"; 
-        	c.fillText(alpha,halfWidth-10, halfHeight-25);
-        	
-        	c.beginPath();
-        	c.fillStyle = "#dd6600";
-        	var theta = leftVector.angle();
-        	c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
+                        c.lineTo(leftPointerStartPos.x+max_val*(arrow.int2-arrow.int4),leftPointerStartPos.y+max_val*(arrow.int1-arrow.int3));
+                        c.lineWidth = 3;
+                        c.stroke();
+                        
+                        c.beginPath();
+                        c.fillStyle = "rgba(255, 255, 255, "+alpha*(LEDcont)+")";
+                    c.arc(halfWidth, halfHeight, 16, 0, Math.PI * 2, true);
+                    c.fill();
+                        
+                        c.beginPath();
+                c.fillStyle = "#fff"; 
+                c.fillText(alpha,halfWidth-10, halfHeight-25);
+                
+                c.beginPath();
+                c.fillStyle = "#dd6600";
+                var theta = leftVector.angle();
+                c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
         }
     });
 
@@ -258,9 +255,9 @@ function draw() {
         acDelta = 0;
         if(LEDloopON) 
         {
-        	//LEDon = frame%2;
-        	LEDcont = 1;
-        	changeLED(LEDcont);
+                //LEDon = frame%2;
+                LEDcont = 1;
+                changeLED(LEDcont);
         }
         frame++;
         if (frame >= 2) {frame = 0;}
@@ -273,16 +270,16 @@ function draw() {
 
 function drawCircles(xCenter,yCenter)
 {
-	var needle = new Vector2(max_val, 0);
-	for(var i=0;i<24*3;i++)
-	{
-		c.beginPath();
-		c.fillStyle = "rgba(255, 255, 255, 0.5)";
-		c.lineWidth = 3;
-		c.arc(xCenter + needle.x, yCenter + needle.y, 1, 0, Math.PI * 2, true);
-		c.fill();
-		needle.rotate(5,0);
-	}
+        var needle = new Vector2(max_val, 0);
+        for(var i=0;i<24*3;i++)
+        {
+                c.beginPath();
+                c.fillStyle = "rgba(255, 255, 255, 0.5)";
+                c.lineWidth = 3;
+                c.arc(xCenter + needle.x, yCenter + needle.y, 1, 0, Math.PI * 2, true);
+                c.fill();
+                needle.rotate(5,0);
+        }
 }
 
 function givePointerType(event) {
@@ -350,20 +347,20 @@ function setupCanvas() {
 
 // Arduino control functions
 function changeLED(LEDon) {
-	if(LEDon)
-	{
-		led1.value = arrow.int1;
-    	led2.value = arrow.int2;
-    	led3.value = arrow.int3;
-    	led4.value = arrow.int4;
+        if(LEDon)
+        {
+                led1.value = arrow.int1;
+            led2.value = arrow.int2;
+            led3.value = arrow.int3;
+            led4.value = arrow.int4;
     }
     else
     {
-    	led1.value = 0;
-    	led2.value = 0;
-    	led3.value = 0;
-    	led4.value = 0;
-	}
+            led1.value = 0;
+            led2.value = 0;
+            led3.value = 0;
+            led4.value = 0;
+        }
 }
 
 
