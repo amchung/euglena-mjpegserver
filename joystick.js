@@ -184,10 +184,11 @@ function onReady(event) {
         
         $("input[name=recBtn]").click(function(){
         	var cc = new CanvasCapture({
+				debug: true,
     			inCanvasEl: document.getElementById('videoCanvas')
 			});
         	cc.start();
-        	setTimeout(function(){cc.stop();}, 3000);
+        	setTimeout(function(){cc.stop();}, 1000);
         });
         
     control_canvas.addEventListener('pointerdown', onPointerDown, false);
