@@ -84,7 +84,7 @@ var socket;
 var cc = new CanvasCapture({
 	debug: true,
     fps: 8,
-    inCanvasEl: video_canvas
+    inCanvasEl: document.getElementById('videoCanvas')
 });
 
 document.addEventListener("DOMContentLoaded", init);
