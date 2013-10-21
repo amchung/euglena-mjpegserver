@@ -10,7 +10,7 @@ vid_c;
 
 var brown_const=0;
 var int_timer=0;
-var max_timer=30;
+var max_timer=40;
 
 var scoreX = 0;
 var scoreY = 0;
