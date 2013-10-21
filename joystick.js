@@ -81,6 +81,11 @@ var arduino = new IOBoard(host, 8887);
 var username = "noname";
 var socket;
 
+var cc = new CanvasCapture(
+    fps: 8,
+    inCanvasEl: video_canvas
+);
+
 document.addEventListener("DOMContentLoaded", init);
         
 window.onorientationchange = resetCanvas;
@@ -182,12 +187,7 @@ function onReady(event) {
                 $("input[name=chatTxt]").val("");
         });
         
-        $("input[name=recordBtn]").click(function(){
-        	var cc = new CanvasCapture(
-        		debug: true,
-        		fps: 8,
-        		inCanvasEl: video_canvas
-        	);
+        $("input[name=recBtn]").click(function(){
         	cc.start();
         	setTimeout(stopRecording,5000);
         });
