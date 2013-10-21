@@ -81,10 +81,11 @@ var arduino = new IOBoard(host, 8887);
 var username = "noname";
 var socket;
 
-var cc = new CanvasCapture(
+var cc = new CanvasCapture({
+	debug: true,
     fps: 8,
     inCanvasEl: video_canvas
-);
+});
 
 document.addEventListener("DOMContentLoaded", init);
         
