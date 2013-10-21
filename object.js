@@ -74,30 +74,31 @@ function getMjpeg(){
 }*/
 
 function drawBox(box_X,box_Y,box_L,totalRes){
-        vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
+    vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
     vid_c.lineWidth = 2;
         
-        vid_c.beginPath();
-        vid_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
+    vid_c.beginPath();
+    vid_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
     vid_c.stroke();        
     
     vid_c.fillStyle = "#f00";
-        vid_c.beginPath();
-        vid_c.moveTo(box_X,box_Y);
-        var enda = (2*Math.PI)*(int_timer/max_timer);
-        vid_c.arc(box_X,box_Y,box_L/4, 0, enda);
-        vid_c.fill();
+    vid_c.beginPath();
+    vid_c.moveTo(box_X,box_Y);
+    
+    var enda = (2*Math.PI)*(int_timer/max_timer);
+    vid_c.arc(box_X,box_Y,box_L/4, 0, enda);
+    vid_c.fill();
         
-        if (score_val>0){
-                vid_c.beginPath();
-            vid_c.fillStyle = "#fff"; 
-            vid_c.fillText('score: +'+score_val,box_X - box_L/2, box_Y - box_L/2-10);
+    if (score_val>0){
+        vid_c.beginPath();
+        vid_c.fillStyle = "#fff"; 
+        vid_c.fillText('score: +'+score_val,box_X - box_L/2, box_Y - box_L/2-10);
             
-            vid_c.moveTo(scoreX, scoreY);
-            vid_c.strokeStyle = "#fff";
-            vid_c.lineWidth = 1;
-                vid_c.lineTo(ObjX, ObjY);
-            vid_c.stroke();        
+        vid_c.moveTo(scoreX, scoreY);
+        vid_c.strokeStyle = "#fff";
+    	vid_c.lineWidth = 1;
+        vid_c.lineTo(ObjX, ObjY);
+        vid_c.stroke();        
     }
 }
 
