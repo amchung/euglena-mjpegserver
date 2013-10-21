@@ -189,7 +189,7 @@ function onReady(event) {
     			inCanvasEl: document.getElementById('videoCanvas')
 			});
         	cc.start();
-        	setTimeout(function(){cc.stop();}, 5000);
+        	setTimeout(function(){cc.stop();}, 3000);
         });
         
     control_canvas.addEventListener('pointerdown', onPointerDown, false);
