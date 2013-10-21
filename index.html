@@ -19,6 +19,7 @@
 	<script src="object.js"></script>
 	<script src="joystick.js"></script>
 	<script src="hand-1.1.2.js"></script>
+	<script src="canvas-capture.js"></script>
 </head>
 <body>
 	<div class="container" style = "padding: 10px">
@@ -37,19 +38,24 @@
 		</div>
 		<div id="controlArea" style = "width:300px; position:absolute; left: 680px; top: 16px">
 			<div>
-				<h2 style="color: #FA6600;">Euglena Livecam</h2>
+				<h3 align="center" style="color: #FA6600;">Euglena Livecam</h3>
 			</div>
 			<div align="center" style = "margin: 20px; ">
-				<h5>TOP 5 SCORES</h5>
+				<h5>< TOP 5 SCORES ></h5>
 				<div id="board" style = "margin: 0px"></div>
 			</div>
 			<div align="center" style="">
 				<div>
-					<h5 style="color: #FA6600;">LED control</h5>
+					<h5 style="color: #FA6600;">< LED control ></h5>
 				</div>
 				<div>
 					<canvas id="controlCanvas" style="z-index: 3;background:#000;padding: 10px;"></canvas>
 				</div>
+			</div>
+			
+			<div id="captureVid" style="display:none;">
+				<h5>< capture video ></h5>
+				<input type="button" name="recordBtn" value="Send" />
 			</div>
 			<div id="username" style="padding: 4px;">
 				<h6>What's your name?</h6>
@@ -67,13 +73,7 @@
 			</div>
 	    </div>
 	    <div id="mdArea" style = "width:640px; padding: 10px;position:absolute; left: 0px;visibility:hidden;">
-			<div>
-				<h5>Motion Detection</h1>
-			</div>
-			<div style = "background:#000;">
 				<canvas id="mdCanvas" style="z-index: 4;"></canvas>
-				<!--<canvas id="testCanvas" style="z-index: 4; width: 640px; height: 480px;"></canvas>-->
-			</div>
 	    </div>
 	</div>
 </body>

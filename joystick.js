@@ -182,7 +182,17 @@ function onReady(event) {
                 $("input[name=chatTxt]").val("");
         });
         
-        control_canvas.addEventListener('pointerdown', onPointerDown, false);
+        $("input[name=recordBtn]").click(function(){
+        	var cc = new CanvasCapture(
+        		debug: true,
+        		fps: 8,
+        		inCanvasEl: video_canvas
+        	);
+        	cc.start();
+        	setTimeout(stopRecording,5000);
+        });
+        
+    control_canvas.addEventListener('pointerdown', onPointerDown, false);
     control_canvas.addEventListener('pointermove', onPointerMove, false);
     control_canvas.addEventListener('pointerup', onPointerUp, false);
     control_canvas.addEventListener('pointerout', onPointerUp, false);
@@ -373,4 +383,8 @@ function resetCanvas(e) {
 
     // make sure we scroll to the top left. 
     window.scrollTo(0, 0);
+}
+
+function stopRecording(){
+	cc.stop();
 }
