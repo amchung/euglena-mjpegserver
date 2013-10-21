@@ -25,9 +25,9 @@
                 inY: 0,
                 inWidth: 0,
                 inHeight: 0,
-                outWidth: 200,
-                outHeight: 150,
-                duration: 5000,
+                outWidth: 640,
+                outHeight: 480,
+                duration: 1000,
                 fps: 15,
                 rollingInterval: true,
                 debug: false
@@ -94,6 +94,7 @@
         };
         
         this.start = function () {
+        	console.log('start recording...');
             clearTimeout(_timer);
             
             this.capture();
@@ -106,7 +107,7 @@
         
         this.stop = function () {
             clearTimeout(_timer);
-            
+            console.log('stopped recording');
             if (this.options.debug) {
                 var anchor = document.createElement('a');
                 anchor.setAttribute('href', this.getImageURL());
