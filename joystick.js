@@ -184,8 +184,6 @@ function onReady(event) {
         
         $("input[name=recBtn]").click(function(){
         	var cc = new CanvasCapture({
-				debug: true,
-    			fps: 8,
     			inCanvasEl: document.getElementById('videoCanvas')
 			});
         	cc.start();
