@@ -81,12 +81,6 @@ var arduino = new IOBoard(host, 8887);
 var username = "noname";
 var socket;
 
-var cc = new CanvasCapture({
-	debug: true,
-    fps: 8,
-    inCanvasEl: document.getElementById('videoCanvas')
-});
-
 document.addEventListener("DOMContentLoaded", init);
         
 window.onorientationchange = resetCanvas;
@@ -189,8 +183,13 @@ function onReady(event) {
         });
         
         $("input[name=recBtn]").click(function(){
+        	var cc = new CanvasCapture({
+				debug: true,
+    			fps: 8,
+    			inCanvasEl: document.getElementById('videoCanvas')
+			});
         	cc.start();
-        	setTimeout(stopRecording,5000);
+        	setTimeout(function(){cc.stop();}, 5000);
         });
         
     control_canvas.addEventListener('pointerdown', onPointerDown, false);
@@ -202,7 +201,7 @@ function onReady(event) {
 }
 
 function draw() {
-        c.clearRect(0, 0, control_canvas.width, control_canvas.height);
+    c.clearRect(0, 0, control_canvas.width, control_canvas.height);
         
     c.beginPath();
     c.moveTo(halfWidth, halfHeight-4);
@@ -354,9 +353,9 @@ function setupCanvas() {
 
 // Arduino control functions
 function changeLED(LEDon) {
-        if(LEDon)
-        {
-                led1.value = arrow.int1;
+    if(LEDon)
+    {
+            led1.value = arrow.int1;
             led2.value = arrow.int2;
             led3.value = arrow.int3;
             led4.value = arrow.int4;
@@ -384,8 +383,4 @@ function resetCanvas(e) {
 
     // make sure we scroll to the top left. 
     window.scrollTo(0, 0);
-}
-
-function stopRecording(){
-	cc.stop();
 }
