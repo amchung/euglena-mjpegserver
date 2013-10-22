@@ -143,6 +143,7 @@ function onReady(event) {
                 console.log("Connected");
         });
         
+        var board = $('#board');
                 
         socket.on('postscore', function(score){
                 board.empty();
