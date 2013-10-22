@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
     setupCanvas();
     setupVidCanvas();
-    setupMotionDetection();
     
     touches = new Collection();
     
