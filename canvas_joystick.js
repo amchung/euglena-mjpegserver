@@ -140,28 +140,29 @@ function onReady(event) {
         socket = new io.connect('http://171.65.102.132:3001');
 
         socket.on('connect', function() {
-                console.log("Connected");
+        	console.log("Connected");    
+        	getFrame();
         });
         
         var board = $('#board');
                 
         socket.on('postscore', function(score){
-                board.empty();
-                for (var i=0;i<score.length;i++){
-                        if(i==0){
-                                board.append('<span style="color: #FA6600">'+ score[i][0]+'  :  '+score[i][1]+'</span> <br />');
-                        }else{
-                                board.append(score[i][0]+'  :  '+score[i][1]+ '<br />');
-                        }
-                }
-                board.fadeOut('fast');
-                board.fadeIn('fast');
-                board.fadeOut('fast');
-                board.fadeIn('fast');
+            board.empty();
+            for (var i=0;i<score.length;i++){
+                if(i==0){
+                    board.append('<span style="color: #FA6600">'+ score[i][0]+'  :  '+score[i][1]+'</span> <br />');
+                }else{
+                    board.append(score[i][0]+'  :  '+score[i][1]+ '<br />');
+            	}
+            }
+            board.fadeOut('fast');
+            board.fadeIn('fast');
+            board.fadeOut('fast');
+            board.fadeIn('fast');
         });
 
         socket.on('disconnect', function() {
-                console.log('disconnected');
+            console.log('disconnected');
         });
         
         $("input[name=recBtn]").click(function(){
@@ -394,8 +395,6 @@ function setupVidCanvas() {
         
         video_canvas.width = vid_width;
         video_canvas.height = vid_height;
-        
-        getFrame();
 }
 
 function getFrame(){
