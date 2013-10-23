@@ -399,7 +399,11 @@ function setupVidCanvas() {
 }
 
 function getFrame(){
-    var img = new Image();
+    var msg = {type:'reqframe', user:username};
+    socket.json.send(msg);
+    
+    socket.on('postframe', function(data){
+		var img = new Image();
         img.onload = function() {
             vid_c.clearRect(0, 0, vid_width, vid_height);
             vid_c.drawImage(img, 0, 0, vid_width, vid_height);
@@ -407,7 +411,8 @@ function getFrame(){
             // load frame
             requestAnimFrame(getFrame);
         };
-        img.src = "http://171.65.102.132:3000";
+        img.src = data;
+    });
 }
 
 function resetGame(){
