@@ -227,23 +227,23 @@ function draw() {
             c.beginPath();
             c.moveTo(leftPointerStartPos.x,leftPointerStartPos.y);
             c.strokeStyle = "rgba(250, 102, 0, 1)";
-                        c.lineTo(leftPointerStartPos.x+max_val*(arrow.int2-arrow.int4),leftPointerStartPos.y+max_val*(arrow.int1-arrow.int3));
-                        c.lineWidth = 3;
-                        c.stroke();
+            c.lineTo(leftPointerStartPos.x+max_val*(arrow.int2-arrow.int4),leftPointerStartPos.y+max_val*(arrow.int1-arrow.int3));
+            c.lineWidth = 3;
+            c.stroke();
                         
-                        c.beginPath();
-                        c.fillStyle = "rgba(255, 255, 255, "+alpha*(LEDcont)+")";
-                    c.arc(halfWidth, halfHeight, 16, 0, Math.PI * 2, true);
-                    c.fill();
+            c.beginPath();
+            c.fillStyle = "rgba(255, 255, 255, "+alpha*(LEDcont)+")";
+            c.arc(halfWidth, halfHeight, 16, 0, Math.PI * 2, true);
+            c.fill();
                         
-                        c.beginPath();
-                c.fillStyle = "#fff"; 
-                c.fillText(alpha,halfWidth-10, halfHeight-25);
+            c.beginPath();
+            c.fillStyle = "#fff"; 
+            c.fillText(alpha,halfWidth-10, halfHeight-25);
                 
-                c.beginPath();
-                c.fillStyle = "#dd6600";
-                var theta = leftVector.angle();
-                c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
+            c.beginPath();
+            c.fillStyle = "#dd6600";
+            var theta = leftVector.angle();
+            c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
         }
     });
 
@@ -341,7 +341,7 @@ function onPointerUp(e) {
 function setupCanvas() {
     control_canvas = document.getElementById('controlCanvas');
     c = control_canvas.getContext('2d');
-    //resetCanvas();
+    resetCanvas();
     c.strokeStyle = "#ffffff";
     c.lineWidth = 2;
 }
@@ -365,7 +365,7 @@ function changeLED(LEDon) {
 }
 
 
-/*function resetCanvas(e) {
+function resetCanvas(e) {
     max_val = (document.getElementById("controlArea").offsetWidth-100)/2;
     
     // resize the canvas - but remember - this clears the canvas too.
@@ -378,7 +378,7 @@ function changeLED(LEDon) {
 
     // make sure we scroll to the top left. 
     window.scrollTo(0, 0);
-}*/
+}
 
 var obj_canvas,
 obj_c,
