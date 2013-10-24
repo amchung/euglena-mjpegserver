@@ -141,7 +141,7 @@ function onReady(event) {
 
         socket.on('connect', function() {
         	console.log("Connected");    
-        	getFrame();
+        	//getFrame();
         });
         
         var board = $('#board');
