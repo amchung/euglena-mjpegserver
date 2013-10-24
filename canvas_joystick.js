@@ -166,6 +166,7 @@ function onReady(event) {
         });
         
         socket.on('postframe', function(data){
+        	console.log('got frame');
 			var img = new Image();
         	img.onload = function() {
             	vid_c.clearRect(0, 0, vid_width, vid_height);
