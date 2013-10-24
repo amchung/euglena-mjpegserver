@@ -165,6 +165,18 @@ function onReady(event) {
             console.log('disconnected');
         });
         
+        socket.on('postframe', function(data){
+			var img = new Image();
+        	img.onload = function() {
+            	vid_c.clearRect(0, 0, vid_width, vid_height);
+            	vid_c.drawImage(img, 0, 0, vid_width, vid_height);
+
+	            // load frame
+    	        //requestAnimFrame(getFrame);
+        	};
+        	img.src = data;
+    	});
+        
         $("input[name=recBtn]").click(function(){
         	var cc = new CanvasCapture({
 				debug: true,
@@ -397,7 +409,7 @@ function setupVidCanvas() {
         video_canvas.height = vid_height;
 }
 
-function getFrame(){
+/*function getFrame(){
     var msg = {type:'reqframe', user:username};
     socket.json.send(msg);
     
@@ -408,11 +420,11 @@ function getFrame(){
             vid_c.drawImage(img, 0, 0, vid_width, vid_height);
 
             // load frame
-            requestAnimFrame(getFrame);
+            //requestAnimFrame(getFrame);
         };
         img.src = data;
     });
-}
+}*/
 
 function resetGame(){
         window.clearTimeout(gametimer);
