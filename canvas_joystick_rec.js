@@ -124,8 +124,8 @@ function onReady(event) {
     $( "#slider" ).bind( "slide", function(event, ui) {
         var value = ui.value;
         $('#value').text("Value: " + value.toFixed(2));
-        brown_const = value;
-        console.log(brown_const);
+        var msg = {type:'setBrConst', user:username, val:value};
+        socket.json.send(msg);
     });
     
 
