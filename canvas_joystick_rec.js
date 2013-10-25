@@ -1,30 +1,4 @@
-﻿//  Sample refactored by David Rousset - Microsoft France - http://blogs.msdn.com/davrous 
-//  Using Hand.js to support all platforms
-
-//  Based on https://github.com/sebleedelisle/JSTouchController/blob/master/Touches.html 
-
-//  Copyright (c)2010-2011, Seb Lee-Delisle, sebleedelisle.com. All rights reserved.
-
-//  Redistribution and use in source and binary forms, with or without modification, are permitted provided 
-//  that the following conditions are met:
-
-//    * Redistributions of source code must retain the above copyright notice, 
-//      this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above copyright notice, 
-//      this list of conditions and the following disclaimer in the documentation 
-//      and/or other materials provided with the distribution.
-
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS 
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
-//  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
-//  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
-//  OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
-//  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-//  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
-//  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
-
-// shim layer with setTimeout fallback
-window.requestAnimFrame = (function () {
+﻿window.requestAnimFrame = (function () {
     return window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
@@ -52,7 +26,7 @@ var IOBoard = BO.IOBoard;
 var IOBoardEvent = BO.IOBoardEvent;
 var Pin = BO.Pin;
 
-//// Variables
+/////////////////////////////// Variables
 // LED related
 var led1; //-90
 var led2; //0
@@ -135,13 +109,15 @@ function onReady(event) {
                                 var msg = {type:'setUsername', user:username};
                                 socket.json.send(msg);
                         }
+                        $('#username').slideUp("slow",function(){
+                                $('#entergame').slideDown("slow");
+                        });
         });
         
         socket = new io.connect('http://171.65.102.132:3001');
 
         socket.on('connect', function() {
-        	console.log("Connected");    
-        	//getFrame();
+        	console.log("Connected");
         });
         
         var board = $('#board');
@@ -166,17 +142,18 @@ function onReady(event) {
         });
         
         socket.on('postframe', function(data){
-        	//console.log('got frame');
 			var img = new Image();
         	img.onload = function() {
             	vid_c.clearRect(0, 0, vid_width, vid_height);
             	vid_c.drawImage(img, 0, 0, vid_width, vid_height);
-
-	            // load frame
-    	        //requestAnimFrame(getFrame);
         	};
         	img.src = data;
     	});
+    	
+    	$("input[name=gamestartBtn]").click(function(){
+            var msg = {type:'reqGame', user:username};
+            socket.json.send(msg);
+        });
         
         $("input[name=recBtn]").click(function(){
         	var msg = {type:'reqRecord', user:username};
@@ -376,7 +353,7 @@ function resetCanvas(e) {
     window.scrollTo(0, 0);
 }
 
-var obj_canvas,
+/*var obj_canvas,
 obj_c,
 ObjX,
 ObjY,
@@ -393,7 +370,7 @@ var max_timer=40;
 var scoreX = 0;
 var scoreY = 0;
 var score_val = 0;
-var gametimer;
+var gametimer;*/
 
 var vid_width = 640;
 var vid_height = 480;
@@ -404,51 +381,4 @@ function setupVidCanvas() {
         
         video_canvas.width = vid_width;
         video_canvas.height = vid_height;
-}
-
-/*function getFrame(){
-    var msg = {type:'reqframe', user:username};
-    socket.json.send(msg);
-    
-    socket.on('postframe', function(data){
-		var img = new Image();
-        img.onload = function() {
-            vid_c.clearRect(0, 0, vid_width, vid_height);
-            vid_c.drawImage(img, 0, 0, vid_width, vid_height);
-
-            // load frame
-            //requestAnimFrame(getFrame);
-        };
-        img.src = data;
-    });
-}*/
-
-function resetGame(){
-        window.clearTimeout(gametimer);
-        
-        score_val = 0;
-        scoreX = ObjX;
-        scoreY = ObjY;
-        
-        int_timer = max_timer;
-        
-        gametimer=requestAnimFrame(countDown);
-}
-
-function countDown(){
-        int_timer = int_timer - 0.1;
-        if (int_timer > 0){
-                score_val = (Math.pow(scoreX-ObjX,2) + Math.pow(scoreY-ObjY,2))*10;
-                gametimer=requestAnimFrame(countDown);
-        }else{
-                window.clearTimeout(gametimer);
-                
-                var msg = {type:'sendscore', user:username, score:score_val};
-                socket.json.send(msg);
-                
-                int_timer=0;
-                score_val = 0;
-                ObjX = vid_width/2;
-                ObjY = vid_height/2;
-        }
 }
