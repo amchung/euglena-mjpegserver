@@ -85,16 +85,15 @@ function drawBox(box_X,box_Y,box_L,totalRes){
     vid_c.lineWidth = 2;
         
     vid_c.beginPath();
-    vid_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
-    vid_c.stroke();        
+    vid_c.rect(-box_X - box_L/2, -box_Y - box_L/2, box_L, box_L);
+    vid_c.stroke(); 
+    
+    vid_c.rotate( -box_rad );
+	vid_c.translate( -box_X, -box_Y );       
     
     vid_c.fillStyle = "#f00";
     vid_c.beginPath();
     vid_c.moveTo(box_X,box_Y);
-	
-	
-	vid_c.rotate( -box_rad );
-	vid_c.translate( -box_X, -box_Y );
         
     if (score_val>0){
         var enda = (2*Math.PI)*(int_timer/max_timer);
