@@ -74,7 +74,14 @@ function getMjpeg(){
 }*/
 
 function drawBox(box_X,box_Y,box_L,totalRes){
-    vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
+	var box_rad = 30*pi()/180;
+    
+    vid_c.translate( box_X, box_Y );
+	vid_c.rotate( box_rad );
+	//vid_c.drawImage( ball_img, -box_X, -box_Y );
+	
+	
+	vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
     vid_c.lineWidth = 2;
         
     vid_c.beginPath();
@@ -84,12 +91,16 @@ function drawBox(box_X,box_Y,box_L,totalRes){
     vid_c.fillStyle = "#f00";
     vid_c.beginPath();
     vid_c.moveTo(box_X,box_Y);
-    
-    var enda = (2*Math.PI)*(int_timer/max_timer);
-    vid_c.arc(box_X,box_Y,box_L/4, 0, enda);
-    vid_c.fill();
+	
+	
+	vid_c.rotate( -box_rad );
+	vid_c.translate( -box_X, -box_Y );
         
     if (score_val>0){
+        var enda = (2*Math.PI)*(int_timer/max_timer);
+    	vid_c.arc(box_X,box_Y,box_L/4, 0, enda);
+   		vid_c.fill();
+   		
         vid_c.beginPath();
         vid_c.fillStyle = "#fff"; 
         vid_c.fillText('score: +'+score_val,box_X - box_L/2, box_Y - box_L/2-10);
@@ -101,6 +112,8 @@ function drawBox(box_X,box_Y,box_L,totalRes){
         vid_c.stroke();        
     }
 }
+
+
 
 function resetGame(){
         window.clearTimeout(gametimer);
