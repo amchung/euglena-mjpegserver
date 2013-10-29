@@ -74,7 +74,7 @@ function getMjpeg(){
 }*/
 
 function drawBox(box_X,box_Y,box_L,totalRes){
-	var box_rad = 30*pi()/180;
+	var box_rad = 30*Math.PI/180;
     
     vid_c.translate( box_X, box_Y );
 	vid_c.rotate( box_rad );
