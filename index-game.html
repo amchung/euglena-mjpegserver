@@ -16,8 +16,9 @@
 	<script src="jquery-1.10.2.min.js"></script>
 	<script src="jquery-ui-1.10.0.custom.min.js"></script>
 	<script src="jquery.ui.touch-punch.min.js"></script>
+	<script src="game-object.js"></script>
 	<script src="canvas-capture.js"></script>
-	<script src="canvas_joystick.js"></script>
+	<script src="game-joystick.js"></script>
 	<script src="hand-1.1.2.js"></script>
 </head>
 <body>
@@ -61,11 +62,18 @@
 				<input type="text" name="usernameTxt" />
 				<input type="button" name="setUsername" value="Enter the Ring" />
 			</div>
+			<div id="sendChat" style="display:none;">
+				<input type="text" name="chatTxt" />
+				<input type="button" name="sendBtn" value="Send" />
+			</div>
 			<div style="background:#000;padding: 10px;">
 				<h6>Use the slider to set the random motion radius</h6>
             	<h6 id="slider"></h6>
             	<h6 id="value"></h6>
 			</div>
+	    </div>
+	    <div id="mdArea" style = "width:640px; padding: 10px;position:absolute; left: 0px;visibility:hidden;">
+				<canvas id="mdCanvas" style="z-index: 4;"></canvas>
 	    </div>
 	</div>
 </body>
