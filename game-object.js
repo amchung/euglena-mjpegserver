@@ -83,8 +83,7 @@ function drawBox(box_X,box_Y,box_L,totalRes){
 	
 	var box_rad = 30*Math.PI/180;
     
-    vid_c.translate(-box_X,-box_Y);
-	vid_c.rotate(-box_rad);
+	vid_c.rotate(box_rad);
 	//vid_c.drawImage( ball_img, -box_X, -box_Y );
 	
 	
@@ -92,11 +91,11 @@ function drawBox(box_X,box_Y,box_L,totalRes){
     vid_c.lineWidth = 2;
         
     vid_c.beginPath();
-    vid_c.rect(- box_L/2, - box_L/2, box_L, box_L);
+    vid_c.rect(box_X-box_L/2, box_Y-box_L/2, box_L, box_L);
     vid_c.stroke(); 
     
-    vid_c.rotate(box_rad);
-	vid_c.translate(box_X, box_Y);       
+    vid_c.rotate(-box_rad);
+	//vid_c.translate(box_X, box_Y);       
     
     vid_c.fillStyle = "#f00";
     vid_c.beginPath();
