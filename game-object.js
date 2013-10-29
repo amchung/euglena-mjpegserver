@@ -74,6 +74,13 @@ function getMjpeg(){
 }*/
 
 function drawBox(box_X,box_Y,box_L,totalRes){
+	vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
+    vid_c.lineWidth = 2;
+        
+    vid_c.beginPath();
+    vid_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
+    vid_c.stroke();   
+	
 	var box_rad = 30*Math.PI/180;
     
     vid_c.translate( box_X, box_Y );
