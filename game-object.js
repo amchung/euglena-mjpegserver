@@ -18,9 +18,6 @@ function setupVidCanvas() {
         video_canvas.width = vid_width;
         video_canvas.height = vid_height;
         
-        shipX = vid_width/2;
-        shipY = vid_height/2;
-        
         getMjpeg();
 }
 
@@ -194,8 +191,8 @@ function drawStar(aX,aY,bX,bY,step){
     }
 }
 
-var shipX,
-shipY,
+var shipX=vid_width/2,
+shipY=vid_height/2,
 shipRad,
 shipL=20,
 starX=40,
