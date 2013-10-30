@@ -75,8 +75,8 @@ function drawShip(box_X,box_Y,box_rad){
 			vid_c.lineTo(0+4,-5+10);
 			vid_c.closePath();
     		vid_c.stroke();
-    		ctx.fillStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
-			ctx.fill();
+    		vid_c.fillStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
+			vid_c.fill();
     		// draw ship fins
     		vid_c.beginPath();
     		vid_c.moveTo(0-4,-5+10);
