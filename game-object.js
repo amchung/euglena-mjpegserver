@@ -218,7 +218,6 @@ function resetGame(){
     shipY = vid_height/2;
     
     gamephase='rest';
-    console.log('gamestart');
     gameTimer=requestAnimFrame(gameLoop);
 }
 
@@ -283,6 +282,7 @@ function getShipLocation(){
 }
 
 function showStar(){
+	console.log(int_star);
 	if(int_star>0)
 	{
 		int_star=int_star-1;
