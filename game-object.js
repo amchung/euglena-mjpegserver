@@ -89,19 +89,19 @@ function drawBox(box_X,box_Y,box_L,box_rad,totalRes){
     // draw ship body
     vid_c.beginPath();
     vid_c.strokeStyle=(totalRes > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
-	vid_c.moveTo(box_X,box_Y);
-	vid_c.lineTo(box_X-5,box_Y+7);
-	vid_c.lineTo(box_X+5,box_Y+7);
+	vid_c.moveTo(0,0);
+	vid_c.lineTo(0-5,0+7);
+	vid_c.lineTo(0+5,0+7);
 	vid_c.closePath();
     vid_c.stroke();
     // draw ship fins
     vid_c.beginPath();
-    vid_c.moveTo(box_X-5,box_Y+7);
-	vid_c.lineTo(box_X-12,box_Y+12);
+    vid_c.moveTo(0-5,0+7);
+	vid_c.lineTo(0-12,0+12);
     vid_c.stroke();
     vid_c.beginPath();
-    vid_c.moveTo(box_X+5,box_Y+7);
-	vid_c.lineTo(box_X+12,box_Y+12);
+    vid_c.moveTo(0+5,0+7);
+	vid_c.lineTo(0+12,0+12);
     vid_c.stroke();
     // exit transformation
     vid_c.rotate(box_rad);
