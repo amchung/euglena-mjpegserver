@@ -2,6 +2,7 @@ var obj_canvas,
 obj_c,
 ObjX,
 ObjY,
+ObjRad=0,
 ObjL=80,
 cp_canvas = null;
 
@@ -73,28 +74,36 @@ function getMjpeg(){
     img1.onload=requestAnimFrame(getMjpeg);
 }*/
 
-function drawBox(box_X,box_Y,box_L,totalRes){
-	vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
-    vid_c.lineWidth = 2;
-        
-    vid_c.beginPath();
-    vid_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
-    vid_c.stroke();   
+function drawBox(box_X,box_Y,box_L,box_rad,totalRes){
 	
-	var box_rad = 30*Math.PI/180;
-    
+	// begin transformation
     vid_c.translate(box_X, box_Y); 
 	vid_c.rotate(-box_rad);
-	//vid_c.drawImage( ball_img, -box_X, -box_Y );
 	
-	
-	vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
-    vid_c.lineWidth = 2;
-        
-    vid_c.beginPath();
-    vid_c.rect(-box_L/2, -box_L/2, box_L, box_L);
-    vid_c.stroke(); 
+	//vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
+    //vid_c.lineWidth = 2;  
+    //vid_c.beginPath();
+    //vid_c.rect(-box_L/2, -box_L/2, box_L, box_L);
+    //vid_c.stroke(); 
     
+    // draw ship body
+    vid_c.beginPath();
+    vid_c.strokeStyle=(totalRes > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
+	vid_.moveTo(box_X,box_Y);
+	vid_.lineTo(box_X-5,box_Y+7);
+	vid_.lineTo(box_X+5,box_Y+7);
+	vid_.closePath();
+    vid_c.stroke();
+    // draw ship fins
+    vid_c.beginPath();
+    vid_.moveTo(box_X-5,box_Y+7);
+	vid_.lineTo(box_X-12,box_Y+12);
+    vid_c.stroke();
+    vid_c.beginPath();
+    vid_.moveTo(box_X+5,box_Y+7);
+	vid_.lineTo(box_X+12,box_Y+12);
+    vid_c.stroke();
+    // exit transformation
     vid_c.rotate(box_rad);
 	vid_c.translate(-box_X, -box_Y);       
     
@@ -251,8 +260,14 @@ function compareFrame(img1) {
     ObjY=Math.max(objy,ObjR);
     ObjY=Math.min(ObjY,vid_height-ObjR);
     ObjY=Math.round(ObjY/2)*2;
-
-    drawBox(ObjX,ObjY,ObjL,res[0]+res[1]+res[2]+res[3]);
+    
+    if(ObjRad>2*Math.PI){
+    	ObjRad = 0;
+    }else{
+		ObjRad=ObjRad+(Math.random()*2/180)*Math.PI;
+	}
+	
+    drawBox(ObjX,ObjY,ObjL,ObjRad,res[0]+res[1]+res[2]+res[3]);
   }
   // copy reference of img1 to img2
   img2 = img1;
