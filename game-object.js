@@ -403,7 +403,8 @@ function compareFrame(img1) {
     }
   }
   
-  hit=res[0]+res[1]+res[2]+res[3];
+  //hit=res[0]+res[1]+res[2]+res[3];
+  hit=0;
   // copy reference of img1 to img2
   img2 = img1;
 }
