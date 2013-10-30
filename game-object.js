@@ -29,7 +29,7 @@ function getMjpeg(){
         // motion detection
         compareFrame(img);
         // load frame
-        requestAnimFrame(getMjpeg);
+        window.requestAnimFrame(getMjpeg);
     };
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
@@ -218,7 +218,7 @@ function resetGame(){
     shipY = vid_height/2;
     
     gamephase='rest';
-    gameTimer=window.requestAnimFrame(gameLoop);
+    gameLoop();
 }
 
 
@@ -257,13 +257,15 @@ function gameLoop(){
 			}
   		break;
   		case 'gameover':
-  			window.clearTimeout(gameTimer);
+  			window.cancelRequestAnimationFrame(gameTimer);
+       		gameTimer = undefined;
   			gameOver();
   		break;
 	}
 
 	drawStar(shipX,shipY,starX,starY,gamelevel-(int_star-6));
 	drawShip(shipX,shipY,shipRad);
+	gameTimer = window.requestAnimationFrame(gameLoop);
 }
 
 var unit=20;
@@ -282,7 +284,6 @@ function getShipLocation(){
 }
 
 function showStar(){
-	console.log(int_star);
 	if(int_star>0)
 	{
 		int_star=int_star-1;
