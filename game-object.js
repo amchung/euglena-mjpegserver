@@ -1,22 +1,11 @@
 var obj_canvas,
 obj_c,
-ObjX,
-ObjY,
-ObjRad=0,
-ObjL=20,
 cp_canvas = null;
 
 var video_canvas,
 vid_c;
 
 var brown_const=0;
-var int_timer=0;
-var max_timer=40;
-
-var scoreX = 0;
-var scoreY = 0;
-var score_val = 0;
-var gametimer;
 
 var vid_width = 640;
 var vid_height = 480;
@@ -25,142 +14,307 @@ function setupVidCanvas() {
         // Show loading notice
         video_canvas = document.getElementById('videoCanvas');
         vid_c = video_canvas.getContext('2d');
-        //video_c.fillStyle = '#444';
-        //video_c.fillText('Loading...', video_canvas.width/2-30, video_canvas.height/3);
-
-        // Setup the WebSocket connection and start the player
-        //var client = new WebSocket( 'ws://171.65.102.132:8084/' );
-        //var player = new jsmpeg(client, {canvas:video_canvas});
         
         video_canvas.width = vid_width;
         video_canvas.height = vid_height;
         
-        ObjX = vid_width/2;
-        ObjY = vid_height/2;
+        shipX = vid_width/2;
+        shipY = vid_height/2;
         
         getMjpeg();
 }
 
 function getMjpeg(){
     var img = new Image();
-        img.onload = function() {
-                vid_c.clearRect(0, 0, vid_width, vid_height);
-            vid_c.drawImage(img, 0, 0, vid_width, vid_height);
-            // motion detection
-            compareFrame(img);
-            // load frame
-            requestAnimFrame(getMjpeg);
-        };
-        img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+    img.onload = function() {
+        vid_c.clearRect(0, 0, vid_width, vid_height);
+        vid_c.drawImage(img, 0, 0, vid_width, vid_height);
+        // motion detection
+        compareFrame(img);
+        // load frame
+        requestAnimFrame(getMjpeg);
+    };
+    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
 
-/*function getMjpeg(){
-        var frameDelta = Date.now() - frameLastUpdateTime;
-    
-    if (frameACDelta > msMovieFrame)
-    {
-        frameACDelta = 0;
-        var img = new Image();
-                img.onload = function() {
-                    video_c.drawImage(img, 0, 0, img.width * (window.innerHeight/img.height), window.innerHeight);
-                };
-                img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-    } else
-    {
-        frameACDelta += frameDelta;
+function drawShip(box_X,box_Y,box_rad){
+	switch(gamephase)
+	{
+		case 'gameover':
+			vid_c.beginPath();
+			vid_c.strokeStyle="rgba(253,172,13,1)";
+			vid_c.moveTo(0-4,-5+10);
+			vid_c.lineTo(0-4,-5+22);
+    		vid_c.stroke();
+    		vid_c.moveTo(0-4,-5+10);
+			vid_c.lineTo(0-4,-5+22);
+    		vid_c.stroke();
+    		vid_c.moveTo(0-4,-5+10);
+			vid_c.lineTo(0-4,-5+22);
+    		vid_c.stroke();
+    		vid_c.moveTo(0-4,-5+10);
+			vid_c.lineTo(0-4,-5+22);
+    		vid_c.stroke();
+    		vid_c.moveTo(0-4,-5+10);
+			vid_c.lineTo(0-4,-5+22);
+    		vid_c.stroke();
+    		vid_c.moveTo(0-4,-5+10);
+			vid_c.lineTo(0-4,-5+22);
+    		vid_c.stroke();
+			
+			vid_c.beginPath();
+    		vid_c.fillStyle = "#fff"; 
+    		vid_c.fillText('GAME OVER',vid_width/2,vid_height/2);
+		break;
+		case 'engine':
+			// begin transformation
+    		vid_c.translate(box_X, box_Y); 
+			vid_c.rotate(-box_rad);
+    		// draw ship body
+    		vid_c.beginPath();
+    		vid_c.strokeStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
+			vid_c.moveTo(0,-5);
+			vid_c.lineTo(0-4,-5+10);
+			vid_c.lineTo(0+4,-5+10);
+			vid_c.closePath();
+    		vid_c.stroke();
+    		ctx.fillStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
+			ctx.fill();
+    		// draw ship fins
+    		vid_c.beginPath();
+    		vid_c.moveTo(0-4,-5+10);
+			vid_c.lineTo(0-4,-5+22);
+    		vid_c.stroke();
+    		vid_c.beginPath();
+    		vid_c.moveTo(0+4,-5+10);
+			vid_c.lineTo(0+4,-5+22);
+    		vid_c.stroke();
+    		// exit transformation
+    		vid_c.rotate(box_rad);
+			vid_c.translate(-box_X, -box_Y);    
+		break;
+		case 'rest':
+			// begin transformation
+    		vid_c.translate(box_X, box_Y); 
+			vid_c.rotate(-box_rad);
+			// draw ship body
+    		vid_c.beginPath();
+    		vid_c.strokeStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
+			vid_c.moveTo(0,-3);
+			vid_c.lineTo(0-5,-3+7);
+			vid_c.lineTo(0+5,-3+7);
+			vid_c.closePath();
+    		vid_c.stroke();
+    		// draw ship fins
+    		vid_c.beginPath();
+    		vid_c.moveTo(0-5,-3+7);
+			vid_c.lineTo(0-12,-3+12);
+    		vid_c.stroke();
+    		vid_c.beginPath();
+    		vid_c.moveTo(0+5,-3+7);
+			vid_c.lineTo(0+12,-3+12);
+    		vid_c.stroke();
+    		// exit transformation
+    		vid_c.rotate(box_rad);
+    		vid_c.translate(-box_X, -box_Y);  
+		default:
+			vid_c.beginPath();
+    		vid_c.fillStyle = "#fff"; 
+    		vid_c.fillText('READY TO START',vid_width/2,vid_height/2);
+	}
+}
+
+function drawStar(aX,aY,bX,bY,step){
+	var arrStar = 
+		[
+			[0+2*Math.random(),-10+2*Math.random()],
+			[8+2*Math.random(),-4+2*Math.random()],
+			[8+2*Math.random(),2+2*Math.random()],
+			[0+2*Math.random(),8+2*Math.random()],
+			[-8+2*Math.random(),2+2*Math.random()],
+			[-8+2*Math.random(),-4+2*Math.random()]
+		];
+		
+	// draw star body
+	switch(gamephase)
+	{
+		case 'gameover':
+			// gameover
+			DrawStar();
+		break;
+		case 'engine':
+    		// no path to draw
+    		DrawStar();
+		break;
+		case 'rest':
+			DrawStar();
+			step = (step > gamelevel) ? gamelevel : step;
+			var dX=(bX-aX)*step/gamelevel;
+			var dY=(bY-aY)*step/gamelevel;
+			DrawDottedLine(aX,aY,aX+dX,aY+dY,2,step,"white");
+		default:
+			//
+			DrawStar();
+	}
+	
+	function DrawStar(){
+		vid_c.strokeStyle="rgba(255,255,255,1)";
+		for(var i=0;i<5;i++)
+		{
+			for(var j=0;j<(5-i);j++){
+				vid_c.beginPath();
+				vid_c.moveTo(bX+arrStar[i][0],bY+arrStar[i][1]);
+				vid_c.lineTo(bX+arrStar[i+j+1][0],bY+arrStar[i+j+1][1]);
+    			vid_c.stroke();
+    		}
+		}
+	}
+
+    function DrawDottedLine(x1,y1,x2,y2,dotRadius,dotCount,dotColor){
+        var dx=x2-x1;
+        var dy=y2-y1;
+        var spaceX=dx/(dotCount-1);
+        var spaceY=dy/(dotCount-1);
+        var newX=x1;
+        var newY=y1;
+        for (var i=0;i<dotCount;i++){
+        	drawDot(newX,newY,dotRadius,dotColor);
+        	newX+=spaceX;
+            newY+=spaceY;              
+        }
+        drawDot(x1,y1,2,"red");
+        drawDot(x2,y2,2,"red");
     }
     
-    frameLastUpdateTime = Date.now();
-    img1.onload=requestAnimFrame(getMjpeg);
-}*/
-
-function drawBox(box_X,box_Y,box_L,box_rad,totalRes){
-	
-	// begin transformation
-    vid_c.translate(box_X, box_Y); 
-	vid_c.rotate(-box_rad);
-	
-	//vid_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
-    //vid_c.lineWidth = 2;  
-    //vid_c.beginPath();
-    //vid_c.rect(-box_L/2, -box_L/2, box_L, box_L);
-    //vid_c.stroke(); 
-    
-    // draw ship body
-    vid_c.beginPath();
-    vid_c.strokeStyle=(totalRes > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
-	vid_c.moveTo(0,-3);
-	vid_c.lineTo(0-5,-3+7);
-	vid_c.lineTo(0+5,-3+7);
-	vid_c.closePath();
-    vid_c.stroke();
-    // draw ship fins
-    vid_c.beginPath();
-    vid_c.moveTo(0-5,-3+7);
-	vid_c.lineTo(0-12,-3+12);
-    vid_c.stroke();
-    vid_c.beginPath();
-    vid_c.moveTo(0+5,-3+7);
-	vid_c.lineTo(0+12,-3+12);
-    vid_c.stroke();
-    // exit transformation
-    vid_c.rotate(box_rad);
-	vid_c.translate(-box_X, -box_Y);       
-    
-    vid_c.fillStyle = "#f00";
-    vid_c.beginPath();
-    vid_c.moveTo(box_X,box_Y);
-        
-    if (score_val>0){
-        var enda = (2*Math.PI)*(int_timer/max_timer);
-    	vid_c.arc(box_X,box_Y,box_L/4, 0, enda);
-   		vid_c.fill();
-   		
+    function drawDot(x,y,dotRadius,dotColor){
         vid_c.beginPath();
-        vid_c.fillStyle = "#fff"; 
-        vid_c.fillText('score: +'+score_val,box_X - box_L/2, box_Y - box_L/2-10);
-            
-        vid_c.moveTo(scoreX, scoreY);
-        vid_c.strokeStyle = "#fff";
-    	vid_c.lineWidth = 1;
-        vid_c.lineTo(ObjX, ObjY);
-        vid_c.stroke();        
+        vid_c.arc(x,y, dotRadius, 0, 2 * Math.PI, false);
+        vid_c.fillStyle = dotColor;
+        vid_c.fill();              
     }
 }
 
-
+var shipX,
+shipY,
+shipRad,
+shipL=20,
+starX=40,
+starY=20;
+var gamelevel;
+var int_star=-1;
+var int_engine=-1;
+var engine = false;
+var rest = false;
+var starTimer;
+var enginerTimer;
+var gamephase;
+var score_val = 0;
+var gameTimer;
+var hit=0;
 
 function resetGame(){
-        window.clearTimeout(gametimer);
-        
-        ObjX = vid_width/2;
-        ObjY = vid_height/2;
-        
-        score_val = 0;
-        scoreX = ObjX;
-        scoreY = ObjY;
-        
-        int_timer = max_timer;
-        
-        gametimer=requestAnimFrame(countDown);
+    score_val = 0;
+    hit = 0;
+    gamelevel=1;
+    
+	shipX = vid_width/2;
+    shipY = vid_height/2;
+    
+    gamephase='rest';
+    gameTimer=requestAnimFrame(gameLoop);
 }
 
-function countDown(){
-        int_timer = int_timer - 0.1;
-        if (int_timer > 0){
-                score_val = (Math.pow(scoreX-ObjX,2) + Math.pow(scoreY-ObjY,2))*10;
-                gametimer=requestAnimFrame(countDown);
-        }else{
-                window.clearTimeout(gametimer);
-                
-                var msg = {type:'sendscore', user:username, score:score_val};
-                socket.json.send(msg);
-                
-                int_timer=0;
-                score_val = 0;
-                ObjX = vid_width/2;
-                ObjY = vid_height/2;
-        }
+
+function gameLoop(){
+	switch(gamephase)
+	{
+		case 'rest':
+  			if(rest==false)
+			{
+				rest=true;
+				int_star=gamelevel+6;
+				getStarLocation(); // get new starX, starY, shipRad
+				starTimer=window.setInterval(showStar,500);
+			}
+  		break;
+		case 'engine':
+  			if(hit>0)
+			{
+				window.clearInterval(engineTimer);
+				engine=false;
+				rest=false;
+				int_star=-1;
+				int_engine=-1;
+				phase='gameover';
+				gamelevel=-1;
+			}
+			else
+			{
+				if(engine==false)
+				{
+					engine=true;
+					int_engine=gamelevel+4;
+					engineTimer=window.setInterval(runEngine,500);
+				}
+			}
+  		break;
+  		case 'gameover':
+  			window.clearTimeout(gameTimer);
+  			gameOver();
+  		break;
+	}
+
+	function showStar(){
+		if(int_star>0)
+		{
+			int_star=int_star-1;
+		}
+		else
+		{
+			window.clearInterval(starTimer);
+			rest=false;
+			gamephase='engine';
+		}
+	}
+	
+	function runEngine(){
+		if(int_engine>0)
+		{
+			getShipLocation();
+			int_engine=int_engine-1;
+		}
+		else
+		{
+			window.clearInterval(engineTimer);
+			engine=false;
+			gamephase='rest';
+			if(gamelevel<10)
+			{
+				gamelevel=gamelevel+1;
+			}
+		}
+	}
+	drawStar(shipX,shipY,starX,starY,gamelevel-(int_star-6));
+	drawShip(shipX,shipY,shipRad);
+	
+	var unit=20;
+	function getStarLocation(){
+		shipRad=Math.random()*Math.PI*2;
+		starX=shipX+unit*(Math.cos(shipRad))*gamelevel;
+		starY=shipY+unit*(Math.sin(shipRad))*gamelevel;
+	}
+	function getShipLocation(){
+		var step = gamelevel-(int_engine-4);
+		step = (step > gamelevel) ? gamelevel : step;
+		shipX=shipX+unit*(Math.cos(shipRad))*step/gamelevel;
+		shipY=shipY+unit*(Math.sin(shipRad))*step/gamelevel;
+	}
+}
+
+function gameOver(){
+    var msg = {type:'sendscore', user:username, score:score_val};
+    socket.json.send(msg);
+	score_val = -1;
 }
 
 
@@ -250,25 +404,9 @@ function compareFrame(img1) {
     if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     }
-    
-    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const;
-    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const;
-    
-    ObjX=Math.max(objx,ObjR);
-    ObjX=Math.min(ObjX,vid_width-ObjR);
-    ObjX=Math.round(ObjX/2)*2;
-    ObjY=Math.max(objy,ObjR);
-    ObjY=Math.min(ObjY,vid_height-ObjR);
-    ObjY=Math.round(ObjY/2)*2;
-    
-    if(ObjRad>2*Math.PI){
-    	ObjRad = 0;
-    }else{
-		ObjRad=ObjRad+(Math.random()*2/180)*Math.PI;
-	}
-	
-    drawBox(ObjX,ObjY,ObjL,ObjRad,res[0]+res[1]+res[2]+res[3]);
   }
+  
+  hit=res[0]+res[1]+res[2]+res[3];
   // copy reference of img1 to img2
   img2 = img1;
 }

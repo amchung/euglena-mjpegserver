@@ -137,9 +137,12 @@ function onReady(event) {
                                 socket.json.send(msg);
                         }
                         $('#username').slideUp("slow",function(){
-                                $('#sendChat').slideDown("slow");
-                                resetGame();
+                                $('#entergame').slideDown("slow");
                         });
+        });
+        
+        $("input[name=gamestartBtn]").click(function(){
+            resetGame();
         });
         
         socket = new io.connect('http://171.65.102.132:8088');
