@@ -280,8 +280,8 @@ function getStarLocation(){
 function getShipLocation(){
 	var step = gamelevel-(int_engine-4);
 	var u = (step > gamelevel) ? 0 : 1;
-	shipX=shipX+unit*(Math.cos(shipRad))*u/gamelevel;
-	shipY=shipY+unit*(Math.sin(shipRad))*u/gamelevel;
+	shipX=shipX+unit*(Math.cos(shipRad))*u;
+	shipY=shipY+unit*(Math.sin(shipRad))*u;
 }
 
 function showStar(){
