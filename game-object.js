@@ -218,7 +218,7 @@ function resetGame(){
     shipY = vid_height/2;
     
     gamephase='rest';
-    gameTimer=requestAnimFrame(gameLoop);
+    gameTimer=window.requestAnimFrame(gameLoop);
 }
 
 
