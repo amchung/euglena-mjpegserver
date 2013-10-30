@@ -230,6 +230,7 @@ function gameLoop(){
 		case 'rest':
   			if(rest==false)
 			{
+				console.log('set starTimer');
 				rest=true;
 				int_star=gamelevel+6;
 				getStarLocation(); // get new starX, starY, shipRad
