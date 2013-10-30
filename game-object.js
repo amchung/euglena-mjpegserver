@@ -3,7 +3,7 @@ obj_c,
 ObjX,
 ObjY,
 ObjRad=0,
-ObjL=80,
+ObjL=20,
 cp_canvas = null;
 
 var video_canvas,
@@ -89,19 +89,19 @@ function drawBox(box_X,box_Y,box_L,box_rad,totalRes){
     // draw ship body
     vid_c.beginPath();
     vid_c.strokeStyle=(totalRes > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
-	vid_c.moveTo(0,0);
-	vid_c.lineTo(0-5,0+7);
-	vid_c.lineTo(0+5,0+7);
+	vid_c.moveTo(0,-3);
+	vid_c.lineTo(0-5,-3+7);
+	vid_c.lineTo(0+5,-3+7);
 	vid_c.closePath();
     vid_c.stroke();
     // draw ship fins
     vid_c.beginPath();
-    vid_c.moveTo(0-5,0+7);
-	vid_c.lineTo(0-12,0+12);
+    vid_c.moveTo(0-5,-3+7);
+	vid_c.lineTo(0-12,-3+12);
     vid_c.stroke();
     vid_c.beginPath();
-    vid_c.moveTo(0+5,0+7);
-	vid_c.lineTo(0+12,0+12);
+    vid_c.moveTo(0+5,-3+7);
+	vid_c.lineTo(0+12,-3+12);
     vid_c.stroke();
     // exit transformation
     vid_c.rotate(box_rad);
@@ -235,11 +235,11 @@ function compareFrame(img1) {
   // just compare if there are two pictures
   if ( img2 != null ) {
     var res;
-    var ObjR=50;
+    var ObjR=10;
 
     try {
       // compare the two pictures, the given threshold helps to ignore noise
-      res = compare(img1, img2, ObjX, ObjY, 12, ObjR); 
+      res = compare(img1, img2, ObjX, ObjY, 6, ObjR); 
     }
     catch(e) {
       // errors can happen if the pictures were corrupted during transfer
