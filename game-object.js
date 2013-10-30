@@ -218,11 +218,13 @@ function resetGame(){
     shipY = vid_height/2;
     
     gamephase='rest';
+    console.log('gamestart');
     gameTimer=requestAnimFrame(gameLoop);
 }
 
 
 function gameLoop(){
+	console.log(gamephase);
 	switch(gamephase)
 	{
 		case 'rest':
