@@ -160,8 +160,8 @@ function drawStar(aX,aY,bX,bY,step){
 		{
 			for(var j=0;j<(5-i);j++){
 				vid_c.beginPath();
-				vid_c.moveTo(bX+arrStar[i][0],bY+arrStar[i][1]);
-				vid_c.lineTo(bX+arrStar[i+j+1][0],bY+arrStar[i+j+1][1]);
+				vid_c.moveTo(bX+2*arrStar[i][0],bY+2*arrStar[i][1]);
+				vid_c.lineTo(bX+2*arrStar[i+j+1][0],bY+2*arrStar[i+j+1][1]);
     			vid_c.stroke();
     		}
 		}
