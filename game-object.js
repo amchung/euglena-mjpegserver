@@ -10,9 +10,6 @@ var brown_const=0;
 var vid_width = 640;
 var vid_height = 480;
 
-var shipX=vid_width/2,
-shipY=vid_height/2;
-
 function setupVidCanvas() {
         // Show loading notice
         video_canvas = document.getElementById('videoCanvas');
@@ -37,35 +34,37 @@ function getMjpeg(){
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
 
+function drawText(){
+	switch(gamephase)
+	{
+		case 'gameover':		
+    		vid_c.fillStyle = "#fff"; 
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
+    		vid_c.fillStyle = "rgba(253,172,13,1)"; 
+    		vid_c.font="30px";
+    		vid_c.fillText('GAME OVER',vid_width/2,vid_height/2);
+		break;
+		case 'rest':
+    		vid_c.fillStyle = "#fff"; 
+    		vid_c.fillText('New target ...',20,20);
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
+		break;
+		case 'engine':
+    		vid_c.fillStyle = "#fff"; 
+    		vid_c.fillText('Run! Run! Run!',20,20);
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
+		break;
+		default:
+			//
+	}
+}
+
 function drawShip(box_X,box_Y,box_rad){
 	box_rad=Math.PI/2+box_rad;
 	switch(gamephase)
 	{
 		case 'gameover':
-			vid_c.beginPath();
-			vid_c.strokeStyle="rgba(253,172,13,1)";
-			vid_c.moveTo(0-4,-5+10);
-			vid_c.lineTo(0-4,-5+22);
-    		vid_c.stroke();
-    		vid_c.moveTo(0-4,-5+10);
-			vid_c.lineTo(0-4,-5+22);
-    		vid_c.stroke();
-    		vid_c.moveTo(0-4,-5+10);
-			vid_c.lineTo(0-4,-5+22);
-    		vid_c.stroke();
-    		vid_c.moveTo(0-4,-5+10);
-			vid_c.lineTo(0-4,-5+22);
-    		vid_c.stroke();
-    		vid_c.moveTo(0-4,-5+10);
-			vid_c.lineTo(0-4,-5+22);
-    		vid_c.stroke();
-    		vid_c.moveTo(0-4,-5+10);
-			vid_c.lineTo(0-4,-5+22);
-    		vid_c.stroke();
-			
-			vid_c.beginPath();
-    		vid_c.fillStyle = "#fff"; 
-    		vid_c.fillText('GAME OVER',vid_width/2,vid_height/2);
+			// gameover graphics
 		break;
 		case 'engine':
 			// begin transformation
@@ -142,31 +141,32 @@ function drawStar(aX,aY,bX,bY,step){
 	{
 		case 'gameover':
 			// gameover
-			DrawStar();
+			DrawStar(bX,bY);
 		break;
 		case 'engine':
     		// no path to draw
-    		DrawStar();
+    		DrawStar(bX,bY);
 		break;
 		case 'rest':
-			DrawStar();
+			DrawStar(bX,bY);
+			DrawStar(aX,aY);
 			step = (step > gamelevel) ? gamelevel : step;
 			var dX=(bX-aX)*step/gamelevel;
 			var dY=(bY-aY)*step/gamelevel;
 			DrawDottedLine(aX,aY,aX+dX,aY+dY,1,step+1,"rgba(253,172,13,1)");
 		default:
 			//
-			DrawStar();
+			DrawStar(bX,bY);
 	}
 	
-	function DrawStar(){
+	function DrawStar(X,Y){
 		vid_c.strokeStyle="rgba(255,255,255,0.4)";
 		for(var i=0;i<5;i++)
 		{
 			for(var j=0;j<(5-i);j++){
 				vid_c.beginPath();
-				vid_c.moveTo(bX+2*arrStar[i][0],bY+2*arrStar[i][1]);
-				vid_c.lineTo(bX+2*arrStar[i+j+1][0],bY+2*arrStar[i+j+1][1]);
+				vid_c.moveTo(X+2*arrStar[i][0],Y+2*arrStar[i][1]);
+				vid_c.lineTo(X+2*arrStar[i+j+1][0],Y+2*arrStar[i+j+1][1]);
     			vid_c.stroke();
     		}
 		}
@@ -195,11 +195,12 @@ function drawStar(aX,aY,bX,bY,step){
         vid_c.fill();              
     }
 }
-
-var shipRad,
-shipL=20,
-starX=40,
-starY=20;
+var shipX=vid_width/2,
+	shipY=vid_height/2,
+	shipRad,
+	shipL=20,
+	starX=40,
+	starY=20;
 var gamelevel;
 var int_star=-1;
 var int_engine=-1;
@@ -255,6 +256,7 @@ function gameLoop(){
 			}
 			else
 			{
+				score_val=score_val+10;
 				if(engine==false)
 				{
 					engine=true;
