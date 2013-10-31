@@ -210,6 +210,7 @@ var gamephase;
 var score_val = 0;
 var gameTimer;
 var hit=0;
+var unit=30;
 
 function resetGame(){
     score_val = 0;
@@ -270,12 +271,12 @@ function gameLoop(){
 	gameTimer = window.requestAnimationFrame(gameLoop);
 }
 
-var unit=20;
-
 function getStarLocation(){
 	shipRad=Math.random()*Math.PI*2;
-	starX=shipX+unit*(Math.cos(shipRad))*gamelevel;
-	starY=shipY+unit*(Math.sin(shipRad))*gamelevel;
+	while(starX<0 || starX>640 || starY<0 || starY>480){
+		starX=shipX+unit*(Math.cos(shipRad))*gamelevel;
+		starY=shipY+unit*(Math.sin(shipRad))*gamelevel;
+	}
 }
 
 function getShipLocation(){
