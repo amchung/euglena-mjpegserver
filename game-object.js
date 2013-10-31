@@ -227,6 +227,7 @@ function resetGame(){
 
 
 function gameLoop(){
+	console.log(gamephase);
 	switch(gamephase)
 	{
 		case 'rest':
@@ -243,6 +244,7 @@ function gameLoop(){
   			if(hit>0)
 			{
 				window.clearInterval(engineTimer);
+				window.clearInterval(starTimer);
 				engine=false;
 				rest=false;
 				int_star=-1;
@@ -261,7 +263,6 @@ function gameLoop(){
 			}
   		break;
   		case 'gameover':
-  			console.log('gameover');
   			window.cancelRequestAnimationFrame(gameTimer);
        		gameTimer = undefined;
   			gameOver();
