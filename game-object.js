@@ -149,14 +149,14 @@ function drawStar(aX,aY,bX,bY,step){
 			step = (step > gamelevel) ? gamelevel : step;
 			var dX=(bX-aX)*step/gamelevel;
 			var dY=(bY-aY)*step/gamelevel;
-			DrawDottedLine(aX,aY,aX+dX,aY+dY,1,unit,"white");
+			DrawDottedLine(aX,aY,aX+dX,aY+dY,1,step+1,"rgba(253,172,13,1)");
 		default:
 			//
 			DrawStar();
 	}
 	
 	function DrawStar(){
-		vid_c.strokeStyle="rgba(255,255,255,1)";
+		vid_c.strokeStyle="rgba(255,255,255,0.6)";
 		for(var i=0;i<5;i++)
 		{
 			for(var j=0;j<(5-i);j++){
@@ -178,10 +178,10 @@ function drawStar(aX,aY,bX,bY,step){
         for (var i=0;i<dotCount;i++){
         	drawDot(newX,newY,dotRadius,dotColor);
         	newX+=spaceX;
-            newY+=spaceY;              
+            newY+=spaceY; 
         }
-        drawDot(x1,y1,2,"red");
-        drawDot(x2,y2,2,"red");
+        drawDot(x1,y1,1,"rgba(253,172,13,1)");
+        drawDot(x2,y2,1,"rgba(253,172,13,1)");
     }
     
     function drawDot(x,y,dotRadius,dotColor){
