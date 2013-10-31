@@ -10,6 +10,9 @@ var brown_const=0;
 var vid_width = 640;
 var vid_height = 480;
 
+var shipX=vid_width/2,
+shipY=vid_height/2;
+
 function setupVidCanvas() {
         // Show loading notice
         video_canvas = document.getElementById('videoCanvas');
@@ -193,9 +196,7 @@ function drawStar(aX,aY,bX,bY,step){
     }
 }
 
-var shipX=vid_width/2,
-shipY=vid_height/2,
-shipRad,
+var shipRad,
 shipL=20,
 starX=40,
 starY=20;
