@@ -48,7 +48,7 @@ function drawText(){
     		vid_c.fillText('GAME OVER',vid_width/2,vid_height/2-100);
     		vid_c.fillStyle = "#fff"; 
     		vid_c.font="20pt sans-serif";
-    		vid_c.fillText(username+' scored '+score_val,vid_width/2,vid_height/2-100);
+    		vid_c.fillText(username+' scored '+score_val,vid_width/2,vid_height/2);
 		break;
 		case 'rest':
     		vid_c.fillStyle = "#fff"; 
