@@ -397,7 +397,7 @@ console.log(ObjR);
 function compareFrame(img1) {
   // just compare if there are two pictures
   if ( img2 != null ) {
-    var res;
+    var res=[0,0,0,0];
     var ObjR=10;
 
     try {
