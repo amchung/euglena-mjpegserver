@@ -227,7 +227,6 @@ function resetGame(){
 
 
 function gameLoop(){
-	console.log(gamephase);
 	switch(gamephase)
 	{
 		case 'rest':
@@ -240,7 +239,8 @@ function gameLoop(){
 			}
   		break;
 		case 'engine':
-  			if(hit>0)
+			console.log(hit);
+  			if(hit>5)
 			{
 				window.clearInterval(engineTimer);
 				engine=false;
@@ -398,7 +398,7 @@ function compareFrame(img1) {
 
     try {
     		// compare the two pictures, the given threshold helps to ignore noise
-    		res = compare(img1, img2, shipX, shipY, 6, ObjR); 
+    		res = compare(img1, img2, shipX, shipY, 10, ObjR); 
     	}
     catch(e) {
     		// errors can happen if the pictures were corrupted during transfer
