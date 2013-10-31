@@ -272,8 +272,8 @@ function gameLoop(){
 }
 
 function getStarLocation(){
-	shipRad=Math.random()*Math.PI*2;
 	while(starX<0 || starX>640 || starY<0 || starY>480){
+		shipRad=Math.random()*Math.PI*2;
 		starX=shipX+unit*(Math.cos(shipRad))*gamelevel;
 		starY=shipY+unit*(Math.sin(shipRad))*gamelevel;
 	}
