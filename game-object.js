@@ -56,7 +56,8 @@ function drawText(){
     		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
 		break;
 		default:
-			//
+			vid_c.fillStyle = "#fff";
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
 	}
 }
 
