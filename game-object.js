@@ -115,6 +115,7 @@ function drawShip(box_X,box_Y,box_rad){
     		// exit transformation
     		vid_c.rotate(-box_rad);
     		vid_c.translate(-box_X, -box_Y);  
+    	break;
 		default:
 			vid_c.beginPath();
     		vid_c.fillStyle = "#fff"; 
@@ -156,7 +157,7 @@ function drawStar(aX,aY,bX,bY,step){
 	}
 	
 	function DrawStar(){
-		vid_c.strokeStyle="rgba(255,255,255,0.6)";
+		vid_c.strokeStyle="rgba(255,255,255,0.4)";
 		for(var i=0;i<5;i++)
 		{
 			for(var j=0;j<(5-i);j++){
