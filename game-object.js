@@ -149,7 +149,7 @@ function drawStar(aX,aY,bX,bY,step){
 			step = (step > gamelevel) ? gamelevel : step;
 			var dX=(bX-aX)*step/gamelevel;
 			var dY=(bY-aY)*step/gamelevel;
-			DrawDottedLine(aX,aY,aX+dX,aY+dY,2,step,"white");
+			DrawDottedLine(aX,aY,aX+dX,aY+dY,1,unit,"white");
 		default:
 			//
 			DrawStar();
@@ -279,7 +279,7 @@ function getStarLocation(){
 
 function getShipLocation(){
 	var step = gamelevel-(int_engine-4);
-	var u = (step > gamelevel) ? 0 : 1;
+	var u = (step > gamelevel - 1) ? 0 : 1;
 	shipX=shipX+unit*(Math.cos(shipRad))*u;
 	shipY=shipY+unit*(Math.sin(shipRad))*u;
 }
