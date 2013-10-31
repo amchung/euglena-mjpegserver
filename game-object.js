@@ -41,6 +41,7 @@ function drawText(){
 		case 'gameover':		
     		vid_c.fillStyle = "#fff"; 
     		vid_c.font="14px sans-serif";
+    		vid_c.textAlign="start"; 
     		vid_c.fillText('player : ' + username + '  score : ' +score_val ,20,20);
     		vid_c.fillStyle = "rgba(253,172,13,1)"; 
     		vid_c.font="40pt sans-serif";
