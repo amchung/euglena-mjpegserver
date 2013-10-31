@@ -240,7 +240,7 @@ function gameLoop(){
   		break;
 		case 'engine':
 			console.log(hit);
-  			if(hit>1)
+  			if(hit>0)
 			{
 				window.clearInterval(engineTimer);
 				engine=false;
@@ -261,6 +261,7 @@ function gameLoop(){
 			}
   		break;
   		case 'gameover':
+  			console.log('gameover');
   			window.cancelRequestAnimationFrame(gameTimer);
        		gameTimer = undefined;
   			gameOver();
