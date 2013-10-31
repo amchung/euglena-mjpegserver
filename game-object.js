@@ -348,10 +348,6 @@ var md_canvas = null;
 */
 
 function compare(image1, image2, ptX, ptY, threshold, ObjR) {
-console.log(ptX);
-console.log(ptY);
-console.log(threshold);
-console.log(ObjR);
   var movement = new Array(0,0,0,0);
   var md_ctx = md_canvas.getContext("2d");
   var width = md_canvas.width/2, height = md_canvas.height/2;
