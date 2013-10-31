@@ -40,24 +40,28 @@ function drawText(){
 	{
 		case 'gameover':		
     		vid_c.fillStyle = "#fff"; 
-    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
+    		vid_c.font="12px";
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,20,20);
     		vid_c.fillStyle = "rgba(253,172,13,1)"; 
     		vid_c.font="30px";
     		vid_c.fillText('GAME OVER',vid_width/2,vid_height/2);
 		break;
 		case 'rest':
     		vid_c.fillStyle = "#fff"; 
-    		vid_c.fillText('New target ...',20,20);
-    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
+    		vid_c.font="12px";
+    		vid_c.fillText('New target ...',200,20);
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,20,20);
 		break;
 		case 'engine':
     		vid_c.fillStyle = "#fff"; 
-    		vid_c.fillText('Run! Run! Run!',20,20);
-    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
+    		vid_c.font="12px";
+    		vid_c.fillText('Run! Run! Run!',200,20);
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,20,20);
 		break;
 		default:
 			vid_c.fillStyle = "#fff";
-    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,100,20);
+			vid_c.font="12px";
+    		vid_c.fillText('player : ' + username + '  score : ' +score_val ,20,20);
 	}
 }
 
