@@ -261,12 +261,11 @@ function gameLoop(){
 			}
   		break;
   		case 'gameover':
-  			window.cancelRequestAnimationFrame(gameTimer);
+  			window.cancelAnimationFrame(gameTimer);
        		gameTimer = undefined;
   			gameOver();
   		break;
 	}
-
 	drawStar(shipX,shipY,starX,starY,gamelevel-(int_star-6));
 	drawShip(shipX,shipY,shipRad);
 	gameTimer = window.requestAnimationFrame(gameLoop);
