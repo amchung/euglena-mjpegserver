@@ -35,7 +35,7 @@ function getMjpeg(){
 }
 
 function drawShip(box_X,box_Y,box_rad){
-	box_rad=Math.PI/2-box_rad;
+	//box_rad=Math.PI/2+box_rad;
 	switch(gamephase)
 	{
 		case 'gameover':
@@ -67,7 +67,7 @@ function drawShip(box_X,box_Y,box_rad){
 		case 'engine':
 			// begin transformation
     		vid_c.translate(box_X, box_Y); 
-			vid_c.rotate(-box_rad);
+			vid_c.rotate(box_rad);
     		// draw ship body
     		vid_c.beginPath();
     		vid_c.strokeStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
@@ -88,13 +88,13 @@ function drawShip(box_X,box_Y,box_rad){
 			vid_c.lineTo(0+4,-5+22);
     		vid_c.stroke();
     		// exit transformation
-    		vid_c.rotate(box_rad);
+    		vid_c.rotate(-box_rad);
 			vid_c.translate(-box_X, -box_Y);    
 		break;
 		case 'rest':
 			// begin transformation
     		vid_c.translate(box_X, box_Y); 
-			vid_c.rotate(-box_rad);
+			vid_c.rotate(box_rad);
 			// draw ship body
     		vid_c.beginPath();
     		vid_c.strokeStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
@@ -113,7 +113,7 @@ function drawShip(box_X,box_Y,box_rad){
 			vid_c.lineTo(0+12,-3+12);
     		vid_c.stroke();
     		// exit transformation
-    		vid_c.rotate(box_rad);
+    		vid_c.rotate(-box_rad);
     		vid_c.translate(-box_X, -box_Y);  
 		default:
 			vid_c.beginPath();
