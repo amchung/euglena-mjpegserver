@@ -240,7 +240,7 @@ function gameLoop(){
   		break;
 		case 'engine':
 			console.log(hit);
-  			if(hit>5)
+  			if(hit>1)
 			{
 				window.clearInterval(engineTimer);
 				engine=false;
