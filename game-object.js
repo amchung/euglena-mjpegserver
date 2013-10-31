@@ -29,6 +29,7 @@ function getMjpeg(){
         // motion detection
         compareFrame(img);
         // load frame
+        drawText();
         window.requestAnimFrame(getMjpeg);
     };
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
