@@ -44,7 +44,11 @@ function drawText(){
     		vid_c.fillText('player : ' + username + '  score : ' +score_val ,20,20);
     		vid_c.fillStyle = "rgba(253,172,13,1)"; 
     		vid_c.font="40pt sans-serif";
-    		vid_c.fillText('GAME OVER',vid_width/2,vid_height/2);
+    		vid_c.textAlign="center"; 
+    		vid_c.fillText('GAME OVER',vid_width/2,vid_height/2-100);
+    		vid_c.fillStyle = "#fff"; 
+    		vid_c.font="20pt sans-serif";
+    		vid_c.fillText(username+' scored '+score_val,vid_width/2,vid_height/2-100);
 		break;
 		case 'rest':
     		vid_c.fillStyle = "#fff"; 
@@ -329,7 +333,6 @@ function runEngine(){
 function gameOver(){
     var msg = {type:'sendscore', user:username, score:score_val};
     socket.json.send(msg);
-	score_val = -1;
 }
 
 
