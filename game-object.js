@@ -401,23 +401,24 @@ function compareFrame(img1) {
     var ObjR=10;
 
     try {
-      // compare the two pictures, the given threshold helps to ignore noise
-      res = compare(img1, img2, shipX, shipY, 6, ObjR); 
-    }
+    		// compare the two pictures, the given threshold helps to ignore noise
+    		res = compare(img1, img2, shipX, shipY, 6, ObjR); 
+    	}
     catch(e) {
-      // errors can happen if the pictures were corrupted during transfer
-      // instead of giving up, just proceed
-    }
+    		// errors can happen if the pictures were corrupted during transfer
+    		// instead of giving up, just proceed
+    	}
     
     var md_ctx = md_canvas.getContext("2d");
     if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             res[0]=0;res[1]=0;res[2]=0;res[3]=0;
-    }
-  }
+    	}
   
-  hit=res[0]+res[1]+res[2]+res[3];
-  // copy reference of img1 to img2
-  img2 = img1;
+	hit=res[0]+res[1]+res[2]+res[3];
+  
+	}
+	// copy reference of img1 to img2
+	img2 = img1;
 }
 
 
