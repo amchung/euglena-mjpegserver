@@ -272,11 +272,9 @@ function gameLoop(){
 }
 
 function getStarLocation(){
-	while(starX<0 || starX>640 || starY<0 || starY>480){
-		shipRad=Math.random()*Math.PI*2;
-		starX=shipX+unit*(Math.cos(shipRad))*gamelevel;
-		starY=shipY+unit*(Math.sin(shipRad))*gamelevel;
-	}
+	shipRad=Math.random()*Math.PI*2;
+	starX=shipX+unit*(Math.cos(shipRad))*gamelevel;
+	starY=shipY+unit*(Math.sin(shipRad))*gamelevel;
 }
 
 function getShipLocation(){
@@ -412,8 +410,7 @@ function compareFrame(img1) {
     }
   }
   
-  //hit=res[0]+res[1]+res[2]+res[3];
-  hit=0;
+  hit=res[0]+res[1]+res[2]+res[3];
   // copy reference of img1 to img2
   img2 = img1;
 }
