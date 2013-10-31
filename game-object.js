@@ -227,7 +227,6 @@ function resetGame(){
 
 
 function gameLoop(){
-	console.log(gamephase);
 	switch(gamephase)
 	{
 		case 'rest':
@@ -244,12 +243,11 @@ function gameLoop(){
   			if(hit>0)
 			{
 				window.clearInterval(engineTimer);
-				window.clearInterval(starTimer);
 				engine=false;
 				rest=false;
 				int_star=-1;
 				int_engine=-1;
-				phase='gameover';
+				gamephase='gameover';
 				gamelevel=-1;
 			}
 			else
