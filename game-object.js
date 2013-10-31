@@ -237,6 +237,9 @@ function gameLoop(){
 				getStarLocation(); // get new starX, starY, shipRad
 				starTimer=window.setInterval(showStar,500);
 			}
+			drawStar(shipX,shipY,starX,starY,gamelevel-(int_star-6));
+			drawShip(shipX,shipY,shipRad);
+			gameTimer = window.requestAnimationFrame(gameLoop);
   		break;
 		case 'engine':
 			console.log(hit);
@@ -259,6 +262,9 @@ function gameLoop(){
 					engineTimer=window.setInterval(runEngine,500);
 				}
 			}
+			drawStar(shipX,shipY,starX,starY,gamelevel-(int_star-6));
+			drawShip(shipX,shipY,shipRad);
+			gameTimer = window.requestAnimationFrame(gameLoop);
   		break;
   		case 'gameover':
   			window.cancelAnimationFrame(gameTimer);
@@ -266,9 +272,6 @@ function gameLoop(){
   			gameOver();
   		break;
 	}
-	drawStar(shipX,shipY,starX,starY,gamelevel-(int_star-6));
-	drawShip(shipX,shipY,shipRad);
-	gameTimer = window.requestAnimationFrame(gameLoop);
 }
 
 function getStarLocation(){
