@@ -35,7 +35,7 @@ function getMjpeg(){
 }
 
 function drawShip(box_X,box_Y,box_rad){
-	//box_rad=Math.PI/2+box_rad;
+	box_rad=Math.PI/2+box_rad;
 	switch(gamephase)
 	{
 		case 'gameover':
