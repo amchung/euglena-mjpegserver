@@ -35,7 +35,7 @@ function getPNG(){
 	var img = new Image();
     img.onload = function() {		
 		project.activeLayer.removeChildren();
-		var point = new Point(0,0);
+		var point = new Point(320,240);
         var raster = new Raster({
         	name: 'videoframe',
 			source: img.src,
