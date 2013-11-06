@@ -23,7 +23,7 @@ function setupVidCanvas() {
 		// Define a mousedown and mousedrag handler
 		tool.onMouseDown = function(event) {
 			path = new Path();
-			path.strokeColor = 'black';
+			path.strokeColor = 'white';
 			path.add(event.point);
 		}
 
