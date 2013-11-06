@@ -30,15 +30,22 @@ window.onload = function() {
 	}
 	getPNG();
 }
+var children = null;
 
 function getPNG(){
 	var img = new Image();
     img.onload = function() {
-		//project.activeLayer.removeChildren();
+    	if(children != null)
+    	{
+			children['videoframe'].remove();
+		}
         var raster = new Raster({
+        	name: 'videoframe',
 			source: img.src,
-			position: view.center
+			//position: view.center
 		});
+		
+		var children = project.activeLayer.children;
         // motion detection
         compareFrame(img);
         // draw virtual graphics
