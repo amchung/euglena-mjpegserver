@@ -159,12 +159,12 @@ function onReady(event) {
                 $("input[name=chatTxt]").val("");
         });
         
-    control_canvas.addEventListener('pointerdown', onPointerDown, false);
-    control_canvas.addEventListener('pointermove', onPointerMove, false);
-    control_canvas.addEventListener('pointerup', onPointerUp, false);
-    control_canvas.addEventListener('pointerout', onPointerUp, false);
+    //control_canvas.addEventListener('pointerdown', onPointerDown, false);
+    //control_canvas.addEventListener('pointermove', onPointerMove, false);
+    //control_canvas.addEventListener('pointerup', onPointerUp, false);
+    //control_canvas.addEventListener('pointerout', onPointerUp, false);
     
-    requestAnimFrame(draw);
+    //requestAnimFrame(draw);
 }
 
 function draw() {
