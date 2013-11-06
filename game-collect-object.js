@@ -17,7 +17,8 @@ window.onload = function() {
 	paper.setup('myCanvas');
 	getPNG();
 }
-/*function getPNG(){
+
+function getPNG(){
 	project.activeLayer.removeChildren();
 	var origin = new Point(vid_width/2,vid_height/2);
     var raster = new Raster({
@@ -25,8 +26,9 @@ window.onload = function() {
 		source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 		position: origin
 	});
-}*/
+}
 
+/*
 function getPNG(){
 	var img = new Image();
     img.onload = function() {		
@@ -44,7 +46,7 @@ function getPNG(){
     	}
 	}
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-}
+}*/
 
 function setupVidCanvas() {
     video_canvas = document.getElementById('videoCanvas');
