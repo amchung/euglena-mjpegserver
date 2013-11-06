@@ -19,7 +19,7 @@ window.onload = function() {
 }
 var children = null;
 
-function getPNG(){
+/*function getPNG(){
 	project.activeLayer.removeChildren();
 	var origin = new Point(vid_width/2,vid_height/2);
     var raster = new Raster({
@@ -27,13 +27,9 @@ function getPNG(){
 		source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 		position: origin
 	});
-	raster.onLoad = function()
-	{	
-        window.requestAnimFrame(getPNG);
-    }
-}
+}*/
 
-/*function getPNG(){
+function getPNG(){
 	var img = new Image();
     img.onload = function() {		
 		project.activeLayer.removeChildren();
@@ -43,12 +39,13 @@ function getPNG(){
 			source: img.src,
 			position: origin
 		});
-		
+	raster.onLoad = function()
+	{	
         compareFrame(img);
         window.requestAnimFrame(getPNG);
     };
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-}*/
+}
 
 function setupVidCanvas() {
     video_canvas = document.getElementById('videoCanvas');
