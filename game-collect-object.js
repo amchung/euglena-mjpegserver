@@ -11,27 +11,26 @@ var brown_const=0;
 var vid_width = 640;
 var vid_height = 480;
 
-function setupVidCanvas() {
-    paper.install(window);
+paper.install(window);
     
-	window.onload = function() {
-		paper.setup('myCanvas');
-		// Create a simple drawing tool:
-		var tool = new Tool();
-		var path;
+window.onload = function() {
+	paper.setup('myCanvas');
+	// Create a simple drawing tool:
+	var tool = new Tool();
+	var path;
 
-		// Define a mousedown and mousedrag handler
-		tool.onMouseDown = function(event) {
-			path = new Path();
-			path.strokeColor = 'white';
-			path.add(event.point);
-		}
-
-		tool.onMouseDrag = function(event) {
-			path.add(event.point);
-		}
+	// Define a mousedown and mousedrag handler
+	tool.onMouseDown = function(event) {
+		path = new Path();
+		path.strokeColor = 'white';
+		path.add(event.point);
 	}
-	
+		tool.onMouseDrag = function(event) {
+		path.add(event.point);
+	}
+}
+
+function setupVidCanvas() {
     video_canvas = document.getElementById('videoCanvas');
     vid_c = video_canvas.getContext('2d');
         
