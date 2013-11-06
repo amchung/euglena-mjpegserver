@@ -35,16 +35,17 @@ function getPNG(){
 	var img = new Image();
     img.onload = function() {		
 		project.activeLayer.removeChildren();
+		
         var raster = new Raster({
         	name: 'videoframe',
-			source: img.src,
-			position: view.center
+			source: img.src
+			//position: view.center
 		});
 		
-		//var children = project.activeLayer.children;
         // motion detection
         compareFrame(img);
         // draw virtual graphics
+        
         //game();
         window.requestAnimFrame(getPNG);
     };
