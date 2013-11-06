@@ -30,6 +30,16 @@ window.onload = function() {
 	}
 }
 
+function getPNG(){
+	var img = new Image();
+    img.onload = function() {
+    	var raster = new Raster(img);
+		raster.position = view.center;    	
+        window.requestAnimFrame(getPNG);
+    };
+    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+}
+
 function setupVidCanvas() {
     video_canvas = document.getElementById('videoCanvas');
     vid_c = video_canvas.getContext('2d');
