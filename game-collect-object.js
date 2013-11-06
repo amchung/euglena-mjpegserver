@@ -28,16 +28,12 @@ window.onload = function() {
 		tool.onMouseDrag = function(event) {
 		path.add(event.point);
 	}
+	getPNG();
 }
 
 function getPNG(){
-	var img = new Image();
-    img.onload = function() {
-    	var raster = new Raster(img);
-		raster.position = view.center;    	
-        window.requestAnimFrame(getPNG);
-    };
-    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+	var url = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+	var raster = new Raster(url);
 }
 
 function setupVidCanvas() {
