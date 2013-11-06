@@ -32,14 +32,17 @@ window.onload = function() {
 var children = null;
 
 function getPNG(){
-		project.activeLayer.removeChildren();
-		var origin = new Point(vid_width/2,vid_height/2);
-        var raster = new Raster({
-        	name: 'videoframe',
-			source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();,
-			position: origin
-		});
+	project.activeLayer.removeChildren();
+	var origin = new Point(vid_width/2,vid_height/2);
+    var raster = new Raster({
+        name: 'videoframe',
+		source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();,
+		position: origin
+	});
+	raster.onLoad = function()
+	{	
         window.requestAnimFrame(getPNG);
+    }
 }
 
 /*function getPNG(){
