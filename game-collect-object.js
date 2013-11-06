@@ -33,18 +33,15 @@ var children = null;
 
 function getPNG(){
 	var img = new Image();
-    img.onload = function() {
-    	if(children != null)
-    	{
-			children['videoframe'].remove();
-		}
+    img.onload = function() {		
+		project.activeLayer.removeChildren();
         var raster = new Raster({
         	name: 'videoframe',
 			source: img.src,
 			position: view.center
 		});
 		
-		var children = project.activeLayer.children;
+		//var children = project.activeLayer.children;
         // motion detection
         compareFrame(img);
         // draw virtual graphics
