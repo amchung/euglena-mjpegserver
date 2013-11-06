@@ -38,7 +38,7 @@ function getPNG(){
 		var point = new Point(0,0);
         var raster = new Raster({
         	name: 'videoframe',
-			source: img.src
+			source: img.src,
 			position: point
 		});
 		
