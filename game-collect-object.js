@@ -17,8 +17,6 @@ window.onload = function() {
 	paper.setup('myCanvas');
 	getPNG();
 }
-var children = null;
-
 /*function getPNG(){
 	project.activeLayer.removeChildren();
 	var origin = new Point(vid_width/2,vid_height/2);
@@ -39,11 +37,12 @@ function getPNG(){
 			source: img.src,
 			position: origin
 		});
+	}
 	raster.onLoad = function()
 	{	
         compareFrame(img);
         window.requestAnimFrame(getPNG);
-    };
+    }
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
 
