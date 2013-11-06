@@ -36,7 +36,7 @@ function getPNG(){
     img.onload = function() {
 		project.activeLayer.removeChildren();
         var raster = new Raster({
-			source: 'img',
+			source: img,
 			position: view.center
 		});
         // motion detection
