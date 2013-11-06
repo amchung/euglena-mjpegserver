@@ -16,10 +16,9 @@ paper.install(window);
 window.onload = function() {
 	paper.setup('myCanvas');
 	// Create a simple drawing tool:
-	var tool = new Tool();
+	/*var tool = new Tool();
 	var path;
 
-	// Define a mousedown and mousedrag handler
 	tool.onMouseDown = function(event) {
 		path = new Path();
 		path.strokeColor = 'white';
@@ -27,7 +26,7 @@ window.onload = function() {
 	}
 		tool.onMouseDrag = function(event) {
 		path.add(event.point);
-	}
+	}*/
 	getPNG();
 }
 var children = null;
@@ -42,7 +41,7 @@ function getPNG(){
         var raster = new Raster({
         	name: 'videoframe',
 			source: img.src,
-			//position: view.center
+			position: view.center
 		});
 		
 		var children = project.activeLayer.children;
