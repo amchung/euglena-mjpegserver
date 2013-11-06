@@ -37,12 +37,12 @@ function getPNG(){
 			source: img.src,
 			position: origin
 		});
+		raster.onLoad = function()
+		{	
+        	compareFrame(img);
+        	window.requestAnimFrame(getPNG);
+    	}
 	}
-	raster.onLoad = function()
-	{	
-        compareFrame(img);
-        window.requestAnimFrame(getPNG);
-    }
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
 
