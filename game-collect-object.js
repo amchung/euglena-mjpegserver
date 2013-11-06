@@ -32,11 +32,20 @@ window.onload = function() {
 }
 
 function getPNG(){
-	project.activeLayer.removeChildren();
-	var url = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-	var raster = new Raster(url);
-	
-	window.requestAnimFrame(getPNG);
+	var img = new Image();
+    img.onload = function() {
+		project.activeLayer.removeChildren();
+        var raster = new Raster({
+			source: img.src
+			position: view.center
+		});
+        // motion detection
+        compareFrame(img);
+        // draw virtual graphics
+        //game();
+        window.requestAnimFrame(getPNG);
+    };
+    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
 
 function setupVidCanvas() {
