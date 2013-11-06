@@ -26,6 +26,12 @@ function getPNG(){
 		source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 		position: origin
 	});
+	
+	raster.onLoad = function()
+	{	
+        compareFrame(img);
+        window.requestAnimFrame(getPNG);
+    }
 }
 
 /*
