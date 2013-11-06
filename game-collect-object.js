@@ -36,7 +36,7 @@ function getPNG(){
 	var origin = new Point(vid_width/2,vid_height/2);
     var raster = new Raster({
         name: 'videoframe',
-		source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();,
+		source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 		position: origin
 	});
 	raster.onLoad = function()
