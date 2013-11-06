@@ -35,7 +35,7 @@ function getPNG(){
 	var url = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 	var raster = new Raster(url);
 	
-	 window.requestAnimFrame(getFrame);
+	 window.requestAnimFrame(getPNG);
 }
 
 function setupVidCanvas() {
