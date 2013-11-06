@@ -35,11 +35,11 @@ function getPNG(){
 	var img = new Image();
     img.onload = function() {		
 		project.activeLayer.removeChildren();
-		var point = new Point(320,240);
+		var origin = new Point(vid_width/2,vid_height/2);
         var raster = new Raster({
         	name: 'videoframe',
 			source: img.src,
-			position: point
+			position: origin
 		});
 		
         // motion detection
