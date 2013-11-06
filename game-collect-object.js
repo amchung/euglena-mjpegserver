@@ -32,11 +32,11 @@ window.onload = function() {
 }
 
 function getPNG(){
-	project.clear();
+	project.activeLayer.removeChildren();
 	var url = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 	var raster = new Raster(url);
 	
-	 window.requestAnimFrame(getPNG);
+	window.requestAnimFrame(getPNG);
 }
 
 function setupVidCanvas() {
