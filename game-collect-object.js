@@ -42,7 +42,7 @@ function getFrame(){
         // motion detection
         compareFrame(img);
         // draw virtual graphics
-        gameFlow();
+        //game();
         window.requestAnimFrame(getFrame);
     };
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
