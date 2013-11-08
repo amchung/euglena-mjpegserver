@@ -15,6 +15,7 @@ paper.install(window);
     
 window.onload = function() {
 	paper.setup('myCanvas');
+	tool.distanceThreshold = 2000;
 	getPNG();
 }
 
