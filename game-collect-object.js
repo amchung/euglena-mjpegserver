@@ -25,7 +25,7 @@ function getPNG(){
     img.onload = function() {		
 		//project.activeLayer.removeChildren();
 		var origin = new Point(vid_width/2,vid_height/2);
-        var raster = new Raster({
+        /*var raster = new Raster({
         	name: 'videoframe',
 			source: img.src,
 			position: origin
@@ -34,7 +34,10 @@ function getPNG(){
 		{	
         	//compareFrame(img);
         	window.requestAnimFrame(getPNG);
-    	}
+    	}*/
+    	var raster = new Raster();
+    	raster.drawImage(img,origin);
+    	window.requestAnimFrame(getPNG);
 	}
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
