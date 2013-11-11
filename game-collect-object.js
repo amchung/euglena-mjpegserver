@@ -29,11 +29,11 @@ function getPNG(){
 			source: img.src,
 			position: origin
 		});
-		//raster.onLoad = function()
-		//{	
+		raster.onLoad = function()
+		{	
         	//compareFrame(img);
         	window.requestAnimFrame(getPNG);
-    	//}
+    	}
 	}
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
@@ -45,10 +45,10 @@ function setupVidCanvas() {
     video_canvas.width = vid_width;
     video_canvas.height = vid_height;
         
-    getFrame();
+    //getFrame();
 }
 
-function getFrame(){
+/*function getFrame(){
     var img = new Image();
     img.onload = function() {
         vid_c.clearRect(0, 0, vid_width, vid_height);
@@ -60,7 +60,7 @@ function getFrame(){
         window.requestAnimFrame(getFrame);
     };
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-}
+}*/
 
 function game(){
 	switch(gamephase)
