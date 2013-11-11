@@ -23,13 +23,13 @@ window.onload = function() {
 function getPNG(){
 	var img = new Image();
     img.onload = function() {		
+		//project.activeLayer.removeChildren();
 		var origin = new Point(vid_width/2,vid_height/2);
         var raster = new Raster({
         	name: 'videoframe',
 			source: img.src,
 			position: origin
 		});
-		project.activeLayer.removeChildren();
 		raster.onLoad = function()
 		{	
         	//compareFrame(img);
