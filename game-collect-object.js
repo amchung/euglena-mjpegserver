@@ -14,18 +14,16 @@ var vid_height = 480;
 paper.install(window);
 
 var origin = new Point(vid_width/2,vid_height/2);
-var raster;
     
 window.onload = function() {
 	paper.setup('myCanvas');
 	//var tool = new Tool();
 	//tool.distanceThreshold = 2000;
 	
-	function onFrame(event) {
+	view.onFrame = function(event){
 		var img = new Image();
     	img.onload = function() {	
-			raster = new Raster({
-        		name: 'videoframe',
+			var raster = new Raster({
 				source: img.src,
 				position: origin
 			});
