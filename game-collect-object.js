@@ -25,7 +25,7 @@ window.onload = function() {
         	project.activeLayer.removeChildren();
     	}
 		var img = new Image();
-		img.id = 'imgframe';
+		img.id = "imgframe";
     	img.onload = function() {
 			raster = new Raster({
 				source: 'imgframe',
