@@ -11,75 +11,31 @@ var brown_const=0;
 var vid_width = 640;
 var vid_height = 480;
 
-paper.install(window);
-
-var origin = new Point(vid_width/2,vid_height/2);
-var raster;
-var frameready = false;
-    
-window.onload = function() {
-	paper.setup('myCanvas');
-	
-	view.onFrame = function(event){
-		if(project.activeLayer.children.length>10){
-        	project.activeLayer.removeChildren();
-    	}
-		//var img = new Image();
-    	//img.onload = function() {
-			raster = new Raster({
-				source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
-				position: origin
-			});
-			raster.onLoad = function()
-			{	
-        		console.log(project.activeLayer.children.length);
-    		}
-		//}
-    	//img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-	}
-}
-
-/*function getPNG(){
-	var img = new Image();
-    img.onload = function() {	
-		project.activeLayer.removeChildren();
-		raster = new Raster({
-        	name: 'videoframe',
-			source: img.src,
-			position: origin
-		});
-		raster.onLoad = function()
-		{	
-        	//compareFrame(img);
-        	window.requestAnimFrame(getPNG);
-    	}
-	}
-    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-}*/
-
 function setupVidCanvas() {
-    video_canvas = document.getElementById('videoCanvas');
-    vid_c = video_canvas.getContext('2d');
+        // Show loading notice
+        video_canvas = document.getElementById('videoCanvas');
+        vid_c = video_canvas.getContext('2d');
         
-    video_canvas.width = vid_width;
-    video_canvas.height = vid_height;
+        video_canvas.width = vid_width;
+        video_canvas.height = vid_height;
         
-    //getFrame();
+        getMjpeg();
 }
 
-/*function getFrame(){
+function getMjpeg(){
     var img = new Image();
     img.onload = function() {
         vid_c.clearRect(0, 0, vid_width, vid_height);
         vid_c.drawImage(img, 0, 0, vid_width, vid_height);
         // motion detection
         compareFrame(img);
-        // draw virtual graphics
-        //game();
-        window.requestAnimFrame(getFrame);
+        console.log(hit);
+        // load frame
+        //drawText();
+        window.requestAnimFrame(getMjpeg);
     };
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-}*/
+}
 
 function game(){
 	switch(gamephase)
