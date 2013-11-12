@@ -22,22 +22,20 @@ window.onload = function() {
 
 function getPNG(){
 	var img = new Image();
+	img.id = 'imgframe';
     img.onload = function() {		
-		//project.activeLayer.removeChildren();
+		project.activeLayer.removeChildren();
 		var origin = new Point(vid_width/2,vid_height/2);
-        /*var raster = new Raster({
+        var raster = new Raster({
         	name: 'videoframe',
-			source: img.src,
+			source: 'imgframe',
 			position: origin
 		});
 		raster.onLoad = function()
 		{	
         	//compareFrame(img);
         	window.requestAnimFrame(getPNG);
-    	}*/
-    	var raster = new Raster();
-    	raster.drawImage(img,origin);
-    	window.requestAnimFrame(getPNG);
+    	}
 	}
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
