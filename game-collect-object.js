@@ -23,7 +23,6 @@ window.onload = function() {
 	view.onFrame = function(event){
 		var img = new Image();
     	img.onload = function() {	
-    		project.activeLayer.removeChildren();
 			var raster = new Raster({
 				source: img.src,
 				position: origin
