@@ -24,14 +24,15 @@ window.onload = function() {
 		if(project.activeLayer.hasChildren()){
         	project.activeLayer.removeChildren();
     	}
-		var img = new Image();
-    	img.onload = function() {
+    	var url = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+		//var img = new Image();
+    	//img.onload = function() {
 			raster = new Raster({
-				source: img,
+				source: url,
 				position: origin
 			});
-		}
-    	img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+		//}
+    	//img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 	}
 }
 
