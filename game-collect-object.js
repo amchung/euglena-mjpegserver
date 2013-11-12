@@ -23,7 +23,8 @@ window.onload = function() {
 function getPNG(){
 	var img = new Image();
 	img.id = 'imgframe';
-    img.onload = function() {		
+    img.onload = function() {	
+    	document.body.appendChild(img);	
 		project.activeLayer.removeChildren();
 		var origin = new Point(vid_width/2,vid_height/2);
         var raster = new Raster({
