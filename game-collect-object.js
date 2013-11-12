@@ -21,14 +21,13 @@ window.onload = function() {
 	paper.setup('myCanvas');
 	
 	view.onFrame = function(event){
-		if(project.activeLayer.hasChildren()){
-        	project.activeLayer.removeChildren();
-    	}
-    	var url = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+		//if(project.activeLayer.hasChildren()){
+        //	project.activeLayer.removeChildren();
+    	//}
 		//var img = new Image();
     	//img.onload = function() {
 			raster = new Raster({
-				source: url,
+				source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 				position: origin
 			});
 		//}
