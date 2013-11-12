@@ -27,6 +27,7 @@ window.onload = function() {
     	}
 		//var img = new Image();
     	//img.onload = function() {
+    	if (frameready == false){
 			raster = new Raster({
 				source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 				position: origin
@@ -35,6 +36,7 @@ window.onload = function() {
 			{	
         		frameready = true;
     		}
+    	}
 		//}
     	//img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 	}
