@@ -15,6 +15,7 @@ paper.install(window);
 
 var origin = new Point(vid_width/2,vid_height/2);
 var raster;
+var group = new Group();
     
 window.onload = function() {
 	paper.setup('myCanvas');
@@ -22,9 +23,12 @@ window.onload = function() {
 	//tool.distanceThreshold = 2000;
 	
 	view.onFrame = function(event){
+		if(project.activeLayer.hasChildren()){
+        	project.activeLayer.removeChildren();
+        	//clearCanvas = false;
+    	}
 		var img = new Image();
     	img.onload = function() {
-    		raster.remove();	
 			raster = new Raster({
 				source: img.src,
 				position: origin
