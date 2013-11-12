@@ -11,31 +11,30 @@ var brown_const=0;
 var vid_width = 640;
 var vid_height = 480;
 
+var origin = new Point(vid_width/2,vid_height/2);
+var raster;
+
 paper.install(window);
     
 window.onload = function() {
 	paper.setup('myCanvas');
 	//var tool = new Tool();
 	//tool.distanceThreshold = 2000;
-	var img = new Image();
-    img.onload = function() {	
-		raster = new Raster({
-        	name: 'videoframe',
-			source: img.src,
-			position: origin
-		});
-		raster.onLoad = function()
-		{	
-        	window.requestAnimFrame(getPNG);
-    	}
+	
+	function onFrame(event) {
+		var img = new Image();
+    	img.onload = function() {	
+			raster = new Raster({
+        		name: 'videoframe',
+				source: img.src,
+				position: origin
+			});
+		}
+    	img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 	}
-    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
 
-var origin = new Point(vid_width/2,vid_height/2);
-var raster;
-
-function getPNG(){
+/*function getPNG(){
 	var img = new Image();
     img.onload = function() {	
 		//project.activeLayer.removeChildren();
@@ -52,7 +51,7 @@ function getPNG(){
     	}
 	}
     img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-}
+}*/
 
 function setupVidCanvas() {
     video_canvas = document.getElementById('videoCanvas');
