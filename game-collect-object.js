@@ -15,21 +15,26 @@ paper.install(window);
 
 var origin = new Point(vid_width/2,vid_height/2);
 var raster;
-var layer;
+var frameready = false;
     
 window.onload = function() {
 	paper.setup('myCanvas');
 	
 	view.onFrame = function(event){
-		//if(project.activeLayer.hasChildren()){
-        //	project.activeLayer.removeChildren();
-    	//}
+		if(frameready && project.activeLayer.hasChildren()){
+        	project.activeLayer.removeChildren();
+        	frameready = false;
+    	}
 		//var img = new Image();
     	//img.onload = function() {
 			raster = new Raster({
 				source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 				position: origin
 			});
+			raster.onLoad = function()
+			{	
+        		frameready = true;
+    		}
 		//}
     	//img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 	}
@@ -38,9 +43,8 @@ window.onload = function() {
 /*function getPNG(){
 	var img = new Image();
     img.onload = function() {	
-		//project.activeLayer.removeChildren();
-		raster.remove();
-        raster = new Raster({
+		project.activeLayer.removeChildren();
+		raster = new Raster({
         	name: 'videoframe',
 			source: img.src,
 			position: origin
