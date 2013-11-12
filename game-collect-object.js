@@ -18,11 +18,10 @@ window.onload = function() {
 	//var tool = new Tool();
 	//tool.distanceThreshold = 2000;
 	var img = new Image();
-	img.id = 'imgframe';
     img.onload = function() {	
 		raster = new Raster({
         	name: 'videoframe',
-			source: 'imgframe',
+			source: img.src,
 			position: origin
 		});
 		raster.onLoad = function()
@@ -38,13 +37,12 @@ var raster;
 
 function getPNG(){
 	var img = new Image();
-	img.id = 'imgframe';
     img.onload = function() {	
 		//project.activeLayer.removeChildren();
 		raster.remove();
         raster = new Raster({
         	name: 'videoframe',
-			source: 'imgframe',
+			source: img.src,
 			position: origin
 		});
 		raster.onLoad = function()
