@@ -17,17 +17,32 @@ window.onload = function() {
 	paper.setup('myCanvas');
 	//var tool = new Tool();
 	//tool.distanceThreshold = 2000;
-	getPNG();
+	var img = new Image();
+	img.id = 'imgframe';
+    img.onload = function() {	
+		raster = new Raster({
+        	name: 'videoframe',
+			source: 'imgframe',
+			position: origin
+		});
+		raster.onLoad = function()
+		{	
+        	window.requestAnimFrame(getPNG);
+    	}
+	}
+    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 }
+
+var origin = new Point(vid_width/2,vid_height/2);
+var raster;
 
 function getPNG(){
 	var img = new Image();
 	img.id = 'imgframe';
     img.onload = function() {	
-    	document.body.appendChild(img);	
-		project.activeLayer.removeChildren();
-		var origin = new Point(vid_width/2,vid_height/2);
-        var raster = new Raster({
+		//project.activeLayer.removeChildren();
+		raster.remove();
+        raster = new Raster({
         	name: 'videoframe',
 			source: 'imgframe',
 			position: origin
