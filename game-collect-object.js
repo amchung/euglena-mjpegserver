@@ -11,10 +11,10 @@ var brown_const=0;
 var vid_width = 640;
 var vid_height = 480;
 
+paper.install(window);
+
 var origin = new Point(vid_width/2,vid_height/2);
 var raster;
-
-paper.install(window);
     
 window.onload = function() {
 	paper.setup('myCanvas');
