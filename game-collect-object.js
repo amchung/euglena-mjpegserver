@@ -21,7 +21,7 @@ window.onload = function() {
 	paper.setup('myCanvas');
 	
 	view.onFrame = function(event){
-		if(frameready && project.activeLayer.hasChildren()){
+		if(frameready && project.activeLayer.children.length>10){
         	project.activeLayer.removeChildren();
         	frameready = false;
     	}
