@@ -35,6 +35,7 @@ window.onload = function() {
 			raster.onLoad = function()
 			{	
         		frameready = true;
+        		console.log(project.activeLayer.children.length);
     		}
     	}
 		//}
