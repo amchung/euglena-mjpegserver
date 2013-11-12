@@ -21,23 +21,19 @@ window.onload = function() {
 	paper.setup('myCanvas');
 	
 	view.onFrame = function(event){
-		if(frameready && project.activeLayer.children.length>10){
+		if(project.activeLayer.children.length>10){
         	project.activeLayer.removeChildren();
-        	frameready = false;
     	}
 		//var img = new Image();
     	//img.onload = function() {
-    	if (frameready == false){
 			raster = new Raster({
 				source: "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(),
 				position: origin
 			});
 			raster.onLoad = function()
 			{	
-        		frameready = true;
         		console.log(project.activeLayer.children.length);
     		}
-    	}
 		//}
     	//img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 	}
