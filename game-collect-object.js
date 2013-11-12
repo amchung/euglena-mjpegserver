@@ -15,22 +15,20 @@ paper.install(window);
 
 var origin = new Point(vid_width/2,vid_height/2);
 var raster;
-var group = new Group();
+var layer;
     
 window.onload = function() {
 	paper.setup('myCanvas');
-	//var tool = new Tool();
-	//tool.distanceThreshold = 2000;
 	
 	view.onFrame = function(event){
 		if(project.activeLayer.hasChildren()){
         	project.activeLayer.removeChildren();
-        	//clearCanvas = false;
     	}
 		var img = new Image();
+		img.id = 'imgframe';
     	img.onload = function() {
 			raster = new Raster({
-				source: img.src,
+				source: 'imgframe',
 				position: origin
 			});
 		}
