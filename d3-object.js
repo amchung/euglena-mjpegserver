@@ -18,6 +18,8 @@ function setupD3() {
     
     var context = canvas.node().getContext("2d");
     
+    getVideo();
+    
     function getVideo(){
     	getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
 			context.clearRect(0, 0, vid_width, vid_height);
