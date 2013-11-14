@@ -13,11 +13,16 @@ var vid_height = 480;
 var n_object = 20;
 var m_object = 5;
 
-var canvas = d3.select("#canvasArea").append("canvas")
-    .attr("width", vid_width)
-    .attr("height", vid_height);
+var canvas;
+var context;
+
+function setupD3(){
+	var canvas = d3.select("#canvasArea").append("canvas")
+    	.attr("width", vid_width)
+    	.attr("height", vid_height);
     
-var context = canvas.node().getContext("2d");
+	var context = canvas.node().getContext("2d");
+}
     
 function getVideo(){
     getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {

@@ -63,6 +63,7 @@ window.onresize = resetCanvas;
 function init() {
     setupCanvas();
     //setupVidCanvas();
+    setupD3();
     setupMotionDetection();
     
     touches = new Collection();
