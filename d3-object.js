@@ -11,6 +11,25 @@ var brown_const=0;
 var vid_width = 640;
 var vid_height = 480;
 
+function setupD3() {
+    var canvas = d3.select("canvasArea").append("canvas")
+    .attr("width", vid_width)
+    .attr("height", vid_height);
+    
+    var context = canvas.node().getContext("2d");
+    
+    getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+		context.clearRect(0, 0, vid_width, vid_height);
+		context.drawImage(image, 0, 0, vid_width, vid_height);
+	});
+	
+	function getVidFrame(path, callback) {
+  		var image = new Image;
+  		image.onload = function() { callback(image); };
+  		image.src = path;
+	}
+}
+
 function setupVidCanvas() {
         // Show loading notice
         video_canvas = document.getElementById('videoCanvas');
@@ -21,6 +40,7 @@ function setupVidCanvas() {
         
         getMjpeg();
 }
+
 
 function getMjpeg(){
     var img = new Image();
