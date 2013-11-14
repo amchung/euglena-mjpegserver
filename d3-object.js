@@ -18,16 +18,20 @@ function setupD3() {
     
     var context = canvas.node().getContext("2d");
     
-    getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
-		context.clearRect(0, 0, vid_width, vid_height);
-		context.drawImage(image, 0, 0, vid_width, vid_height);
-		window.requestAnimFrame(getVidFrame);
-	});
+    function getVideo(){
+    	getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+			context.clearRect(0, 0, vid_width, vid_height);
+			context.drawImage(image, 0, 0, vid_width, vid_height);
+		});
 	
-	function getVidFrame(path, callback) {
-  		var image = new Image;
-  		image.onload = function() { callback(image); };
-  		image.src = path;
+		function getVidFrame(path, callback) {
+  			var image = new Image;
+  			image.onload = function() {
+  				callback(image);
+  				window.requestAnimFrame(getVideo);
+  			};
+  			image.src = path;
+		}
 	}
 }
 
