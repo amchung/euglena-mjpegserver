@@ -91,7 +91,7 @@ g.append("svg:path")
 var tail = g.selectAll("path");
 
 d3.timer(function() {
-	getVideo();
+	//getVideo();
   for (var i = -1; ++i < n;) {
     var spermatozoon = spermatozoa[i],
         path = spermatozoon.path,
