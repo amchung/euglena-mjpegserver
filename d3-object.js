@@ -24,9 +24,13 @@ function setupD3(){
 	var context = canvas.node().getContext("2d");*/
     
 	function getVideo(){
-    	getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
-			context.clearRect(0, 0, vid_width, vid_height);
-			context.drawImage(image, 0, 0, vid_width, vid_height);
+    	/*getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+			var img = svg.selectAll("img").data([0]);
+			img.enter()
+				.append("svg:img")
+				.attr("xlink:href", image)
+				.attr("width", vid_width)
+				.attr("height", vid_height);
 		});
 	
 		function getVidFrame(path, callback) {
@@ -36,7 +40,17 @@ function setupD3(){
   				compareFrame(image);
   			};
   			image.src = path;
-		}
+		}*/
+		
+		var frameURL = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
+		//var svg = d3.select('svg');
+		var image = svg.append("image")
+    		.attr('onload', function() {
+         		compareFrame(image);
+    		})
+    		.attr("xlink:href", frameURL)
+    		.attr("width", vid_width)
+    		.attr("height", vid_height);		
 	}
 
 	var w = 640,
@@ -78,7 +92,7 @@ function setupD3(){
 	var tail = g.selectAll("path");
 
 d3.timer(function() {
-	//getVideo();
+	getVideo();
   	for (var i = -1; ++i < n;) {
     	var spermatozoon = spermatozoa[i],
         	path = spermatozoon.path,
