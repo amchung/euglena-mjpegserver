@@ -12,9 +12,9 @@ var vid_width = 640;
 var vid_height = 480;
 
 function setupD3() {
-    var canvas = d3.select("canvasArea").append("canvas")
-    .attr("width", vid_width)
-    .attr("height", vid_height);
+    var canvas = d3.select("#canvasArea").append("canvas")
+    	.attr("width", vid_width)
+    	.attr("height", vid_height);
     
     var context = canvas.node().getContext("2d");
     
