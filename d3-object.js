@@ -17,116 +17,102 @@ var canvas;
 var context;
 
 function setupD3(){
-	var canvas = d3.select("#canvasArea").append("canvas")
+	/*var canvas = d3.select("#canvasArea").append("canvas")
     	.attr("width", vid_width)
     	.attr("height", vid_height);
     
-	var context = canvas.node().getContext("2d");
+	var context = canvas.node().getContext("2d");*/
     
-function getVideo(){
-    getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
-		context.clearRect(0, 0, vid_width, vid_height);
-		context.drawImage(image, 0, 0, vid_width, vid_height);
-	});
+	function getVideo(){
+    	getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+			context.clearRect(0, 0, vid_width, vid_height);
+			context.drawImage(image, 0, 0, vid_width, vid_height);
+		});
 	
-	function getVidFrame(path, callback) {
-  		var image = new Image;
-  		image.onload = function() {
-  			callback(image);
-  			compareFrame(image);
-  		};
-  		image.src = path;
+		function getVidFrame(path, callback) {
+  			var image = new Image;
+  			image.onload = function() {
+  				callback(image);
+  				compareFrame(image);
+  			};
+  			image.src = path;
+		}
 	}
-}
 
-var gameobject = d3.range(n_object).map(function() {
-	var x = Math.random() * vid_width, y = Math.random() * vid_height;
-	return {
-		vx: Math.random() * 2 - 1,
-		vy: Math.random() * 2 - 1,
-		path: d3.range(m_object).map(function() { return [x, y]; }),
-		count: 0
-	};
-});
-
-
-
-var w = 640,
-    h = 480,
-    n = 20,
-    m = 12,
-    degrees = 180 / Math.PI;
+	var w = 640,
+    	h = 480,
+    	n = 20,
+    	m = 12,
+    	degrees = 180 / Math.PI;
     
-var spermatozoa = d3.range(n).map(function() {
-  var x = Math.random() * w, y = Math.random() * h;
-  return {
-    vx: Math.random() * 2 - 1,
-    vy: Math.random() * 2 - 1,
-    path: d3.range(m).map(function() { return [x, y]; }),
-    count: 0
-  };
-});
+	var spermatozoa = d3.range(n).map(function() {
+  		var x = Math.random() * w, y = Math.random() * h;
+  		return {
+    		vx: Math.random() * 2 - 1,
+    		vy: Math.random() * 2 - 1,
+    		path: d3.range(m).map(function() { return [x, y]; }),
+    		count: 0
+  		};
+	});
 
-var svg = d3.select("canvas").append("svg:svg")
-    .attr("width", w)
-    .attr("height", h);
+	var svg = d3.select("#canvasArea").append("svg:svg")
+    	.attr("width", vid_width)
+    	.attr("height", vid_height);
 
-var g = svg.selectAll("g")
-    .data(spermatozoa)
-  .enter().append("svg:g");
+	var g = svg.selectAll("g")
+    	.data(spermatozoa)
+		.enter().append("svg:g");
 
-var head = g.append("svg:ellipse")
-    .attr("rx", 6.5)
-    .attr("ry", 4);
+	var head = g.append("svg:ellipse")
+    	.attr("rx", 6.5)
+    	.attr("ry", 4);
 
-g.append("svg:path")
-    .map(function(d) { return d.path.slice(0, 3); })
-    .attr("class", "mid");
+	g.append("svg:path")
+    	.map(function(d) { return d.path.slice(0, 3); })
+    	.attr("class", "mid");
 
-g.append("svg:path")
-    .map(function(d) { return d.path; })
-    .attr("class", "tail");
+	g.append("svg:path")
+    	.map(function(d) { return d.path; })
+    	.attr("class", "tail");
 
-var tail = g.selectAll("path");
+	var tail = g.selectAll("path");
 
 d3.timer(function() {
-	getVideo();
-  for (var i = -1; ++i < n;) {
-    var spermatozoon = spermatozoa[i],
-        path = spermatozoon.path,
-        dx = spermatozoon.vx,
-        dy = spermatozoon.vy,
-        x = path[0][0] += dx,
-        y = path[0][1] += dy,
-        speed = Math.sqrt(dx * dx + dy * dy),
-        count = speed * 10,
-        k1 = -5 - speed / 3;
+	//getVideo();
+  	for (var i = -1; ++i < n;) {
+    	var spermatozoon = spermatozoa[i],
+        	path = spermatozoon.path,
+        	dx = spermatozoon.vx,
+        	dy = spermatozoon.vy,
+        	x = path[0][0] += dx,
+        	y = path[0][1] += dy,
+        	speed = Math.sqrt(dx * dx + dy * dy),
+        	count = speed * 10,
+        	k1 = -5 - speed / 3;
 
-    // Bounce off the walls.
-    if (x < 0 || x > w) spermatozoon.vx *= -1;
-    if (y < 0 || y > h) spermatozoon.vy *= -1;
+    	// Bounce off the walls.
+    	if (x < 0 || x > w) spermatozoon.vx *= -1;
+    	if (y < 0 || y > h) spermatozoon.vy *= -1;
 
-    // Swim!
-    for (var j = 0; ++j < m;) {
-      var vx = x - path[j][0],
-          vy = y - path[j][1],
-          k2 = Math.sin(((spermatozoon.count += count) + j * 3) / 300) / speed;
-      path[j][0] = (x += dx / speed * k1) - dy * k2;
-      path[j][1] = (y += dy / speed * k1) + dx * k2;
-      speed = Math.sqrt((dx = vx) * dx + (dy = vy) * dy);
-    }
-  }
+    	// Swim!
+    	for (var j = 0; ++j < m;) {
+      		var vx = x - path[j][0],
+          		vy = y - path[j][1],
+          		k2 = Math.sin(((spermatozoon.count += count) + j * 3) / 300) / speed;
+      		path[j][0] = (x += dx / speed * k1) - dy * k2;
+      		path[j][1] = (y += dy / speed * k1) + dx * k2;
+      		speed = Math.sqrt((dx = vx) * dx + (dy = vy) * dy);
+    	}
+  	}
 
-  head.attr("transform", function(d) {
-    return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
-  });
+  	head.attr("transform", function(d) {
+    	return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
+  	});
 
-  tail.attr("d", function(d) {
-    return "M" + d.join("L");
-  });
+  	tail.attr("d", function(d) {
+    	return "M" + d.join("L");
+  	});
 });
-
-
 }
 
 
