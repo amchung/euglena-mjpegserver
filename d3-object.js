@@ -10,62 +10,130 @@ var brown_const=0;
 
 var vid_width = 640;
 var vid_height = 480;
+var n_object = 20;
+var m_object = 5;
 
-function setupD3() {
-    var canvas = d3.select("#canvasArea").append("canvas")
-    	.attr("width", vid_width)
-    	.attr("height", vid_height);
+var canvas = d3.select("#canvasArea").append("canvas")
+    .attr("width", vid_width)
+    .attr("height", vid_height);
     
-    var context = canvas.node().getContext("2d");
+var context = canvas.node().getContext("2d");
     
-    d3.timer(getVideo);
-    
-    function getVideo(){
-    	getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
-			context.clearRect(0, 0, vid_width, vid_height);
-			context.drawImage(image, 0, 0, vid_width, vid_height);
-		});
+function getVideo(){
+    getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+		context.clearRect(0, 0, vid_width, vid_height);
+		context.drawImage(image, 0, 0, vid_width, vid_height);
+	});
 	
-		function getVidFrame(path, callback) {
-  			var image = new Image;
-  			image.onload = function() {
-  				callback(image);
-  				compareFrame(image);
-  				console.log(hit);
-  			};
-  			image.src = path;
-		}
+	function getVidFrame(path, callback) {
+  		var image = new Image;
+  		image.onload = function() {
+  			callback(image);
+  			compareFrame(image);
+  		};
+  		image.src = path;
 	}
 }
 
-function setupVidCanvas() {
-        // Show loading notice
-        video_canvas = document.getElementById('videoCanvas');
-        vid_c = video_canvas.getContext('2d');
-        
-        video_canvas.width = vid_width;
-        video_canvas.height = vid_height;
-        
-        getMjpeg();
-}
+/*var gameobject = d3.range(n_object).map(function() {
+	var x = Math.random() * vid_width, y = Math.random() * vid_height;
+	return {
+		vx: Math.random() * 2 - 1,
+		vy: Math.random() * 2 - 1,
+		path: d3.range(m_object).map(function() { return [x, y]; }),
+		count: 0
+	};
+});*/
 
 
-function getMjpeg(){
-    var img = new Image();
-    img.onload = function() {
-        vid_c.clearRect(0, 0, vid_width, vid_height);
-        vid_c.drawImage(img, 0, 0, vid_width, vid_height);
-        
-        // motion detection
-        compareFrame(img);
-        
-        // draw graphics
-        game();
-        
-        window.requestAnimFrame(getMjpeg);
-    };
-    img.src = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-}
+
+var w = 640,
+    h = 480,
+    n = 100,
+    m = 12,
+    degrees = 180 / Math.PI;
+    
+var spermatozoa = d3.range(n).map(function() {
+  var x = Math.random() * w, y = Math.random() * h;
+  return {
+    vx: Math.random() * 2 - 1,
+    vy: Math.random() * 2 - 1,
+    path: d3.range(m).map(function() { return [x, y]; }),
+    count: 0
+  };
+});
+
+var svg = d3.select("canvas").append("svg:svg")
+    .attr("width", w)
+    .attr("height", h);
+
+var g = svg.selectAll("g")
+    .data(spermatozoa)
+  .enter().append("svg:g");
+
+var head = g.append("svg:ellipse")
+    .attr("rx", 6.5)
+    .attr("ry", 4);
+
+g.append("svg:path")
+    .map(function(d) { return d.path.slice(0, 3); })
+    .attr("class", "mid");
+
+g.append("svg:path")
+    .map(function(d) { return d.path; })
+    .attr("class", "tail");
+
+var tail = g.selectAll("path");
+
+d3.timer(function() {
+	getVideo();
+  for (var i = -1; ++i < n;) {
+    var spermatozoon = spermatozoa[i],
+        path = spermatozoon.path,
+        dx = spermatozoon.vx,
+        dy = spermatozoon.vy,
+        x = path[0][0] += dx,
+        y = path[0][1] += dy,
+        speed = Math.sqrt(dx * dx + dy * dy),
+        count = speed * 10,
+        k1 = -5 - speed / 3;
+
+    // Bounce off the walls.
+    if (x < 0 || x > w) spermatozoon.vx *= -1;
+    if (y < 0 || y > h) spermatozoon.vy *= -1;
+
+    // Swim!
+    for (var j = 0; ++j < m;) {
+      var vx = x - path[j][0],
+          vy = y - path[j][1],
+          k2 = Math.sin(((spermatozoon.count += count) + j * 3) / 300) / speed;
+      path[j][0] = (x += dx / speed * k1) - dy * k2;
+      path[j][1] = (y += dy / speed * k1) + dx * k2;
+      speed = Math.sqrt((dx = vx) * dx + (dy = vy) * dy);
+    }
+  }
+
+  head.attr("transform", function(d) {
+    return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
+  });
+
+  tail.attr("d", function(d) {
+    return "M" + d.join("L");
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function game(){
 	switch(gamephase)
@@ -105,145 +173,6 @@ function game(){
 	}
 }
 
-function drawObject(){
-}
-
-function drawShip(box_X,box_Y,box_rad){
-	box_rad=Math.PI/2+box_rad;
-	switch(gamephase)
-	{
-		case 'gameover':
-			// gameover graphics
-		break;
-		case 'engine':
-			// begin transformation
-    		vid_c.translate(box_X, box_Y); 
-			vid_c.rotate(box_rad);
-    		// draw ship body
-    		vid_c.beginPath();
-    		vid_c.strokeStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
-			vid_c.moveTo(0,-5);
-			vid_c.lineTo(0-4,-5+10);
-			vid_c.lineTo(0+4,-5+10);
-			vid_c.closePath();
-    		vid_c.stroke();
-    		vid_c.fillStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
-			vid_c.fill();
-    		// draw ship fins
-    		vid_c.beginPath();
-    		vid_c.moveTo(0-4,-5+10);
-			vid_c.lineTo(0-4,-5+22);
-    		vid_c.stroke();
-    		vid_c.beginPath();
-    		vid_c.moveTo(0+4,-5+10);
-			vid_c.lineTo(0+4,-5+22);
-    		vid_c.stroke();
-    		// exit transformation
-    		vid_c.rotate(-box_rad);
-			vid_c.translate(-box_X, -box_Y);    
-		break;
-		case 'rest':
-			// begin transformation
-    		vid_c.translate(box_X, box_Y); 
-			vid_c.rotate(box_rad);
-			// draw ship body
-    		vid_c.beginPath();
-    		vid_c.strokeStyle=(hit > 0) ? "rgba(253,172,13,1)" : "rgba(255,255,255,1)";
-			vid_c.moveTo(0,-3);
-			vid_c.lineTo(0-5,-3+7);
-			vid_c.lineTo(0+5,-3+7);
-			vid_c.closePath();
-    		vid_c.stroke();
-    		// draw ship fins
-    		vid_c.beginPath();
-    		vid_c.moveTo(0-5,-3+7);
-			vid_c.lineTo(0-12,-3+12);
-    		vid_c.stroke();
-    		vid_c.beginPath();
-    		vid_c.moveTo(0+5,-3+7);
-			vid_c.lineTo(0+12,-3+12);
-    		vid_c.stroke();
-    		// exit transformation
-    		vid_c.rotate(-box_rad);
-    		vid_c.translate(-box_X, -box_Y);  
-    	break;
-		default:
-			vid_c.beginPath();
-    		vid_c.fillStyle = "#fff"; 
-    		vid_c.fillText('READY TO START',vid_width/2,vid_height/2);
-	}
-}
-
-function drawStar(aX,aY,bX,bY,step){
-	var arrStar = 
-		[
-			[0+2*Math.random(),-10+2*Math.random()],
-			[8+2*Math.random(),-4+2*Math.random()],
-			[8+2*Math.random(),2+2*Math.random()],
-			[0+2*Math.random(),8+2*Math.random()],
-			[-8+2*Math.random(),2+2*Math.random()],
-			[-8+2*Math.random(),-4+2*Math.random()]
-		];
-		
-	// draw star body
-	switch(gamephase)
-	{
-		case 'gameover':
-			// gameover
-			DrawStar(bX,bY);
-		break;
-		case 'engine':
-    		// no path to draw
-    		DrawStar(bX,bY);
-		break;
-		case 'rest':
-			DrawStar(bX,bY);
-			DrawStar(aX,aY);
-			step = (step > gamelevel) ? gamelevel : step;
-			var dX=(bX-aX)*step/gamelevel;
-			var dY=(bY-aY)*step/gamelevel;
-			DrawDottedLine(aX,aY,aX+dX,aY+dY,1,step+1,"rgba(253,172,13,1)");
-		default:
-			//
-			DrawStar(bX,bY);
-	}
-	
-	function DrawStar(X,Y){
-		vid_c.strokeStyle="rgba(255,255,255,0.4)";
-		for(var i=0;i<5;i++)
-		{
-			for(var j=0;j<(5-i);j++){
-				vid_c.beginPath();
-				vid_c.moveTo(X+2*arrStar[i][0],Y+2*arrStar[i][1]);
-				vid_c.lineTo(X+2*arrStar[i+j+1][0],Y+2*arrStar[i+j+1][1]);
-    			vid_c.stroke();
-    		}
-		}
-	}
-
-    function DrawDottedLine(x1,y1,x2,y2,dotRadius,dotCount,dotColor){
-        var dx=x2-x1;
-        var dy=y2-y1;
-        var spaceX=dx/(dotCount-1);
-        var spaceY=dy/(dotCount-1);
-        var newX=x1;
-        var newY=y1;
-        for (var i=0;i<dotCount;i++){
-        	drawDot(newX,newY,dotRadius,dotColor);
-        	newX+=spaceX;
-            newY+=spaceY; 
-        }
-        drawDot(x1,y1,1,"rgba(253,172,13,1)");
-        drawDot(x2,y2,1,"rgba(253,172,13,1)");
-    }
-    
-    function drawDot(x,y,dotRadius,dotColor){
-        vid_c.beginPath();
-        vid_c.arc(x,y, dotRadius, 0, 2 * Math.PI, false);
-        vid_c.fillStyle = dotColor;
-        vid_c.fill();              
-    }
-}
 var shipX=vid_width/2,
 	shipY=vid_height/2,
 	shipRad,
@@ -260,7 +189,7 @@ var enginerTimer;
 var gamephase;
 var score_val = 0;
 var actionTimer;
-var hit=0;
+var hit = new Array();
 var unit=30;
 
 function setGameAction(){
@@ -269,7 +198,7 @@ function setGameAction(){
 
 function setbackPreGame(){
     score_val = 0;
-    hit = 0;
+    hit = new Array();
     gamelevel=1;
     
 	shipX = vid_width/2;
@@ -392,6 +321,13 @@ var img1 = null;
 var img2 = null;
 var md_canvas = null;
 
+function setupMotionDetection() {
+  md_canvas = document.getElementById('mdCanvas');
+  test_canvas = document.getElementById('testCanvas');
+  md_canvas.width = vid_width;
+  md_canvas.height = vid_height;
+}
+
 /*
   compare two images and count the differences
 
@@ -439,53 +375,26 @@ function compare(image1, image2, ptX, ptY, threshold, ObjR) {
   return movement;
 }
 
-/*
-  Callback function for completed picture downloads
 
-  With every new picture a compare() is performed.
-  The new picture is 'img1', the previous picture is stored in 'img2'.
-*/
-function compareFrame(img1) {
+function compareFrame(img1,arrObject) {
   // just compare if there are two pictures
   if ( img2 != null ) {
     var res=[0,0,0,0];
     var ObjR=10;
 
     try {
-    		// compare the two pictures, the given threshold helps to ignore noise
-    		res = compare(img1, img2, shipX, shipY, 10, ObjR); 
+    		for (var n=0; n<arrMotion.length; n++){
+    			// arrObject [active, position_x, position_y, detection_radius]
+    			res = compare(img1, img2, arrObject[n][1], arrObject[n][2], 10, arrObject[n][3]); 
+    			    if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
+            			res[0]=0;res[1]=0;res[2]=0;res[3]=0;
+    				}
+				hit[n]=res[0]+res[1]+res[2]+res[3];
+    		}
     	}
     catch(e) {
-    		// errors can happen if the pictures were corrupted during transfer
-    		// instead of giving up, just proceed
+    		// errors
     	}
-    
-    var md_ctx = md_canvas.getContext("2d");
-    if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
-            res[0]=0;res[1]=0;res[2]=0;res[3]=0;
-    	}
-  
-	hit=res[0]+res[1]+res[2]+res[3];
-  
 	}
-	// copy reference of img1 to img2
 	img2 = img1;
-}
-
-
-
-/*
-  Initialize the elements
-
-  * Create a Canvas() object and insert it into the page
-  * Download the first image
-  * Pause the Livestream again if we were paused previously
-    This way we will not pause, but we will lower the refresh rate
-    For a proper pause, the page can not be reloaded
-*/
-function setupMotionDetection() {
-  md_canvas = document.getElementById('mdCanvas');
-  test_canvas = document.getElementById('testCanvas');
-  md_canvas.width = vid_width;
-  md_canvas.height = vid_height;
 }
