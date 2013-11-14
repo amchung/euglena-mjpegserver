@@ -22,7 +22,6 @@ function setupD3(){
     	.attr("height", vid_height);
     
 	var context = canvas.node().getContext("2d");
-}
     
 function getVideo(){
     getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
@@ -91,7 +90,7 @@ g.append("svg:path")
 var tail = g.selectAll("path");
 
 d3.timer(function() {
-	//getVideo();
+	getVideo();
   for (var i = -1; ++i < n;) {
     var spermatozoon = spermatozoa[i],
         path = spermatozoon.path,
@@ -128,7 +127,7 @@ d3.timer(function() {
 });
 
 
-
+}
 
 
 
