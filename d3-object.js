@@ -18,7 +18,7 @@ function setupD3() {
     
     var context = canvas.node().getContext("2d");
     
-    getVideo();
+    d3.timer(getVideo);
     
     function getVideo(){
     	getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
@@ -30,7 +30,6 @@ function setupD3() {
   			var image = new Image;
   			image.onload = function() {
   				callback(image);
-  				window.requestAnimFrame(getVideo);
   			};
   			image.src = path;
 		}
