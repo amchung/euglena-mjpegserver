@@ -40,7 +40,7 @@ function getVideo(){
 	}
 }
 
-/*var gameobject = d3.range(n_object).map(function() {
+var gameobject = d3.range(n_object).map(function() {
 	var x = Math.random() * vid_width, y = Math.random() * vid_height;
 	return {
 		vx: Math.random() * 2 - 1,
@@ -48,7 +48,7 @@ function getVideo(){
 		path: d3.range(m_object).map(function() { return [x, y]; }),
 		count: 0
 	};
-});*/
+});
 
 
 
@@ -68,7 +68,7 @@ var spermatozoa = d3.range(n).map(function() {
   };
 });
 
-/*var svg = d3.select("canvas").append("svg:svg")
+var svg = d3.select("canvas").append("svg:svg")
     .attr("width", w)
     .attr("height", h);
 
@@ -88,9 +88,9 @@ g.append("svg:path")
     .map(function(d) { return d.path; })
     .attr("class", "tail");
 
-var tail = g.selectAll("path");*/
+var tail = g.selectAll("path");
 
-/*d3.timer(function() {
+d3.timer(function() {
 	getVideo();
   for (var i = -1; ++i < n;) {
     var spermatozoon = spermatozoa[i],
@@ -125,7 +125,7 @@ var tail = g.selectAll("path");*/
   tail.attr("d", function(d) {
     return "M" + d.join("L");
   });
-});*/
+});
 
 
 
