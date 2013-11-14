@@ -30,6 +30,8 @@ function setupD3() {
   			var image = new Image;
   			image.onload = function() {
   				callback(image);
+  				compareFrame(image);
+  				console.log(hit);
   			};
   			image.src = path;
 		}
