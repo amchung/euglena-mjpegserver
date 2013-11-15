@@ -54,11 +54,7 @@ function setupD3() {
     	.data(objects)
 		.enter().append("svg:g");
 
-	var box = g.append("svg:rect")
-		.attr("x", -l/2)
-		.attr("y", -l/2)
-    	.attr("width", l)
-    	.attr("height", l);
+	var box = g.append("svg:rect");
 	
 	function drawObjects(){
 		for (var i = -1; ++i < n;) {
@@ -82,9 +78,10 @@ function setupD3() {
     		if (y > h-l)
     		{
     			object.path[0][1] = h-l;
-    		}
-  		}
-		
+    		}	
+    	}
+		box.attr("width", l);
+		box.attr("height",l);
 		box.attr("stroke", function(d,i){
 			return d.color;
 		});
