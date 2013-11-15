@@ -17,6 +17,10 @@ var context;
 var vid_width = 640;
 var vid_height = 480;
 
+var l = 80,
+	n = 4,
+	v = 1/4;
+
 function setupD3() {
     canvas = d3.select("#canvasArea").append("canvas")
         .attr("width", vid_width)
@@ -26,10 +30,7 @@ function setupD3() {
 
 	var w = 640,
     	h = 480,
-    	n = 4,
     	m = 20,
-    	l = 80,
-    	v = 1/4,
     	radius = 50,
     	degrees = 180 / Math.PI;
     
@@ -123,7 +124,7 @@ function setupD3() {
     		var res=[0,0,0,0];
     		try {
     			for (var i = -1; ++i < n;){
-    				res = compare(img1, img2, objects[i].path[0][0], objects[i].path[0][1], 14, radius); 
+    				res = compare(img1, img2, objects[i].path[0][0], objects[i].path[0][1], 14, l/2+10); 
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}

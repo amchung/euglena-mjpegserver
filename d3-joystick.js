@@ -87,20 +87,51 @@ function onReady(event) {
         led3 = arduino.getDigitalPin(9);
         led4 = arduino.getDigitalPin(10);
             
-        // jQuery part for the button
-    $("#slider").slider({
-        step: 0.05,
-        min : 0.0,
-        max : 1.0
+        // jQuery part for the sliders
+    $("#n_slider").slider({
+        step: 1,
+        min : 1,
+        max : 10,
+        value: 4
     });
 
-    $('#value').text("Value: 0");
+    $('#size_value').text("Value: 4");
     
-    $( "#slider" ).bind( "slide", function(event, ui) {
+    $( "#size_slider" ).bind( "size_slide", function(event, ui) {
         var value = ui.value;
-        $('#value').text("Value: " + value.toFixed(2));
+        $('#size_value').text("Value: " + value);
+        n = value;
+    });    
+    
+    
+    $("#size_slider").slider({
+        step: 10,
+        min : 20,
+        max : 200,
+        value : 80
+    });
+
+    $('#size_value').text("Value: 80");
+    
+    $( "#size_slider" ).bind( "size_slide", function(event, ui) {
+        var value = ui.value;
+        $('#size_value').text("Value: " + value);
+        l = value;
+    });
+        
+    $("#br_slider").slider({
+        step: 0.05,
+        min : 0.0,
+        max : 1.0,
+        value: 0
+    });
+
+    $('#br_value').text("Value: 0");
+    
+    $( "#br_slider" ).bind( "br_slide", function(event, ui) {
+        var value = ui.value;
+        $('#br_value').text("Value: " + value.toFixed(2));
         brown_const = value;
-        console.log(brown_const);
     });
     
 
