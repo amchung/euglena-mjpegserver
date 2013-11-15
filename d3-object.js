@@ -10,8 +10,6 @@ var brown_const=0;
 
 var vid_width = 640;
 var vid_height = 480;
-var n_object = 20;
-var m_object = 5;
 
 var canvas;
 var context;
@@ -29,7 +27,7 @@ function setupD3() {
 	var w = 640,
     	h = 480,
     	n = 4,
-    	m = 3,
+    	m = 20,
     	l = 80,
     	radius = 50,
     	degrees = 180 / Math.PI;
@@ -70,8 +68,8 @@ function setupD3() {
         		k1 = -5 - speed / 3;
 
     		// Bounce off the walls.
-    		if (x < 0 || x > w) object.vx *= -1;
-    		if (y < 0 || y > h) object.vy *= -1;
+    		if (x < 0 || x > w-l) object.vx *= -1;
+    		if (y < 0 || y > h-l) object.vy *= -1;
 
     		// Swim!
     		for (var j = 0; ++j < m;) {
