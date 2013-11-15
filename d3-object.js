@@ -81,12 +81,12 @@ function setupD3() {
     		{
     			object.path[0][1] = h-l;
     		}
-
-    		var color = ( object.hit == true ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)"
-    		box.style("stroke", color);
-    		
   		}
-
+		
+		box.attr("stroke",function(d){
+			var color = ( d.hit == true ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
+			return color;
+		});
   		box.attr("transform", function(d) {
     		return "translate(" + d.path[0] + ")";
   		});
@@ -97,7 +97,7 @@ function setupD3() {
   		drawObjects();
 	});
 
-	window.setInterval(getVideo,1000/20);
+	window.setInterval(getVideo, 1000/20);
 		
 	function getVideo(){
         getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
@@ -122,7 +122,7 @@ function setupD3() {
     		var res=[0,0,0,0];
     		try {
     			for (var i = -1; ++i < n;){
-    				res = compare(img1, img2, objects[i].path[0][0], objects[i].path[0][1], 20, radius); 
+    				res = compare(img1, img2, objects[i].path[0][0], objects[i].path[0][1], 14, radius); 
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
