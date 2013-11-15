@@ -91,7 +91,7 @@ function onReady(event) {
     $("#n_slider").slider({
         step: 1,
         min : 1,
-        max : 10,
+        max : 20,
         value: 4
     });
 

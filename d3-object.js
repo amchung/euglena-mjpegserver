@@ -21,7 +21,7 @@ var l = 80,
 	n = 4,
 	v = 1/4;
 	
-var n_max = 10;
+var n_max = 20;
 
 function setupD3() {
     canvas = d3.select("#canvasArea").append("canvas")
@@ -43,7 +43,7 @@ function setupD3() {
     		vy: 0,
     		path: d3.range(m).map(function() { return [x, y]; }),
     		count: 0,
-    		active: true,
+    		active: 0,
     		size: l,
     		color: "#FA6600"
   		};
@@ -83,7 +83,11 @@ function setupD3() {
     			object.path[0][1] = h-l;
     		}	
     		object.size = l;
+    		ovject.active = (i<n)?1:0;
     	}
+    	box.attr("alpha", fuction(d,i){
+    		return d.active;
+    	});
 		box.attr("width", function(d,i){
 			return d.size;
 		});
