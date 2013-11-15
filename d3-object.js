@@ -314,8 +314,6 @@ function gameOver(){
 }
 
 
-
-
 /*******************************************************************************
   Copyright (C) 2009 Tom Stoeveken
   This program is free software;
