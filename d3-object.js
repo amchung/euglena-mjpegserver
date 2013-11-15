@@ -60,9 +60,11 @@ function setupD3() {
 	
 	function drawObjects(){
 		for (var i = -1; ++i < n;) {
-    		var object = objects[i];
+    		var object = objects[i],
+        		x = object.path[0][0],
+        		y = object.path[0][1];
 
-    		// Bounce off the walls.
+    		// stuck at the walls.
     		if (x < 0)
     		{
     			object.path[0][0] = 0;
