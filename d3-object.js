@@ -16,7 +16,38 @@ var m_object = 5;
 var canvas;
 var context;
 
-function setupD3(){
+var vid_width = 640;
+var vid_height = 480;
+
+function setupD3() {
+    canvas = d3.select("#canvasArea").append("canvas")
+        .attr("width", vid_width)
+        .attr("height", vid_height);
+    
+    context = canvas.node().getContext("2d");
+    
+    d3.timer(getVideo);
+    
+    function getVideo(){
+            getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+                        context.clearRect(0, 0, vid_width, vid_height);
+                        context.drawImage(image, 0, 0, vid_width, vid_height);
+                });
+        
+                function getVidFrame(path, callback) {
+                          var image = new Image;
+                          image.onload = function() {
+                                  callback(image);
+                                  compareFrame(image);
+                                  console.log(hit);
+                          };
+                          image.src = path;
+                }
+        }
+}
+
+
+/*function setupD3(){
 	var w = 640,
     	h = 480,
     	n = 20,
@@ -105,7 +136,7 @@ d3.timer(function() {
 }
 
 
-
+*/
 
 
 
