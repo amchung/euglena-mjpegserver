@@ -82,10 +82,10 @@ function setupD3() {
     		}	
     		object.size = l;
     	}
-		box.attr("width", function(d,i)({
+		box.attr("width", function(d,i){
 			return d.size;
 		});
-		box.attr("height", function(d,i)({
+		box.attr("height", function(d,i){
 			return d.size;
 		});
 		box.attr("stroke", function(d,i){
