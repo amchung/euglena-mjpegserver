@@ -115,10 +115,8 @@ function setupD3() {
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
-    				console.log(i);
-    				console.log(objects[i].hit);
-    				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const
-    				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const
+    				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])/8+(Math.random()-0.5)*20*brown_const
+    				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])/8+(Math.random()-0.5)*20*brown_const
 					objects[i].hit =(res[0]+res[1]+res[2]+res[3]>0)?true:false;
     			}
     		}
