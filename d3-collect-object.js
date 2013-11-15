@@ -44,6 +44,7 @@ function setupD3() {
     		path: d3.range(m).map(function() { return [x, y]; }),
     		count: 0,
     		active: 0,
+    		fill: none,
     		size: l,
     		color: "#FA6600"
   		};
@@ -68,6 +69,9 @@ function setupD3() {
     		object.size = l;
     		object.active = (i<n)?1:0;
     	}
+    	box.attr("fill", function(d,i){
+    		return d.fill;
+    	});
     	box.attr("opacity", function(d,i){
     		return d.active;
     	});
@@ -119,9 +123,10 @@ function setupD3() {
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
-    				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])*v+(Math.random()-0.5)*20*brown_const
-    				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])*v+(Math.random()-0.5)*20*brown_const
 					objects[i].color = ((res[0]+res[1]+res[2]+res[3])>0)?"#FDAC0D":"#FA6600";
+					if(res[0]+res[1]+res[2]+res[3])>0){
+						objects[i].fill = "#FDAC0D";
+					}
     			}
     		}
     	catch(e) {
