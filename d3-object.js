@@ -29,7 +29,7 @@ function setupD3() {
 	var w = 640,
     	h = 480,
     	n = 4,
-    	m = 12,
+    	m = 3,
     	l = 80,
     	radius = 50,
     	degrees = 180 / Math.PI;
