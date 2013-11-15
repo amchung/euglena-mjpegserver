@@ -82,7 +82,7 @@ function setupD3() {
     			object.path[0][1] = h-l;
     		}
 
-    		var color = ( object.hit > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)"
+    		var color = ( object.hit == true ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)"
     		box.style("stroke", color);
     		
   		}
