@@ -20,6 +20,8 @@ var vid_height = 480;
 var l = 80,
 	n = 4,
 	v = 1/4;
+	
+var n_max = 10;
 
 function setupD3() {
     canvas = d3.select("#canvasArea").append("canvas")
@@ -34,7 +36,7 @@ function setupD3() {
     	radius = l/2+10,
     	degrees = 180 / Math.PI;
     
-	var objects = d3.range(n).map(function() {
+	var objects = d3.range(n_max).map(function() {
   		var x = 40 + Math.random() * (w-40), y = 40 + Math.random() * (h-40);
   		return {
     		vx: 0,
