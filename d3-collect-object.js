@@ -124,7 +124,7 @@ function setupD3() {
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
 					objects[i].color = ((res[0]+res[1]+res[2]+res[3])>0)?"#FDAC0D":"#FA6600";
-					if(res[0]+res[1]+res[2]+res[3])>0){
+					if(res[0]+res[1]+res[2]+res[3]>0){
 						objects[i].fill = "#FDAC0D";
 					}
     			}
