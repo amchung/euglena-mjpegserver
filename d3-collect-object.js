@@ -23,6 +23,7 @@ var l = 80,
 	threshold = 10;
 	
 var n_max = 20;
+var objects;
 
 function setupD3() {
     canvas = d3.select("#canvasArea").append("canvas")
@@ -37,7 +38,7 @@ function setupD3() {
     	radius = l/2+10,
     	degrees = 180 / Math.PI;
     
-	var objects = d3.range(n_max).map(function() {
+	objects = d3.range(n_max).map(function() {
   		var x = 40 + Math.random() * (w-40), y = 40 + Math.random() * (h-40);
   		return {
     		vx: 0,
