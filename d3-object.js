@@ -85,7 +85,7 @@ function setupD3() {
     		object.size = l;
     		object.active = (i<n)?1:0;
     	}
-    	box.attr("alpha", function(d,i){
+    	box.attr("opacity", function(d,i){
     		return d.active;
     	});
 		box.attr("width", function(d,i){
