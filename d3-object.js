@@ -122,13 +122,13 @@ function setupD3() {
     		var res=[0,0,0,0];
     		try {
     			for (var i = -1; ++i < n;){
-    				res = compare(img1, img2, objects[i].path[0][0], objects[i].path[0][1], 10, radius); 
+    				res = compare(img1, img2, objects[i].path[0][0], objects[i].path[0][1], 20, radius); 
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
     				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const
     				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const
-					objects[i].hit =(objects[i].path[0][0]+objects[i].path[0][1]>5)?true:false;
+					objects[i].hit =(res[0]+res[1]+res[2]+res[3])>0)?true:false;
     			}
     		}
     	catch(e) {
