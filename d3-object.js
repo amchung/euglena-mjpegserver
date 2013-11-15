@@ -31,7 +31,7 @@ function setupD3() {
 	var w = 640,
     	h = 480,
     	m = 20,
-    	radius = 50,
+    	radius = l/2+10,
     	degrees = 180 / Math.PI;
     
 	var objects = d3.range(n).map(function() {
@@ -42,6 +42,7 @@ function setupD3() {
     		path: d3.range(m).map(function() { return [x, y]; }),
     		count: 0,
     		active: true,
+    		size: l,
     		color: "#FA6600"
   		};
 	});
@@ -79,13 +80,17 @@ function setupD3() {
     		{
     			object.path[0][1] = h-l;
     		}	
+    		object.size = l;
     	}
-		box.attr("width", l);
-		box.attr("height",l);
+		box.attr("width", function(d,i)({
+			return d.size;
+		});
+		box.attr("height", function(d,i)({
+			return d.size;
+		});
 		box.attr("stroke", function(d,i){
 			return d.color;
 		});
-		
   		box.attr("transform", function(d) {
     		return "translate(" + d.path[0] + ")";
   		});
