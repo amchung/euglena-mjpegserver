@@ -119,6 +119,22 @@ function onReady(event) {
         console.log(value);
         l = value;
     });
+    
+    $("#th_slider").slider({
+        step: 2,
+        min : 0,
+        max : 40,
+        value : 10
+    });
+
+    $('#th_value').text("Value: 10");
+    
+    $( "#th_slider" ).bind( "slide", function(event, ui) {
+        var value = ui.value;
+        $('#th_value').text("Value: " + value);
+        console.log(value);
+        threshold = value;
+    });
 
         $('input[name=setUsername]').click(function(){
         	if($('input[name=usernameTxt]').val() != ""){

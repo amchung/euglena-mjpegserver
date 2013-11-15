@@ -19,7 +19,8 @@ var vid_height = 480;
 
 var l = 80,
 	n = 4,
-	v = 1/4;
+	v = 1/4,
+	threshold = 10;
 	
 var n_max = 20;
 
@@ -124,7 +125,7 @@ function setupD3() {
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
 					objects[i].color = ((res[0]+res[1]+res[2]+res[3])>0)?"#FDAC0D":"#FA6600";
-					if(res[0]+res[1]+res[2]+res[3]>0){
+					if(res[0]+res[1]+res[2]+res[3]>threshold){
 						objects[i].fill = "#FDAC0D";
 					}
     			}
