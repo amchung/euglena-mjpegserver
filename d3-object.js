@@ -61,7 +61,6 @@ function setupD3() {
 	function drawObjects(){
 		for (var i = -1; ++i < n;) {
     		var object = objects[i],
-        		path = object.path,
         		dx = object.vx,
         		dy = object.vy,
         		x = path[0][0] += dx,
@@ -71,6 +70,10 @@ function setupD3() {
     		// Bounce off the walls.
     		if (x < 0 || x > w-l) object.vx *= -1;
     		if (y < 0 || y > h-l) object.vy *= -1;
+    		
+    		var color = ( object.hit > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)"
+    		box.style("stroke", color);
+    		
   		}
 
   		box.attr("transform", function(d) {
@@ -112,6 +115,8 @@ function setupD3() {
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
+    				objects[n].path[0][0]+=(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const
+    				objects[n].path[0][1]+=(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const
 					objects[n].hit =(res[0]+res[1]+res[2]+res[3]>0)?true:false;
     			}
     		}
