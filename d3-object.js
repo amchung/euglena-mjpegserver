@@ -24,30 +24,11 @@ function setupD3() {
         .attr("width", vid_width)
         .attr("height", vid_height);
     
-    context = canvas.node().getContext("2d");
-    
-    d3.timer(getVideo);
-    
-    function getVideo(){
-            getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
-                        context.clearRect(0, 0, vid_width, vid_height);
-                        context.drawImage(image, 0, 0, vid_width, vid_height);
-                });
-        
-                function getVidFrame(path, callback) {
-                          var image = new Image;
-                          image.onload = function() {
-                                  callback(image);
-                                  compareFrame(image);
-                                  console.log(hit);
-                          };
-                          image.src = path;
-                }
-        }
+    context = canvas.node().getContext("2d");  
 }
 
 
-/*function setupD3(){
+function setupD3(){
 	var w = 640,
     	h = 480,
     	n = 20,
@@ -85,14 +66,21 @@ function setupD3() {
     	.attr("height", l);
 	
 	function getVideo(){
-		var frameURL = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-		image.attr('onload', function() {
-         		compareFrame(image);
-    		})
-    		.attr("xlink:href", frameURL)
-    		.attr("width", vid_width)
-    		.attr("height", vid_height);		
-	}
+        getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+            context.clearRect(0, 0, vid_width, vid_height);
+            context.drawImage(image, 0, 0, vid_width, vid_height);
+        });
+        
+    	function getVidFrame(path, callback) {
+            var image = new Image;
+            image.onload = function() {
+                callback(image);
+                compareFrame(image);
+                //console.log(hit);
+            };
+            image.src = path;
+        }
+    }
 	
 	function drawObjects(){
 		for (var i = -1; ++i < n;) {
@@ -136,7 +124,6 @@ d3.timer(function() {
 }
 
 
-*/
 
 
 
