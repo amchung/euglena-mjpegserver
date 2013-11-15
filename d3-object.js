@@ -70,7 +70,7 @@ function setupD3() {
     		// Bounce off the walls.
     		if (x < 0 || x > w-l) object.vx *= -1;
     		if (y < 0 || y > h-l) object.vy *= -1;
-    		
+    		console.log(object.hit);
     		var color = ( object.hit > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)"
     		box.style("stroke", color);
     		
