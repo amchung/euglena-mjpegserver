@@ -95,11 +95,11 @@ function onReady(event) {
         value: 4
     });
 
-    $('#size_value').text("Value: 4");
+    $('#n_value').text("Value: 4");
     
-    $( "#size_slider" ).bind( "size_slide", function(event, ui) {
+    $( "#n_slider" ).bind( "n_slide", function(event, ui) {
         var value = ui.value;
-        $('#size_value').text("Value: " + value);
+        $('#n_value').text("Value: " + value);
         n = value;
     });    
     
