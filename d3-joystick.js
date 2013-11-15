@@ -119,7 +119,23 @@ function onReady(event) {
         console.log(value);
         l = value;
     });
-        
+       
+    $("#v_slider").slider({
+        step: 0.05,
+        min : 0.0,
+        max : 2.0,
+        value : 0.4
+    });
+
+    $('#v_value').text("Value: 0.40");
+    
+    $( "#v_slider" ).bind( "slide", function(event, ui) {
+        var value = ui.value;
+        $('#v_value').text("Value: " + value);
+        console.log(value);
+        v = value;
+    });
+     
     $("#br_slider").slider({
         step: 0.05,
         min : 0.0,
@@ -127,7 +143,7 @@ function onReady(event) {
         value: 0
     });
 
-    $('#br_value').text("Value: 0");
+    $('#br_value').text("Value: 0.00");
     
     $( "#br_slider" ).bind( "slide", function(event, ui) {
         var value = ui.value;
@@ -137,14 +153,14 @@ function onReady(event) {
     
 
         $('input[name=setUsername]').click(function(){
-                        if($('input[name=usernameTxt]').val() != ""){
-                                username = $('input[name=usernameTxt]').val();
-                                var msg = {type:'setUsername', user:username};
-                                socket.json.send(msg);
-                        }
-                        $('#username').slideUp("slow",function(){
-                                $('#entergame').slideDown("slow");
-                        });
+        	if($('input[name=usernameTxt]').val() != ""){
+                username = $('input[name=usernameTxt]').val();
+                    var msg = {type:'setUsername', user:username};
+                    socket.json.send(msg);
+                }
+            $('#username').slideUp("slow",function(){
+                $('#entergame').slideDown("slow");
+            });
         });
         
         $("input[name=gamestartBtn]").click(function(){
