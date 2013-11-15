@@ -25,10 +25,7 @@ function setupD3() {
         .attr("height", vid_height);
     
     context = canvas.node().getContext("2d");  
-}
 
-
-function setupD3(){
 	var w = 640,
     	h = 480,
     	n = 20,
@@ -52,10 +49,10 @@ function setupD3(){
     	.attr("width", vid_width)
     	.attr("height", vid_height);
 
-	var image = svg.append("image")
+	/*var image = svg.append("image")
     	.attr("xlink:href", "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime())
     	.attr("width", vid_width)
-    	.attr("height", vid_height);
+    	.attr("height", vid_height);*/
     		
 	var g = svg.selectAll("g")
     	.data(objects)
