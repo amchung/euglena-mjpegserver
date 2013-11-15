@@ -83,7 +83,7 @@ function setupD3() {
     			object.path[0][1] = h-l;
     		}	
     		object.size = l;
-    		ovject.active = (i<n)?1:0;
+    		object.active = (i<n)?1:0;
     	}
     	box.attr("alpha", function(d,i){
     		return d.active;
