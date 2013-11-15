@@ -70,7 +70,7 @@ function setupD3() {
     		// Bounce off the walls.
     		if (x < 0 || x > w-l) object.vx *= -1;
     		if (y < 0 || y > h-l) object.vy *= -1;
-    		console.log(object.hit);
+
     		var color = ( object.hit > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)"
     		box.style("stroke", color);
     		
@@ -110,14 +110,16 @@ function setupD3() {
   		if ( img2 != null ) {
     		var res=[0,0,0,0];
     		try {
-    			for (var i=0; i<n; i++){
-    				res = compare(img1, img2, objects[n].path[0][0], objects[n].path[0][1], 10, radius); 
+    			for (var i = -1; ++i < n;){
+    				res = compare(img1, img2, objects[i].path[0][0], objects[i].path[0][1], 10, radius); 
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
-    				objects[n].path[0][0]+=(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const
-    				objects[n].path[0][1]+=(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const
-					objects[n].hit =(res[0]+res[1]+res[2]+res[3]>0)?true:false;
+    				console.log(i);
+    				console.log(objects[i].hit);
+    				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const
+    				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const
+					objects[i].hit =(res[0]+res[1]+res[2]+res[3]>0)?true:false;
     			}
     		}
     	catch(e) {
