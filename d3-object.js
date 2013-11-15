@@ -17,9 +17,6 @@ var context;
 var vid_width = 640;
 var vid_height = 480;
 
-var hit = new Array();
-var arrObject = new Array();
-
 function setupD3() {
     canvas = d3.select("#canvasArea").append("canvas")
         .attr("width", vid_width)
@@ -69,7 +66,7 @@ function setupD3() {
         		dy = object.vy,
         		x = path[0][0] += dx,
         		y = path[0][1] += dy,
-        		speed = Math.sqrt(dx * dx + dy * dy),
+        		speed = Math.sqrt(dx * dx + dy * dy);
 
     		// Bounce off the walls.
     		if (x < 0 || x > w-l) object.vx *= -1;
@@ -115,7 +112,7 @@ function setupD3() {
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
-					hit[n]=res[0]+res[1]+res[2]+res[3];
+					objects[n].hit =(res[0]+res[1]+res[2]+res[3]>0)?true:false;
     			}
     		}
     	catch(e) {
