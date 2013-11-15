@@ -29,6 +29,7 @@ function setupD3() {
     	n = 4,
     	m = 20,
     	l = 80,
+    	v = 1/4,
     	radius = 50,
     	degrees = 180 / Math.PI;
     
@@ -81,10 +82,11 @@ function setupD3() {
     		{
     			object.path[0][1] = h-l;
     		}
+    		
   		}
 		
 		box.attr("stroke",function(d){
-			var color = ( d.hit == true ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
+			var color = ( d.hit == true ) ? "#FDAC0D" : "#FA6600";
 			return color;
 		});
   		box.attr("transform", function(d) {
@@ -126,8 +128,8 @@ function setupD3() {
     			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
             				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     					}
-    				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const
-    				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const
+    				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])*v+(Math.random()-0.5)*20*brown_const
+    				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])*v+(Math.random()-0.5)*20*brown_const
 					objects[i].hit =((res[0]+res[1]+res[2]+res[3])>0)?true:false;
     			}
     		}
