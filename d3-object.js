@@ -55,7 +55,6 @@ function setupD3(){
 	
 	function getVideo(){
 		var frameURL = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
-		//var svg = d3.select('svg');
 		image.attr('onload', function() {
          		compareFrame(image);
     		})
@@ -92,7 +91,8 @@ function setupD3(){
   		}
 
   		box.attr("transform", function(d) {
-    		return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
+    		return "translate(" + d.path[0] + ")";
+    		//return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
   		});
   	}
 
