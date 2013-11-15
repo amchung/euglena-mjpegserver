@@ -44,7 +44,7 @@ function setupD3() {
     		path: d3.range(m).map(function() { return [x, y]; }),
     		count: 0,
     		active: 0,
-    		fill: none,
+    		fill: "none",
     		size: l,
     		color: "#FA6600"
   		};
