@@ -62,7 +62,6 @@ window.onresize = resetCanvas;
 
 function init() {
     setupCanvas();
-    //setupVidCanvas();
     setupD3();
     setupMotionDetection();
     
@@ -160,15 +159,15 @@ function onReady(event) {
                 $("input[name=chatTxt]").val("");
         });
         
-    //control_canvas.addEventListener('pointerdown', onPointerDown, false);
-    //control_canvas.addEventListener('pointermove', onPointerMove, false);
-    //control_canvas.addEventListener('pointerup', onPointerUp, false);
-    //control_canvas.addEventListener('pointerout', onPointerUp, false);
+    control_canvas.addEventListener('pointerdown', onPointerDown, false);
+    control_canvas.addEventListener('pointermove', onPointerMove, false);
+    control_canvas.addEventListener('pointerup', onPointerUp, false);
+    control_canvas.addEventListener('pointerout', onPointerUp, false);
     
-    //requestAnimFrame(draw);
+    requestAnimFrame(joystick_draw);
 }
 
-function draw() {
+function joystick_draw() {
     c.clearRect(0, 0, control_canvas.width, control_canvas.height);
         
     c.beginPath();
@@ -220,7 +219,7 @@ function draw() {
         }
     });
 
-    requestAnimFrame(draw);
+    requestAnimFrame(joystick_draw);
     
     //// LED control loop
     var delta = Date.now() - lastUpdateTime;
