@@ -20,7 +20,7 @@ var vid_height = 480;
 var l = 80,
 	n = 4,
 	v = 1/4,
-	threshold = 10;
+	threshold = 30;
 	
 var n_max = 20;
 var objects;

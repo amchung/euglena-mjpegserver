@@ -121,13 +121,13 @@ function onReady(event) {
     });
     
     $("#th_slider").slider({
-        step: 2,
+        step: 5,
         min : 0,
-        max : 40,
-        value : 10
+        max : 100,
+        value : 30
     });
 
-    $('#th_value').text("Value: 10");
+    $('#th_value').text("Value: 30");
     
     $( "#th_slider" ).bind( "slide", function(event, ui) {
         var value = ui.value;
