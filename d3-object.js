@@ -44,7 +44,7 @@ function setupD3(){
 		
 		var frameURL = "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime();
 		//var svg = d3.select('svg');
-		var image = svg.append("image")
+		image
     		.attr('onload', function() {
          		compareFrame(image);
     		})
@@ -73,6 +73,11 @@ function setupD3(){
     	.attr("width", vid_width)
     	.attr("height", vid_height);
 
+	var image = svg.append("image")
+    	.attr("xlink:href", "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime())
+    	.attr("width", vid_width)
+    	.attr("height", vid_height);
+    		
 	var g = svg.selectAll("g")
     	.data(spermatozoa)
 		.enter().append("svg:g");
@@ -90,45 +95,49 @@ function setupD3(){
     	.attr("class", "tail");
 
 	var tail = g.selectAll("path");
+	
+	function drawObjects(){
+		for (var i = -1; ++i < n;) {
+    		var spermatozoon = spermatozoa[i],
+        		path = spermatozoon.path,
+        		dx = spermatozoon.vx,
+        		dy = spermatozoon.vy,
+        		x = path[0][0] += dx,
+        		y = path[0][1] += dy,
+        		speed = Math.sqrt(dx * dx + dy * dy),
+        		count = speed * 10,
+        		k1 = -5 - speed / 3;
+
+    		// Bounce off the walls.
+    		if (x < 0 || x > w) spermatozoon.vx *= -1;
+    		if (y < 0 || y > h) spermatozoon.vy *= -1;
+
+    		// Swim!
+    		for (var j = 0; ++j < m;) {
+      			var vx = x - path[j][0],
+          			vy = y - path[j][1],
+          			k2 = Math.sin(((spermatozoon.count += count) + j * 3) / 300) / speed;
+      			path[j][0] = (x += dx / speed * k1) - dy * k2;
+      			path[j][1] = (y += dy / speed * k1) + dx * k2;
+      			speed = Math.sqrt((dx = vx) * dx + (dy = vy) * dy);
+    		}
+  		}
+
+  		head.attr("transform", function(d) {
+    		return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
+  		});
+
+  		tail.attr("d", function(d) {
+    		return "M" + d.join("L");
+  		});
+  	}
 
 d3.timer(function() {
 	getVideo();
-  	for (var i = -1; ++i < n;) {
-    	var spermatozoon = spermatozoa[i],
-        	path = spermatozoon.path,
-        	dx = spermatozoon.vx,
-        	dy = spermatozoon.vy,
-        	x = path[0][0] += dx,
-        	y = path[0][1] += dy,
-        	speed = Math.sqrt(dx * dx + dy * dy),
-        	count = speed * 10,
-        	k1 = -5 - speed / 3;
-
-    	// Bounce off the walls.
-    	if (x < 0 || x > w) spermatozoon.vx *= -1;
-    	if (y < 0 || y > h) spermatozoon.vy *= -1;
-
-    	// Swim!
-    	for (var j = 0; ++j < m;) {
-      		var vx = x - path[j][0],
-          		vy = y - path[j][1],
-          		k2 = Math.sin(((spermatozoon.count += count) + j * 3) / 300) / speed;
-      		path[j][0] = (x += dx / speed * k1) - dy * k2;
-      		path[j][1] = (y += dy / speed * k1) + dx * k2;
-      		speed = Math.sqrt((dx = vx) * dx + (dy = vy) * dy);
-    	}
-  	}
-
-  	head.attr("transform", function(d) {
-    	return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
-  	});
-
-  	tail.attr("d", function(d) {
-    	return "M" + d.join("L");
-  	});
+  	drawObjects();
 });
-}
 
+}
 
 
 
