@@ -28,15 +28,15 @@ function setupD3() {
 
 	var w = 640,
     	h = 480,
-    	n = 20,
+    	n = 4,
     	m = 12,
     	l = 80,
+    	radius = 50,
     	degrees = 180 / Math.PI;
     
 	var objects = d3.range(n).map(function() {
-  		var x = Math.random() * w, y = Math.random() * h;
+  		var x = 40 + Math.random() * (w-40), y = 40 + Math.random() * (h-40);
   		var active = true;
-  		var radius = 50;
   		return {
     		vx: Math.random() * 2 - 1,
     		vy: Math.random() * 2 - 1,
@@ -56,23 +56,6 @@ function setupD3() {
 	var box = g.append("svg:rect")
     	.attr("width", l)
     	.attr("height", l);
-	
-	function getVideo(){
-        getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
-            context.clearRect(0, 0, vid_width, vid_height);
-            context.drawImage(image, 0, 0, vid_width, vid_height);
-        });
-        
-    	function getVidFrame(path, callback) {
-            var image = new Image;
-            image.onload = function() {
-                callback(image);
-                compareFrame(image);
-                //console.log(hit);
-            };
-            image.src = path;
-        }
-    }
 	
 	function drawObjects(){
 		for (var i = -1; ++i < n;) {
@@ -103,24 +86,33 @@ function setupD3() {
 
   		box.attr("transform", function(d) {
     		return "translate(" + d.path[0] + ")";
-    		//return "translate(" + d.path[0] + ")rotate(" + Math.atan2(d.vy, d.vx) * degrees + ")";
   		});
   	}
 
-d3.timer(function() {
-	//getVideo();
-	//console.log(hit);
-  	drawObjects();
-});
 
-window.setInterval(getVideo,1000/20);
+	d3.timer(function() {
+  		drawObjects();
+	});
+
+	window.setInterval(getVideo,1000/20);
+		
+	function getVideo(){
+        getVidFrame("http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime(), function(image) {
+            context.clearRect(0, 0, vid_width, vid_height);
+            context.drawImage(image, 0, 0, vid_width, vid_height);
+        });
+        
+    	function getVidFrame(path, callback) {
+            var image = new Image;
+            image.onload = function() {
+                callback(image);
+                compareFrame(image);
+                //console.log(hit);
+            };
+            image.src = path;
+        }
+    }
 }
-
-
-
-
-
-
 
 
 
