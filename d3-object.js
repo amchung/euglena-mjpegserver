@@ -60,8 +60,7 @@ function setupD3() {
 	
 	function drawObjects(){
 		for (var i = -1; ++i < n;) {
-    		var object = objects[i],
-        		speed = Math.sqrt(dx * dx + dy * dy);
+    		var object = objects[i];
 
     		// Bounce off the walls.
     		if (x < 0)
