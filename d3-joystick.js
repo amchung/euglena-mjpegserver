@@ -97,7 +97,7 @@ function onReady(event) {
 
     $('#n_value').text("Value: 4");
     
-    $( "#n_slider" ).bind( "n_slide", function(event, ui) {
+    $( "#n_slider" ).bind( "slide", function(event, ui) {
         var value = ui.value;
         $('#n_value').text("Value: " + value);
         n = value;
@@ -113,7 +113,7 @@ function onReady(event) {
 
     $('#size_value').text("Value: 80");
     
-    $( "#size_slider" ).bind( "size_slide", function(event, ui) {
+    $( "#size_slider" ).bind( "slide", function(event, ui) {
         var value = ui.value;
         $('#size_value').text("Value: " + value);
         console.log(value);
@@ -129,7 +129,7 @@ function onReady(event) {
 
     $('#br_value').text("Value: 0");
     
-    $( "#br_slider" ).bind( "br_slide", function(event, ui) {
+    $( "#br_slider" ).bind( "slide", function(event, ui) {
         var value = ui.value;
         $('#br_value').text("Value: " + value.toFixed(2));
         brown_const = value;
