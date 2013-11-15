@@ -41,7 +41,7 @@ function setupD3() {
     		path: d3.range(m).map(function() { return [x, y]; }),
     		count: 0,
     		active: true,
-    		hit: false
+    		color: "#FA6600"
   		};
 	});
 
@@ -82,13 +82,12 @@ function setupD3() {
     		{
     			object.path[0][1] = h-l;
     		}
-    		
   		}
 		
-		box.attr("stroke",function(d){
-			var color = ( d.hit == true ) ? "#FDAC0D" : "#FA6600";
-			return color;
+		box.attr("stroke", function(d,i){
+			return d.color;
 		});
+		
   		box.attr("transform", function(d) {
     		return "translate(" + d.path[0] + ")";
   		});
@@ -130,7 +129,7 @@ function setupD3() {
     					}
     				objects[i].path[0][0]+=(res[0]+res[2]-res[1]-res[3])*v+(Math.random()-0.5)*20*brown_const
     				objects[i].path[0][1]+=(res[0]+res[1]-res[2]-res[3])*v+(Math.random()-0.5)*20*brown_const
-					objects[i].hit =((res[0]+res[1]+res[2]+res[3])>0)?true:false;
+					objects[i].color = ((res[0]+res[1]+res[2]+res[3])>0)?"#FDAC0D":"#FA6600";
     			}
     		}
     	catch(e) {
