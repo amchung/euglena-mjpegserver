@@ -48,11 +48,6 @@ function setupD3() {
 	var svg = d3.select("#canvasArea").append("svg:svg")
     	.attr("width", vid_width)
     	.attr("height", vid_height);
-
-	/*var image = svg.append("image")
-    	.attr("xlink:href", "http://171.65.102.132:8080/?action=snapshot?t=" + new Date().getTime())
-    	.attr("width", vid_width)
-    	.attr("height", vid_height);*/
     		
 	var g = svg.selectAll("g")
     	.data(objects)
