@@ -123,7 +123,7 @@ function onReady(event) {
     $("#v_slider").slider({
         step: 0.05,
         min : 0.0,
-        max : 2.0,
+        max : 1.0,
         value : 0.4
     });
 
