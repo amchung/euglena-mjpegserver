@@ -139,6 +139,12 @@ function setupD3() {
 
 }
 
+function resetObjects(){
+	for (var i = -1; ++i < n_max;) {
+		objects[i].fill = "none";
+	}
+}
+
 /*******************************************************************************
   Copyright (C) 2009 Tom Stoeveken
   This program is free software;

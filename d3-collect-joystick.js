@@ -143,12 +143,16 @@ function onReady(event) {
                     socket.json.send(msg);
                 }
             $('#username').slideUp("slow",function(){
-                $('#entergame').slideDown("slow");
+                //$('#entergame').slideDown("slow");
             });
         });
         
-        $("input[name=gamestartBtn]").click(function(){
-            resetGame();
+        /*$("input[name=gamestartBtn]").click(function(){
+            //resetGame();
+        });*/
+        
+        $("input[name=resetBtn]").click(function(){
+            resetObjects();
         });
         
         socket = new io.connect('http://171.65.102.132:8088');
