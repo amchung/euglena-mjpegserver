@@ -17,6 +17,9 @@ var context;
 var vid_width = 640;
 var vid_height = 480;
 
+var hit = new Array();
+var arrObject = new Array();
+
 function setupD3() {
     canvas = d3.select("#canvasArea").append("canvas")
         .attr("width", vid_width)
@@ -34,12 +37,13 @@ function setupD3() {
     
 	var objects = d3.range(n).map(function() {
   		var x = 40 + Math.random() * (w-40), y = 40 + Math.random() * (h-40);
-  		var active = true;
   		return {
-    		vx: Math.random() * 2 - 1,
-    		vy: Math.random() * 2 - 1,
+    		vx: 0,
+    		vy: 0,
     		path: d3.range(m).map(function() { return [x, y]; }),
-    		count: 0
+    		count: 0,
+    		active: true,
+    		hit: false
   		};
 	});
 
@@ -52,6 +56,8 @@ function setupD3() {
 		.enter().append("svg:g");
 
 	var box = g.append("svg:rect")
+		.attr("x", -l/2)
+		.attr("y", -l/2)
     	.attr("width", l)
     	.attr("height", l);
 	
@@ -64,22 +70,10 @@ function setupD3() {
         		x = path[0][0] += dx,
         		y = path[0][1] += dy,
         		speed = Math.sqrt(dx * dx + dy * dy),
-        		count = speed * 10,
-        		k1 = -5 - speed / 3;
 
     		// Bounce off the walls.
     		if (x < 0 || x > w-l) object.vx *= -1;
     		if (y < 0 || y > h-l) object.vy *= -1;
-
-    		// Swim!
-    		for (var j = 0; ++j < m;) {
-      			var vx = x - path[j][0],
-          			vy = y - path[j][1],
-          			k2 = Math.sin(((object.count += count) + j * 3) / 300) / speed;
-      			path[j][0] = (x += dx / speed * k1) - dy * k2;
-      			path[j][1] = (y += dy / speed * k1) + dx * k2;
-      			speed = Math.sqrt((dx = vx) * dx + (dy = vy) * dy);
-    		}
   		}
 
   		box.attr("transform", function(d) {
@@ -105,11 +99,32 @@ function setupD3() {
             image.onload = function() {
                 callback(image);
                 compareFrame(image);
-                //console.log(hit);
             };
             image.src = path;
         }
     }
+    
+    
+    function compareFrame(img1) {
+		// just compare if there are two pictures
+  		if ( img2 != null ) {
+    		var res=[0,0,0,0];
+    		try {
+    			for (var i=0; i<n; i++){
+    				res = compare(img1, img2, objects[n].path[0][0], objects[n].path[0][1], 10, radius); 
+    			    	if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
+            				res[0]=0;res[1]=0;res[2]=0;res[3]=0;
+    					}
+					hit[n]=res[0]+res[1]+res[2]+res[3];
+    			}
+    		}
+    	catch(e) {
+    			// errors
+    		}
+		}
+		img2 = img1;
+	}
+
 }
 
 
@@ -168,7 +183,6 @@ var enginerTimer;
 var gamephase;
 var score_val = 0;
 var actionTimer;
-var hit = new Array();
 var unit=30;
 
 function setGameAction(){
@@ -352,28 +366,4 @@ function compare(image1, image2, ptX, ptY, threshold, ObjR) {
     }
   }
   return movement;
-}
-
-
-function compareFrame(img1,arrObject) {
-  // just compare if there are two pictures
-  if ( img2 != null ) {
-    var res=[0,0,0,0];
-    var ObjR=10;
-
-    try {
-    		for (var n=0; n<arrMotion.length; n++){
-    			// arrObject [active, position_x, position_y, detection_radius]
-    			res = compare(img1, img2, arrObject[n][1], arrObject[n][2], 10, arrObject[n][3]); 
-    			    if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
-            			res[0]=0;res[1]=0;res[2]=0;res[3]=0;
-    				}
-				hit[n]=res[0]+res[1]+res[2]+res[3];
-    		}
-    	}
-    catch(e) {
-    		// errors
-    	}
-	}
-	img2 = img1;
 }
