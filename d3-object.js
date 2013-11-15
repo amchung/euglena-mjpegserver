@@ -259,54 +259,10 @@ function actionLoop(){
 			}
 			drawStar(shipX,shipY,starX,starY,gamelevel-(int_star-6));
 			drawShip(shipX,shipY,shipRad);
-			
   		break;
 	}
 }
 
-function getStarLocation(){
-	shipRad=Math.random()*Math.PI*2;
-	starX=shipX+unit*(Math.cos(shipRad))*gamelevel;
-	starY=shipY+unit*(Math.sin(shipRad))*gamelevel;
-}
-
-function getShipLocation(){
-	var step = gamelevel-(int_engine-4);
-	var u = (step > gamelevel - 1) ? 0 : 1;
-	shipX=shipX+unit*(Math.cos(shipRad))*u;
-	shipY=shipY+unit*(Math.sin(shipRad))*u;
-}
-
-function showStar(){
-	if(int_star>0)
-	{
-		int_star=int_star-1;
-	}
-	else
-	{
-		window.clearInterval(starTimer);
-		rest=false;
-		gamephase='engine';
-	}
-}
-	
-function runEngine(){
-	if(int_engine>0)
-	{
-		getShipLocation();
-		int_engine=int_engine-1;
-	}
-	else
-	{
-		window.clearInterval(engineTimer);
-		engine=false;
-		gamephase='rest';
-		if(gamelevel<10)
-		{
-			gamelevel=gamelevel+1;
-		}
-	}
-}
 
 function gameOver(){
     var msg = {type:'sendscore', user:username, score:score_val};
