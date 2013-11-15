@@ -116,6 +116,7 @@ function onReady(event) {
     $( "#size_slider" ).bind( "size_slide", function(event, ui) {
         var value = ui.value;
         $('#size_value').text("Value: " + value);
+        console.log(value);
         l = value;
     });
         
