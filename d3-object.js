@@ -108,14 +108,14 @@ function setupD3() {
   	}
 
 d3.timer(function() {
-	getVideo();
+	//getVideo();
 	//console.log(hit);
   	drawObjects();
 });
 
 }
 
-
+window.setInterval(getVideo,1000/20);
 
 
 
