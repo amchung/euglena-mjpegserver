@@ -63,8 +63,8 @@ function setupD3() {
     		var object = objects[i],
         		dx = object.vx,
         		dy = object.vy,
-        		x = path[0][0] += dx,
-        		y = path[0][1] += dy,
+        		x = object.path[0][0] += dx,
+        		y = object.path[0][1] += dy,
         		speed = Math.sqrt(dx * dx + dy * dy);
 
     		// Bounce off the walls.
