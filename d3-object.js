@@ -113,9 +113,10 @@ d3.timer(function() {
   	drawObjects();
 });
 
+window.setInterval(getVideo,1000/20);
 }
 
-window.setInterval(getVideo,1000/20);
+
 
 
 
