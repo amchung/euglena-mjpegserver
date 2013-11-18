@@ -22,6 +22,7 @@ var l = 80,
 	v = 1/4;
 	
 var n_max = 30;
+var objects;
 
 function setupD3() {
     canvas = d3.select("#canvasArea").append("canvas")
