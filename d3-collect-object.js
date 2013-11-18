@@ -22,7 +22,7 @@ var l = 80,
 	v = 1/4,
 	threshold = 30;
 	
-var n_max = 20;
+var n_max = 30;
 var objects;
 
 function setupD3() {
@@ -63,7 +63,7 @@ function setupD3() {
 	var box = g.append("svg:rect");
 	
 	function drawObjects(){
-		for (var i = -1; ++i < n;) {
+		for (var i = -1; ++i < n_max;) {
     		var object = objects[i],
         		x = object.path[0][0],
         		y = object.path[0][1];
