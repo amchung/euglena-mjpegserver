@@ -143,6 +143,9 @@ function setupD3() {
 function resetObjects(){
 	for (var i = -1; ++i < n_max;) {
 		objects[i].fill = "none";
+		var x = 40 + Math.random() * (w-40), y = 40 + Math.random() * (h-40);
+		objects[i].path[0][0] = x;
+        objects[i].path[0][1] = y;
 	}
 }
 

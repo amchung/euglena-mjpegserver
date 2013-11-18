@@ -163,9 +163,9 @@ function onReady(event) {
             });
         });
         
-        /*$("input[name=gamestartBtn]").click(function(){
-            //resetGame();
-        });*/
+        $("input[name=resetBtn]").click(function(){
+            resetObjects();
+        });
         
         socket = new io.connect('http://171.65.102.132:8088');
         var chat = $('#chat');
