@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Euglena Livecam</title>
+    <link rel="stylesheet" href="base.css"/>
+    <link rel="stylesheet" href="layout.css"/>
+    <link rel="stylesheet" href="skeleton.css"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
+    <script src="Collection.js"></script>
+    <script src="Vector2.js"></script>
+    <script src="VectorLED.js"></script>
+	<script src="Breakout-base.js"></script>
+	<script src="socket_io.js"></script>
+	<script src="d3-object.js"></script>
+	<script src="d3-joystick.js"></script>
+	<script src="hand-1.1.2.js"></script>
+	<style type="text/css">
+		rect {
+  			fill: none;
+  			stroke-linecap: round;
+  			stroke-width: 3px;
+		}
+		canvas, svg {
+  			position: absolute;
+  			top: 0;
+  			left: 0;
+		}
+    </style>
+</head>
+<body>
+	<div class="container" style = "padding: 10px">
+		<div>
+    		<div id="canvasArea" style = "padding: 10px; width: 640px; height: 480px;">
+			</div>
+			<div id="username" style="padding: 4px;">
+				<h6>What's your name?</h6>
+				<input type="text" name="usernameTxt" />
+				<input type="button" name="setUsername" value="Enter the Ring" />
+			</div>
+			<div id="chat" style="padding: 6px; min-width: 600px; max-height:100px; overflow-y:scroll;"></div>
+		</div>
+		<div id="controlArea" style = "width:300px; position:absolute; left: 680px; top: 16px">
+			<div>
+				<h3 align="center" style="color: #FA6600;">Euglena Livecam</h3>
+			</div>
+			<div id="ledArea" align="center">
+				<div>
+					<h5 style="color: #FA6600;">< LED control ></h5>
+				</div>
+			</div>
+			<div align="center" >
+				<div style="width:300px; height:280px;">
+					<canvas id="controlCanvas" style="background:#000;padding: 10px;position:inherit;"></canvas>
+				</div>
+			</div>
+			<div align="center" style = "margin: 20px; ">
+				<h5>< TOP 5 SCORES ></h5>
+				<div id="board" style = "margin: 0px"></div>
+			</div>
+			<div style="padding: 6px">
+				<div id="entergame" style="display:none;">
+					<input type="button" name="gamestartBtn" value="Game Start" />
+				</div>
+				<div style="background:#000;padding: 10px;">
+					<h6>number of objects [1,20]</h6>
+            		<h6 id="n_slider"></h6>
+            		<h6 id="n_value"></h6>
+				</div>
+				<div style="background:#000;padding: 10px;">
+					<h6>size of objects [20,200]</h6>
+            		<h6 id="size_slider"></h6>
+            		<h6 id="size_value"></h6>
+				</div>
+				<div style="background:#000;padding: 10px;">
+					<h6>repelling force [0.00,1.00]</h6>
+            		<h6 id="v_slider"></h6>
+            		<h6 id="v_value"></h6>
+				</div>
+				<div style="background:#000;padding: 10px;">
+					<h6>object random motion radius [0.00,1.00]</h6>
+            		<h6 id="br_slider"></h6>
+            		<h6 id="br_value"></h6>
+				</div>
+			</div>
+	    </div>
+	    <div id="mdArea" style = "width:640px; padding: 10px;position:absolute; left: 0px;visibility:hidden;">
+				<canvas id="mdCanvas" style="z-index: 4;"></canvas>
+	    </div>
+	</div>
+</body>
+</html>
