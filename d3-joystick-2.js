@@ -236,7 +236,7 @@ function joystick_draw() {
     
     var img_hand = new Image;
     img_hand.onload = function(){c.drawImage(img_hand,0,0);};
-    img_hand.src = "joystick_hand.svg";
+    img_hand.src = "http://www.stanford.edu/~amchung/joystick_hand.svg";
     
         //// mouse event loop
     touches.forEach(function (touch) {
