@@ -31,14 +31,15 @@ function setupD3() {
     
     svg_led = d3.select("#ledArea").append("svg:svg")
         .attr("width", 300)
-        .attr("height", 300);
+        .attr("height", 300)
+        .style("fill", "#000000");
         
     var shape_stage = svg_led.append("svg:rect")
     							.attr("x", 112.5)
     							.attr("y", 112.5)
     							.attr("width", 75)
     							.attr("height", 75)
-    							.style("fill", "#000000");
+    							.style("fill", "#111111");
     
     var shape_led = svg_led.append("svg:polygon")
     						.attr("points", "-39.042,8.417 24.708,8.417 24.7,6.191 20.958,5.667 6.708,1.417 6.708,6.167 -39.042,6.167 	")
