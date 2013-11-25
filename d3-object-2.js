@@ -32,7 +32,7 @@ function setupD3() {
     svg_led = d3.select("#ledArea").append("svg:svg")
         .attr("width", 300)
         .attr("height", 300)
-        .style("fill", "#000000");
+        .attr("fill", "#000000");
         
     var shape_stage = svg_led.append("svg:rect")
     							.attr("x", 112.5)
