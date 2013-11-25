@@ -38,7 +38,7 @@ function setupD3() {
     							.attr("y", 112.5)
     							.attr("width", 75)
     							.attr("height", 75)
-    							.style("fill", "#ff0000");
+    							.style("fill", "#000000");
             
     context = canvas.node().getContext("2d");  
 
