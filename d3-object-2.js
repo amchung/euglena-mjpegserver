@@ -47,10 +47,10 @@ function setupD3() {
     
     var g_led = svg_led.append("svg:g")
     						.attr("transform", "translate(55,150)");
-    var led_p1 = g_led.append("svg:polygon")
+    g_led.append("svg:polygon")
     						.attr("points", "-39.042,8.417 24.708,8.417 24.7,6.191 20.958,5.667 6.708,1.417 6.708,6.167 -39.042,6.167 	")
     						.style("fill", "#58595B");
-    var led_p2 = g_led.append("svg:polygon")
+    g_led.append("svg:polygon")
     						.attr("points", "-38.792,-8.333 21.458,-8.333 24.208,-6.333 24.208,3.667 6.708,-2.333 6.708,-5.833 -38.792,-5.833 	")
     						.style("fill", "#58595B");					
     var led_p3 = g_led.append("svg:path")
