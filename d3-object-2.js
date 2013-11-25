@@ -41,11 +41,14 @@ function setupD3() {
     							.attr("height", 75)
     							.style("fill", "#111111");
     
-    var shape_led = svg_led.append("svg:polygon")
+    var g_led = svg_led.append("svg:g");
+    var led_p1 = g_led.append("svg:polygon")
     						.attr("points", "-39.042,8.417 24.708,8.417 24.7,6.191 20.958,5.667 6.708,1.417 6.708,6.167 -39.042,6.167 	")
     						.style("fill", "#58595B");
-    						
-    var shape_led2 = svg_led.append("svg:path")
+    var led_p2 = g_led.append("svg:polygon")
+    						.attr("points", "-38.792,-8.333 21.458,-8.333 24.208,-6.333 24.208,3.667 6.708,-2.333 6.708,-5.833 -38.792,-5.833 	")
+    						.style("fill", "#58595B");					
+    var led_p3 = g_led.append("svg:path")
     						.attr("d", "M39.042,0.834c0-3.697-0.483-7.667-4.069-10.966c-8.452-7.775-36.53-7.701-38.847-7.701c-3.728,0-4.75,7.909-4.75,17.667c0,9.757,1.022,17.667,4.75,17.667c2.282,0,32.307,0.417,38.792-6.494C38.095,7.62,39.042,4.622,39.042,0.834z")
     						.style("fill", "#ffffff")
     						.style("opacity", "0.5");
