@@ -174,6 +174,8 @@ function setupD3() {
   		ledR.style("opacity",led2.value);
   		ledD.style("opacity",led3.value);
   		ledL.style("opacity",led4.value);
+  		
+  		console.log(led1.value);
   	}
 
 
