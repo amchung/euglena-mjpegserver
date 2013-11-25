@@ -39,6 +39,10 @@ function setupD3() {
     							.attr("width", 75)
     							.attr("height", 75)
     							.style("fill", "#000000");
+    
+    var shape_led = svg_led.append("svg:polygon")
+    						.attr("points", "-39.042,8.417 24.708,8.417 24.7,6.191 20.958,5.667 6.708,1.417 6.708,6.167 -39.042,6.167 	")
+    						.style("fill", "#58595B");
             
     context = canvas.node().getContext("2d");  
 
