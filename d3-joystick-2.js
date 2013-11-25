@@ -28,10 +28,10 @@ var Pin = BO.Pin;
 
 //// Variables
 // LED related
-var led1; //-90
-var led2; //0
-var led3; //90
-var led4; //180=-180
+var led1; //-90 U
+var led2; //0 R
+var led3; //90 D
+var led4; //180=-180 L
 var LEDloopON = false;
 var LEDcont = 1;
 var max_val;

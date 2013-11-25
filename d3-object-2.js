@@ -169,6 +169,11 @@ function setupD3() {
   		box.attr("transform", function(d) {
     		return "translate(" + d.path[0] + ")";
   		});
+  		
+  		ledU.style("opacity",led1.value);
+  		ledR.style("opacity",led2.value);
+  		ledD.style("opacity",led3.value);
+  		ledL.style("opacity",led4.value);
   	}
 
 
