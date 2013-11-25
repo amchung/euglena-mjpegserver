@@ -29,11 +29,11 @@ function setupD3() {
         .attr("width", vid_width)
         .attr("height", vid_height);
     
-    svg_led = d3.select("#ledArea").append("svg")
+    svg_led = d3.select("#ledArea").append("svg:svg")
         .attr("width", 300)
         .attr("height", 300);
         
-    var shape_stage = svg_led.append("rect")
+    var shape_stage = svg_led.append("svg:rect")
     							.attr("x", 112.5)
     							.attr("y", 112.5)
     							.attr("width", 75)
