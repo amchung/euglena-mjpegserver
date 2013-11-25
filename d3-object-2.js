@@ -57,8 +57,8 @@ function setupD3() {
     						.attr("d", "M39.042,0.834c0-3.697-0.483-7.667-4.069-10.966c-8.452-7.775-36.53-7.701-38.847-7.701c-3.728,0-4.75,7.909-4.75,17.667c0,9.757,1.022,17.667,4.75,17.667c2.282,0,32.307,0.417,38.792-6.494C38.095,7.62,39.042,4.622,39.042,0.834z")
     						.style("fill", "#ffffff")
     						.style("opacity", "0")
-    						.style("stroke","#ffffff")
-  							.style("stroke-opacity", ".5");
+    						.attr("stroke","#ffffff")
+  							.attr("stroke-opacity", ".5");
     						
     var g_ledR = svg_led.append("svg:g")
     						.attr("transform", "matrix(-1 0 0 1 245 150)");
