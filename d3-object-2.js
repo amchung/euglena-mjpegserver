@@ -59,6 +59,7 @@ function setupD3() {
     						.style("opacity", "0.5");
     						
     var g_ledR = svg_led.append("svg:g")
+    						.attr("transform", "rotate(Math.PI)") 
     						.attr("transform", "translate(245,150)");
     			g_ledR.append("svg:polygon")
     						.attr("points", "-39.042,8.417 24.708,8.417 24.7,6.191 20.958,5.667 6.708,1.417 6.708,6.167 -39.042,6.167 	")
