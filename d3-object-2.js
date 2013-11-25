@@ -44,6 +44,13 @@ function setupD3() {
     var shape_led = svg_led.append("svg:polygon")
     						.attr("points", "-39.042,8.417 24.708,8.417 24.7,6.191 20.958,5.667 6.708,1.417 6.708,6.167 -39.042,6.167 	")
     						.style("fill", "#58595B");
+    var shape_led2 = svg_led.append("svg:g")
+    						.style("opacity", "0.5")
+    						.enter().append("svg.path")
+    						.attr("fill", "#ffffff")
+    						.attr("d", "M39.042,0.834c0-3.697-0.483-7.667-4.069-10.966c-8.452-7.775-36.53-7.701-38.847-7.701
+			c-3.728,0-4.75,7.909-4.75,17.667c0,9.757,1.022,17.667,4.75,17.667c2.282,0,32.307,0.417,38.792-6.494
+			C38.095,7.62,39.042,4.622,39.042,0.834z");
             
     context = canvas.node().getContext("2d");  
 
