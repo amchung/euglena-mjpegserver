@@ -170,12 +170,12 @@ function setupD3() {
     		return "translate(" + d.path[0] + ")";
   		});
   		
-  		led_U.style("opacity",led1.value);
-  		led_R.style("opacity",led2.value);
-  		led_D.style("opacity",led3.value);
-  		led_L.style("opacity",led4.value);
+  		led_U.style("opacity",arrow.int1);
+  		led_R.style("opacity",arrow.int2);
+  		led_D.style("opacity",arrow.int3);
+  		led_L.style("opacity",arrow.int4);
   		
-  		console.log(led1.value);
+  		console.log(arrow.int1);
   	}
 
 
