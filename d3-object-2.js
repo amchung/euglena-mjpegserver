@@ -129,7 +129,7 @@ function setupD3() {
     		// stuck at the walls.
     		if (x < 0)
     		{
-    			object.path[0][0] = 0;
+    			object.path[0][0] = l;
     		}
     		if(x > w-l) 
     		{
@@ -137,7 +137,7 @@ function setupD3() {
     		}
     		if (y < 0)
     		{
-    			object.path[0][1] = 0;
+    			object.path[0][1] = l;
     		}
     		if (y > h-l)
     		{
@@ -162,10 +162,10 @@ function setupD3() {
     		return "translate(" + d.path[0] + ")";
   		});
   		
-  		led_D.style("opacity",arrow.int1);
-  		led_R.style("opacity",arrow.int2);
-  		led_U.style("opacity",arrow.int3);
-  		led_L.style("opacity",arrow.int4);
+  		led_U.style("opacity",arrow.int1);
+  		led_L.style("opacity",arrow.int2);
+  		led_D.style("opacity",arrow.int3);
+  		led_R.style("opacity",arrow.int4);
   	}
 
 
