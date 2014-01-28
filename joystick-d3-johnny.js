@@ -1,3 +1,4 @@
+// main requestAnimFrame for all the animation
 ﻿window.requestAnimFrame = (function () {
     return window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -9,55 +10,37 @@
     };
 })();
 
+//// for drawing the joystick
 var control_canvas,
-c,        // c is the fg_canvas' context 2D
+c, // context 2D
 halfWidth,
 halfHeight,
-leftPointerID = -1,
+leftPointerID = -1,	// variable for mouse left button cursor interactions
 leftPointerPos = new Vector2(0, 0),
 leftPointerStartPos = new Vector2(0, 0),
 leftVector = new Vector2(0, 0);
-arrow = new VectorLED(0, 0, 0, 0);
+arrow = new VectorLED(0, 0, 0, 0);	// vector for LED direction
 
 var touches; // collections of pointers
 
 /////////////////////////////// ARDUINO SETUP 
-var IOBoard = BO.IOBoard;
-var IOBoardEvent = BO.IOBoardEvent;
-var Pin = BO.Pin;
 
-//// Variables
-// LED related
-var led1; //-90 D
-var led2; //0 R
-var led3; //90 U
-var led4; //180=-180 L
+// LED setup
+//var led1; //-90 D
+//var led2; //0 R
+//var led3; //90 U
+//var led4; //180=-180 L
+var max_val; // threshold radius of the joystick
 var LEDloopON = false;
-var LEDcont = 1;
-var max_val;
 
-var frame = 0;
-var lastUpdateTime = 0;
-var acDelta = 0;
-var msPerFrame = 10;
-
-// Set to true to print debug messages to console
-BO.enableDebugging = true; 
-
-var host = window.location.hostname;
-// if the file is opened locally, set the host to "localhost"
-if (window.location.protocol.indexOf("file:") === 0) {
-        host = "171.65.102.132";
-    }
-var arduino = new IOBoard(host, 8887);
 ///////////////////////////// ARDUINO SETUP END
 
-var username = "noname";
-var socket;
+var username = "noname";	// for socket.io
+var socket;			// for socket.io
 
 document.addEventListener("DOMContentLoaded", init);
         
-window.onorientationchange = resetCanvas;
+window.onorientationchange = resetCanvas;	// resize when you resize the browser
 window.onresize = resetCanvas;
 
 function init() {
@@ -67,27 +50,12 @@ function init() {
     
     touches = new Collection();
     
-    arduino.addEventListener(IOBoardEvent.READY, onReady);
+    onReady();
 }
 
-function onReady(event) {
-        // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
-
-        // Set Pin 5,6,9,10 to PWM
-        arduino.setDigitalPinMode(5, Pin.PWM);
-        arduino.setDigitalPinMode(6, Pin.PWM);
-        arduino.setDigitalPinMode(9, Pin.PWM);
-        arduino.setDigitalPinMode(10, Pin.PWM);
-
-        // Create an LED object to interface with the LED wired
-        // to the I/O board
-        led1 = arduino.getDigitalPin(5);
-        led2 = arduino.getDigitalPin(6);
-        led3 = arduino.getDigitalPin(9);
-        led4 = arduino.getDigitalPin(10);
-            
-        // jQuery part for the sliders
+function onReady() {
+////// jQuery for the sliders
+   // number of the virtual objects
     $("#n_slider").slider({
         step: 1,
         min : 1,
@@ -103,7 +71,7 @@ function onReady(event) {
         n = value;
     });    
     
-    
+   // size of the virtual objects
     $("#size_slider").slider({
         step: 10,
         min : 20,
@@ -119,7 +87,7 @@ function onReady(event) {
         console.log(value);
         l = value;
     });
-       
+    // speed of the virtual objects       
     $("#v_slider").slider({
         step: 0.05,
         min : 0.0,
@@ -135,7 +103,8 @@ function onReady(event) {
         console.log(value);
         v = value;
     });
-     
+
+    // brownian motion setting of the virtual objects
     $("#br_slider").slider({
         step: 0.05,
         min : 0.0,
@@ -151,7 +120,8 @@ function onReady(event) {
         brown_const = value;
     });
     
-
+////// jQuery for the socket.io
+    // username input
         $('input[name=setUsername]').click(function(){
         	if($('input[name=usernameTxt]').val() != ""){
                 username = $('input[name=usernameTxt]').val();
@@ -166,19 +136,28 @@ function onReady(event) {
         $("input[name=gamestartBtn]").click(function(){
             resetGame();
         });
-        
-        socket = new io.connect('http://171.65.102.132:8088');
+    // chats and score postings        
+        socket = new io.connect('http://171.65.102.132:3002');
         var chat = $('#chat');
         var board = $('#board');
 
         socket.on('connect', function() {
-                console.log("Connected");
-                //chat.html("<b>Connected!</b>");
-                socket.emit('message', {channel:'realtime'});
+            console.log("Connected");
+            socket.emit('message', {channel:'realtime'});
         });
         
         socket.on('message', function(message){
-                chat.append(message + '<br />');
+		var str = message.split("&&");
+		if (Number(str[0]))
+		{
+			chat.append(str[1] + '<br />');
+		}else{
+			var ledArray = str[1].split("^");
+			arrow.int1 = ledArray[0];
+			arrow.int2 = ledArray[1];
+			arrow.int3 = ledArray[2];
+			arrow.int4 = ledArray[3];
+		}
         });
                 
         socket.on('postscore', function(score){
@@ -206,12 +185,13 @@ function onReady(event) {
                 socket.json.send(msg);
                 $("input[name=chatTxt]").val("");
         });
-        
+
+////// EventListeners for joystick canvas
     control_canvas.addEventListener('pointerdown', onPointerDown, false);
     control_canvas.addEventListener('pointermove', onPointerMove, false);
     control_canvas.addEventListener('pointerup', onPointerUp, false);
     control_canvas.addEventListener('pointerout', onPointerUp, false);
-    
+    // start drawing joystick loop
     requestAnimFrame(joystick_draw);
 }
 
@@ -248,47 +228,33 @@ function joystick_draw() {
             c.beginPath();
             c.moveTo(leftPointerStartPos.x,leftPointerStartPos.y);
             c.strokeStyle = "rgba(250, 102, 0, 1)";
-                        c.lineTo(leftPointerStartPos.x+max_val*(arrow.int2-arrow.int4),leftPointerStartPos.y+max_val*(arrow.int1-arrow.int3));
-                        c.lineWidth = 3;
-                        c.stroke();
+            c.lineTo(leftPointerStartPos.x+max_val*(arrow.int2-arrow.int4),leftPointerStartPos.y+max_val*(arrow.int1-arrow.int3));
+            c.lineWidth = 3;
+            c.stroke();
                         
-                        c.beginPath();
-                        c.fillStyle = "rgba(255, 255, 255, "+alpha*(LEDcont)+")";
-                    c.arc(halfWidth, halfHeight, 16, 0, Math.PI * 2, true);
-                    c.fill();
+            c.beginPath();
+            c.fillStyle = "rgba(255, 255, 255, "+alpha+")";
+            c.arc(halfWidth, halfHeight, 16, 0, Math.PI * 2, true);
+            c.fill();
                         
-                        c.beginPath();
-                c.fillStyle = "#fff"; 
-                c.fillText(alpha,halfWidth-10, halfHeight-25);
+            c.beginPath();
+            c.fillStyle = "#fff"; 
+            c.fillText(alpha,halfWidth-10, halfHeight-25);
                 
-                c.beginPath();
-                c.fillStyle = "#dd6600";
-                var theta = leftVector.angle();
-                c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
-		// send the input to johnny five
-		
+            c.beginPath();
+            c.fillStyle = "#dd6600";
+            var theta = leftVector.angle();
+            c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
+            // send the input to johnny five
+            	
         }
     });
 
     requestAnimFrame(joystick_draw);
-    
-    //// LED control loop
-    var delta = Date.now() - lastUpdateTime;
-    if (acDelta > msPerFrame)
+    if(LEDloopON) 
     {
-        acDelta = 0;
-        if(LEDloopON) 
-        {
-                LEDcont = 1;
-                changeLED(LEDcont);
-        }
-        frame++;
-        if (frame >= 2) {frame = 0;}
-    } else
-    {
-        acDelta += delta;
+        changeLED(1);
     }
-    lastUpdateTime = Date.now();
 }
 
 function drawCircles(xCenter,yCenter)
@@ -322,7 +288,6 @@ function givePointerType(event) {
 function onPointerDown(e) {
     var newPointer = { identifier: e.pointerId, x: e.clientX, y: e.clientY, type: givePointerType(e) };
     leftPointerID = e.pointerId;
-    //leftPointerStartPos.reset(e.clientX, e.clientY);
     leftPointerStartPos.reset(halfWidth, halfHeight);
     leftPointerPos.copyFrom(leftPointerStartPos);
     leftVector.reset(0, 0);
@@ -332,10 +297,8 @@ function onPointerDown(e) {
 
 function onPointerMove(e) {
     if (leftPointerID == e.pointerId) {
-        //leftPointerPos.reset(e.clientX, e.clientY);
         leftPointerPos.reset(e.offsetX, e.offsetY);
         leftVector.copyFrom(leftPointerPos);
-        //leftVector.minusEq(leftPointerStartPos);
         leftVector.minusEq(leftPointerStartPos);
         arrow.setArrow(leftVector, max_val);
         LEDloopON = true;
@@ -356,8 +319,8 @@ function onPointerUp(e) {
     leftVector.reset(0, 0);
     arrow.reset(0, 0, 0, 0);
     touches.remove(e.pointerId);
-    LEDloopON = false;
-    changeLED(0);
+    LEDloopON = false; // we are no longer monitoring the mouse input
+    changeLED(0); // turn off all LEDs
 }
 
 function setupCanvas() {
@@ -372,18 +335,16 @@ function setupCanvas() {
 function changeLED(LEDon) {
     if(LEDon)
     {
-            led1.value = arrow.int1;
-            led2.value = arrow.int2;
-            led3.value = arrow.int3;
-            led4.value = arrow.int4;
+	var msg = 
+	{type:'sendarrow', user:username, led1:arrow.int1, led2:arrow.int2, led3:arrow.int3, led4:arrow.int4};
+    	socket.json.send(msg);
     }
     else
     {
-            led1.value = 0;
-            led2.value = 0;
-            led3.value = 0;
-            led4.value = 0;
-        }
+	var msg = 
+	{type:'sendarrow', user:username, led1:0, led2:0, led3:0, led4:0};
+    	socket.json.send(msg);
+    }
 }
 
 

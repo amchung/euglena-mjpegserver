@@ -237,7 +237,6 @@ function joystick_draw() {
         //// mouse event loop
     touches.forEach(function (touch) {
         if (touch.identifier == leftPointerID) {
-	// draw the joystick in the control canvas
             var alpha = arrow.trimArrow(leftVector, max_val);
             
             c.beginPath();
@@ -265,8 +264,6 @@ function joystick_draw() {
                 c.fillStyle = "#dd6600";
                 var theta = leftVector.angle();
                 c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
-		// send the input to johnny five
-		
         }
     });
 
