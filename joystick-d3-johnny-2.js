@@ -20,6 +20,7 @@ leftPointerPos = new Vector2(0, 0),
 leftPointerStartPos = new Vector2(0, 0),
 leftVector = new Vector2(0, 0);
 arrow = new VectorLED(0, 0, 0, 0);	// vector for LED direction
+joy_arrow = new VectorLED(0, 0, 0, 0);	// vector used for direction calculations
 
 var touches; // collections of pointers
 
@@ -36,7 +37,7 @@ var LEDloopON = false;
 ///////////////////////////// ARDUINO SETUP END
 
 var username = "noname";	// for socket.io
-var socket;			// for socket.io
+var socket;					// for socket.io
 
 document.addEventListener("DOMContentLoaded", init);
         
@@ -142,7 +143,7 @@ function onReady() {
         var board = $('#board');
 
         socket.on('connect', function() {
-            console.log("Connected");
+            console.log("Connected!");
             socket.emit('message', {channel:'realtime'});
         });
         
@@ -177,7 +178,7 @@ function onReady() {
 
         socket.on('disconnect', function() {
                 console.log('disconnected');
-                chat.html("<b>Disconnect!</b>");
+                chat.html("<b>Disconnected!</b>");
         });
 
         $("input[name=sendBtn]").click(function(){
@@ -257,20 +258,6 @@ function joystick_draw() {
     }
 }
 
-function drawCircles(xCenter,yCenter)
-{
-        var needle = new Vector2(max_val, 0);
-        for(var i=0;i<24*3;i++)
-        {
-                c.beginPath();
-                c.fillStyle = "rgba(255, 255, 255, 0.5)";
-                c.lineWidth = 3;
-                c.arc(xCenter + needle.x, yCenter + needle.y, 1, 0, Math.PI * 2, true);
-                c.fill();
-                needle.rotate(5,0);
-        }
-}
-
 function givePointerType(event) {
     switch (event.pointerType) {
         case event.POINTER_TYPE_MOUSE:
@@ -291,7 +278,7 @@ function onPointerDown(e) {
     leftPointerStartPos.reset(halfWidth, halfHeight);
     leftPointerPos.copyFrom(leftPointerStartPos);
     leftVector.reset(0, 0);
-    arrow.reset(0, 0, 0, 0);
+    joy_arrow.reset(0, 0, 0, 0);
     touches.add(e.pointerId, newPointer);
 }
 
@@ -300,7 +287,7 @@ function onPointerMove(e) {
         leftPointerPos.reset(e.offsetX, e.offsetY);
         leftVector.copyFrom(leftPointerPos);
         leftVector.minusEq(leftPointerStartPos);
-        arrow.setArrow(leftVector, max_val);
+        joy_arrow.setArrow(leftVector, max_val);
         LEDloopON = true;
     }
     else {
@@ -317,7 +304,7 @@ function onPointerUp(e) {
         leftVector.reset(0, 0);
     }
     leftVector.reset(0, 0);
-    arrow.reset(0, 0, 0, 0);
+    joy_arrow.reset(0, 0, 0, 0);
     touches.remove(e.pointerId);
     LEDloopON = false; // we are no longer monitoring the mouse input
     changeLED(0); // turn off all LEDs
@@ -336,7 +323,7 @@ function changeLED(LEDon) {
     if(LEDon)
     {
 	var msg = 
-	{type:'sendarrow', user:username, led1:arrow.int1, led2:arrow.int2, led3:arrow.int3, led4:arrow.int4};
+	{type:'sendarrow', user:username, led1:joy_arrow.int1, led2:joy_arrow.int2, led3:joy_arrow.int3, led4:joy_arrow.int4};
     	socket.json.send(msg);
     }
     else

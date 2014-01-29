@@ -10,8 +10,6 @@ var brown_const=0;
 
 var vid_width = 640;
 var vid_height = 480;
-//var vid_width = 320;
-//var vid_height = 240;
 
 var svg_led;
 var context;
@@ -183,7 +181,7 @@ function setupD3() {
             var image = new Image;
             image.onload = function() {
                 callback(image);
-		console.log(new Date().getTime());
+				//console.log(new Date().getTime());
                 compareFrame(image);
             };
             image.src = path;
